@@ -6,10 +6,8 @@ class Game{
 
     constructor(){
         this.canvas = document.getElementById("g");
-
-        this.WIDTH=W;
-        this.HEIGHT=H;
-
+        this.canvas.width = W;
+        this.canvas.height = H;
         this.gl = TinySprite(this.canvas);
         this.gl.flush();
 
@@ -20,7 +18,7 @@ class Game{
         this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
-        this.screen = new Screen(this.WIDTH, this.HEIGHT);
+        this.screen = new Screen(W, H);
 
     }
 
@@ -46,8 +44,6 @@ class Game{
             console.log("FPS: "+this.fps);
             this.fpsCounter = this.fps = 0;
         }
-
-
     }
 
 }
