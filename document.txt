@@ -1,0 +1,48 @@
+JS13k 2024 Theme: Triskaidekaphobia
+
+Fear for the number 13.
+
+
+Size limit: 13 312 bytes zipped.
+
+ideas:
+
+    Dungeon game
+        13 different rooms/dungeons themed to 13 different fears.
+
+        2D: Heroes of loot like battle.  Arcade:ish battles with high tempo.
+            Draw pixels myself or use TinyGL this year again?
+                Yes, the performance will suffer alot
+            Can I do the alpha blending like lights myself without WebGL?
+
+            I might want to draw pixels myself since I might need "lots" of graphic
+
+        3D: Like Searching for 04 but bigger rooms, fast paced battles, movements, jumping...
+
+        Randomized rooms? From templates put together.
+
+        fears:
+            https://en.wikipedia.org/wiki/List_of_phobias
+            Objects:
+                Fear of spiders  (just killed two in the office!)
+                Fear of snakes
+                Fear of bacterias/germs
+                Fear of clowns
+                Fear of wasps
+                Fear of ghosts
+                Fear of ants/insects
+                Fear of number 13 (last room)
+
+            Environment:
+                Fear of darkness
+                Fear of closed spaces
+                Fear of big spaces
+                Fear of fire
+
+        if you get a hit of 13 points it's a crit
+
+
+
+    Card game
+        If you have collected 13 cards in the hand it's game over
+        Slay the spire-like card combat
