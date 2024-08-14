@@ -14,8 +14,9 @@ class Level{
         this.lights = [];
 
 
-        this.lights.push(new Light(368,368,0xffffffff,192,192));
-        this.lights.push(new Light(540,368,0xffffffff,192,192));
+        this.lights.push(new Light(736,736,0xff00ffff,256,256));
+        this.lights.push(new Light(1080,736,0xff0099ff,256,256));
+        this.lights.push(new Light(880,826,0xff0000ff,256,256));
 
         for (let x = 10; x < 18; x++){
             this.tiles[x+10*this.width] = Tiles.wall1;
@@ -38,7 +39,7 @@ class Level{
         this.tiles[18+14*this.width] = Tiles.wall_bottom_right_corner;
         
 
-        this.player = new Player(10*32,10*32);
+        this.player = new Player(10*64,10*64);
 
 
         this.entities.push(new Enemy(12*32,12*32));
@@ -59,11 +60,11 @@ class Level{
                 
                 let tile = this.tiles[x+y*this.width];
                 if (tile != null){
-                    if (x ==10){
-                        console.log("player.x: "+ this.player.x+ " player.sprite.x: " + this.player.sprite.x+ " tile.x "+ x*32 + " tile.renderX:" + ( (game.cameraCenterX - this.player.x) + (x*32)));
-                    }
-                    tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*32);
-                    tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*32);
+                    //if (x ==10){
+                   //     console.log("player.x: "+ this.player.x+ " player.sprite.x: " + this.player.sprite.x+ " tile.x "+ x*32 + " tile.renderX:" + ( (game.cameraCenterX - this.player.x) + (x*32)));
+                   // }
+                    tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*64);
+                    tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*64);
                     tile.render(game);
                 }
             }

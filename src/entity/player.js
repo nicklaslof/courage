@@ -1,19 +1,30 @@
 import Sprite from "../graphic/sprite.js";
+import Animation from "./animation.js";
+
 import Entity from "./entity.js";
 
 class Player extends Entity{
     constructor(x,y){
-        super(x,y,new Sprite(x,y,0,112,16,16,32,32,0xffffffff));
-        this.speed = 1.5;
+        super(x,y,new Sprite(x,y,0,112,16,16,64,64,0xffffffff));
+        this.speed = 128;
+
+        this.animation = new Animation();
+        this.animation.addState("idle",this.sprite,0.1);
+        this.animation.addState("walk", new Sprite(x,y,16,112,16,16,64,64,0xffffffff),160)
+        .addState("walk", new Sprite(x,y,0,112,16,16,64,64,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,64,64,0xffffffff),160)
+        .addState("walk", new Sprite(x,y,0,112,16,16,64,64,0xffffffff),240);
+       
+        this.animation.setCurrentState("idle");
+
     }
 
     tick(game,deltaTime){
         this.moveDirection.x = game.input.axes.x;
         this.moveDirection.y = game.input.axes.y;
 
-        super.tick(deltaTime);
-
-
+        if (this.moveDirection.x != 0 || this.moveDirection.y != 0) this.animation.setCurrentState("walk");
+        else this.animation.setCurrentState("idle");
+        super.tick(game,deltaTime);
     }
 
     render(game){

@@ -12,8 +12,8 @@ class Screen{
         this.level = new Level(32,32);
     }
 
-    tick(deltaTime){
-        this.level.tick(deltaTime);
+    tick(game, deltaTime){
+        this.level.tick(game, deltaTime);
 
     }
 

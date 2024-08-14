@@ -7,12 +7,18 @@ class Entity{
         this.horizontalFlip = false;
         this.moveDirection = {x:0,y:0};
         this.speed = 1;
+        this.animation = null;
     }
 
-
     tick(game,deltaTime){
-        this.x += this.moveDirection.x * this.speed;
-        this.y += this.moveDirection.y * this.speed;
+
+        if (this.animation != null){
+            this.animation.tick(game,deltaTime);
+            this.sprite = this.animation.currentSprite;
+        }
+
+        this.x += this.moveDirection.x * this.speed * deltaTime/1000;
+        this.y += this.moveDirection.y * this.speed * deltaTime/1000;
 
         if (this.moveDirection.x < 0) this.horizontalFlip = false;
         if (this.moveDirection.x > 0) this.horizontalFlip = true;
