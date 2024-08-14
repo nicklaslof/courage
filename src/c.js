@@ -1,0 +1,1 @@
+const TZ=2048;const W=1024;const H=576;
