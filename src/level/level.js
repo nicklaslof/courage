@@ -1,3 +1,4 @@
+import Enemy from "../entity/enemy.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
@@ -38,6 +39,9 @@ class Level{
         
 
         this.player = new Player(10*32,10*32);
+
+
+        this.entities.push(new Enemy(12*32,12*32));
         this.entities.push(this.player);
 
     }

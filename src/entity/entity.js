@@ -19,8 +19,8 @@ class Entity{
     }
 
     render(game){
-        this.sprite.x = this.x;
-        this.sprite.y = this.y;
+        this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
+        this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
         this.sprite.horizontalFlip = this.horizontalFlip;
         this.sprite.render(game);
     }
