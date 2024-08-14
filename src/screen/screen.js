@@ -18,17 +18,11 @@ class Screen{
     }
 
     render(game){
-
-
-        //Clear the pixels for every frame
-
-        // Draw stuff
-
         this.level.render(game);
+    }
 
-
-        
-        // Render the pixels to the browser canvas
+    renderLight(game){
+        this.level.renderLight(game);
     }
 
 }

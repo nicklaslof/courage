@@ -1,6 +1,7 @@
 import Texture from "./graphic/texture.js";
 import Screen from "./screen/screen.js";
 import { TinySprite } from './lib/tinysprite.js';
+import GlTexture from "./graphic/gltexture.js";
 
 class Game{
 
@@ -15,11 +16,29 @@ class Game{
         this.texture = new Texture(this.gl.g);
         this.image.src = "t.png";
 
+        this.setupLightBuffer();
+
         this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
         this.screen = new Screen(W, H);
 
+    }
+
+    setupLightBuffer(){
+        this.lightTexture = new GlTexture(this.gl.g,null).tex;
+        this.effectTexture = new GlTexture(this.gl.g, null).tex;
+        this.fb = this.setupFrameBuffer(this.gl.g,this.lightTexture);   
+    }
+
+    setupFrameBuffer(gl,texture){
+        var fb = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,texture,0);   
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+        return fb;
     }
 
     update(){
@@ -29,11 +48,36 @@ class Game{
         let deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
 
-        this.gl.bkg(0,0,0,1);
-        this.gl.cls();
-
         this.screen.tick(deltaTime);
+
+        //this.gl.bkg(0,0,0,1);
+        //this.gl.cls();
+
+        // Set blend mode and render the level
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
         this.screen.render(this);
+        this.gl.flush();
+
+        // Bind the light buffer
+
+        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
+
+        // Set the global darkness
+        this.gl.bkg(0.2,0.2,0.2,1.0);
+        this.gl.cls();
+        this.gl.flip = false;
+        this.gl.col = 0xffffffff;
+        this.gl.g.enable( this.gl.g.BLEND );
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA, this.gl.g.ONE);
+        this.screen.renderLight(this);
+        this.gl.flush();
+        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, null);
+        
+        this.gl.col = 0xffffffff;
+        this.gl.g.blendFunc(this.gl.g.DST_COLOR, this.gl.g.ZERO);
+        this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
+
+
 
         this.gl.flush();
 
