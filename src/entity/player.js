@@ -3,7 +3,7 @@ import Entity from "./entity.js";
 
 class Player extends Entity{
     constructor(x,y){
-        super(x,y,new Sprite(x,y,48,48,16,16,32,32,0xffffffff));
+        super(x,y,new Sprite(x,y,0,112,16,16,32,32,0xffffffff));
         this.speed = 1.5;
     }
 
