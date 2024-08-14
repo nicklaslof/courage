@@ -2,6 +2,7 @@ import Texture from "./graphic/texture.js";
 import Screen from "./screen/screen.js";
 import { TinySprite } from './lib/tinysprite.js';
 import GlTexture from "./graphic/gltexture.js";
+import Input from "./input/input.js";
 
 class Game{
 
@@ -16,12 +17,20 @@ class Game{
         this.texture = new Texture(this.gl.g);
         this.image.src = "t.png";
 
+        this.keys =[];
+        onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
+        this.input = new Input();
+
+
         this.setupLightBuffer();
 
         this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
         this.screen = new Screen(W, H);
+
+        this.cameraCenterX = W/2;
+        this.cameraCenterY = H/2;
 
     }
 
@@ -48,10 +57,11 @@ class Game{
         let deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
 
-        this.screen.tick(deltaTime);
+        this.input.tick(this);
+        this.screen.tick(this,deltaTime);
 
-        //this.gl.bkg(0,0,0,1);
-        //this.gl.cls();
+        this.gl.bkg(0,0,0,1);
+        this.gl.cls();
 
         // Set blend mode and render the level
         this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
@@ -63,7 +73,7 @@ class Game{
         this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
 
         // Set the global darkness
-        this.gl.bkg(0.2,0.2,0.2,1.0);
+        this.gl.bkg(0.3,0.3,0.3,1.0);
         this.gl.cls();
         this.gl.flip = false;
         this.gl.col = 0xffffffff;

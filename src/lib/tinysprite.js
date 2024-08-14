@@ -54,7 +54,7 @@ export function TinySprite(canvas) {
                 'uniform sampler2D j;',
                 'void main(){',
                 'vec4 col=texture2D(j,g)*h;',
-                'if (col.rgb == vec3(1.0,0.0,1.0))',
+                'if (col.a == 0.0)',
                 'discard;',
                 'gl_FragColor=col;',
                 '}'

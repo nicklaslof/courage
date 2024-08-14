@@ -1,3 +1,4 @@
+import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
@@ -12,8 +13,8 @@ class Level{
         this.lights = [];
 
 
-        this.lights.push(new Light(368,368,0xff00bbff,192,192));
-        this.lights.push(new Light(540,368,0xff0099ff,192,192));
+        this.lights.push(new Light(368,368,0xffffffff,192,192));
+        this.lights.push(new Light(540,368,0xffffffff,192,192));
 
         for (let x = 10; x < 18; x++){
             this.tiles[x+10*this.width] = Tiles.wall1;
@@ -36,38 +37,35 @@ class Level{
         this.tiles[18+14*this.width] = Tiles.wall_bottom_right_corner;
         
 
+        this.player = new Player(10*32,10*32);
+        this.entities.push(this.player);
 
     }
 
-    tick(deltaTime){
-        this.entities.forEach(e => e.tick(deltaTime));
-        this.lights.forEach(l => l.tick(deltaTime));
+    tick(game,deltaTime){
+        this.entities.forEach(e => e.tick(game,deltaTime));
+        this.lights.forEach(l => l.tick(game, deltaTime));
     }
 
     render(game){
-        this.entities.forEach(e => e.render(this));
+    
 
         for(let x = 0; x < this.width; x++){
             for (let y = 0; y < this.height; y++){
                 
                 let tile = this.tiles[x+y*this.width];
                 if (tile != null){
-                    tile.sprite.x = x*32;
-                    tile.sprite.y = y*32;
+                    if (x ==10){
+                        console.log("player.x: "+ this.player.x+ " player.sprite.x: " + this.player.sprite.x+ " tile.x "+ x*32 + " tile.renderX:" + ( (game.cameraCenterX - this.player.x) + (x*32)));
+                    }
+                    tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*32);
+                    tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*32);
                     tile.render(game);
-                }else{
-                    //this.floor.x = x*32;
-                    //this.floor.y = y*32;
-                    //this.floor.render(game);   
                 }
-                
-
-
             }
         }
-        
-        
 
+        this.entities.forEach(e => e.render(game));
     }
 
     renderLight(game){

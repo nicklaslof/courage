@@ -3,8 +3,8 @@ class Light{
     constructor(x,y,c,sizeX=550, sizeY=550) {
         this.x = x;
         this.y = y;
-        this.startX = x;
-        this.startY = y;
+        this.renderX = 0;
+        this.renderY = 0;
         this.c = c;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -13,14 +13,17 @@ class Light{
         this.v0 = this.u0 + (550/TZ);
         this.v1 = this.u1 + (550/TZ);
     }
-    tick(deltaTime){
+    tick(game, deltaTime){
         this.sizeX = Math.max(0,this.sizeX);
         this.sizeY = Math.max(0,this.sizeY);
+        this.renderX = (game.cameraCenterX - game.screen.level.player.x) + this.x;
+        this.renderY = (game.cameraCenterY - game.screen.level.player.y) + this.y;
     }
 
     render(game){
+
         game.gl.col = this.c;
-        game.gl.img(game.texture.glTexture.tex,-this.sizeX/2,-this.sizeY/2,this.sizeX,this.sizeY,0,this.x,this.y,1,1, this.u0, this.u1, this.v0, this.v1);
+        game.gl.img(game.texture.glTexture.tex,-this.sizeX/2,-this.sizeY/2,this.sizeX,this.sizeY,0,this.renderX,this.renderY,1,1, this.u0, this.u1, this.v0, this.v1);
     }
 
 }
