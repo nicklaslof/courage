@@ -7,18 +7,35 @@ class Level{
         this.width = width;
         this.height = height;
         this.tiles = new Array(64*64);
+        this.tiles.fill(Tiles.air);
         this.entities = [];
         this.lights = [];
 
 
-        this.lights.push(new Light(368,368,0xffffffff,256,256));
+        this.lights.push(new Light(368,368,0xff00bbff,192,192));
+        this.lights.push(new Light(540,368,0xff0099ff,192,192));
 
         for (let x = 10; x < 18; x++){
             this.tiles[x+10*this.width] = Tiles.wall1;
+            this.tiles[18+10*this.width] = Tiles.wall_rightend;
+            this.tiles[9+10*this.width] = Tiles.wall_leftend;
+            this.tiles[18+11*this.width] = Tiles.wall_right;
+            this.tiles[18+12*this.width] = Tiles.wall_right;
+            this.tiles[18+13*this.width] = Tiles.wall_right;
+            this.tiles[9+11*this.width] = Tiles.wall_left;
+            this.tiles[9+12*this.width] = Tiles.wall_left;
+            this.tiles[9+13*this.width] = Tiles.wall_left;
             this.tiles[x+11*this.width] = Tiles.floor1;
             this.tiles[x+12*this.width] = Tiles.floor1;
             this.tiles[x+13*this.width] = Tiles.floor1;
+
+            this.tiles[x+14*this.width] = Tiles.wall_bottom;
         }
+
+        this.tiles[9+14*this.width] = Tiles.wall_bottom_left_corner;
+        this.tiles[18+14*this.width] = Tiles.wall_bottom_right_corner;
+        
+
 
     }
 
@@ -35,7 +52,6 @@ class Level{
                 
                 let tile = this.tiles[x+y*this.width];
                 if (tile != null){
-                    console.log(x+" "+y);
                     tile.sprite.x = x*32;
                     tile.sprite.y = y*32;
                     tile.render(game);
