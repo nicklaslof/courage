@@ -1,3 +1,4 @@
+import Bullet from "../entity/bullet.js";
 import Enemy from "../entity/enemy.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
@@ -47,6 +48,8 @@ class Level{
         this.entities.push(new Enemy(11*64,12*64));
         this.entities.push(new Enemy(13*64,13*64));
         this.entities.push(new Enemy(12*64,11*64));
+
+        //this.entities.push(new Bullet(14*64,12*64,2000));
         this.entities.push(this.player);
 
     }
@@ -61,10 +64,14 @@ class Level{
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
                     console.log("Collision");
                     e1.onCollision(e2);
-                    if (e1.disposed) this.removeEntity(e1);
                 }
+                if (e1.disposed) this.removeEntity(e1);
             });
         })
+    }
+
+    addEntity(entity){
+        this.entities.push(entity);
     }
 
     removeEntity(entity){

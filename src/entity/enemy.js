@@ -3,7 +3,7 @@ import Entity from "./entity.js";
 
 class Enemy extends Entity{
     constructor(x,y){
-        super(x,y,new Sprite(x,y,0,112,16,16,48,48,0xffffffff),{minX:16,minY:10,maxX:48,maxY:58});
+        super(x,y,new Sprite(x,y,0,112,16,16,48,48,0xffffffff),3,{minX:16,minY:10,maxX:48,maxY:58});
         
     }
 

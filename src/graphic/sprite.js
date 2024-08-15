@@ -9,6 +9,8 @@ class Sprite{
         this.rotation = 0;
         this.horizontalFlip = false;
         this.setupUV(texX,texY,texW,texH);
+        this.renderOffsetX = 0;
+        this.renderOffsetY = 0;
     }
 
     setupUV(texX,texY,texW,texH){
@@ -25,7 +27,7 @@ class Sprite{
     render(game){
         game.gl.col = this.c;
         game.gl.flip = this.horizontalFlip;
-        game.gl.img(game.texture.glTexture.tex,-this.sizeX/2,-this.sizeY/2,this.sizeX,this.sizeY,0,this.x,this.y,1,1, this.u0, this.u1, this.v0, this.v1);
+        game.gl.img(game.texture.glTexture.tex,(-this.sizeX/2)+this.renderOffsetX,(-this.sizeY/2)+this.renderOffsetY,this.sizeX,this.sizeY,0,this.x,this.y,1,1, this.u0, this.u1, this.v0, this.v1);
     }
 
 }

@@ -2,12 +2,13 @@ import Tiles from "../tile/tiles.js";
 
 class Entity{
 
-    constructor(x,y,sprite,collisionBox={minX:0,minY:0,maxX:64,maxY:64}){
+    constructor(x,y,sprite,health=1,collisionBox={minX:0,minY:0,maxX:64,maxY:64}){
         this.x = x;
         this.y = y;
         this.sprite = sprite;
         this.horizontalFlip = false;
         this.moveDirection = {x:0,y:0};
+        this.facingDirection = {x:0,y:0};
         this.speed = 1;
         this.animation = null;
         this.collisionBox = collisionBox;
@@ -16,11 +17,14 @@ class Entity{
         this.tempVector = {x:0, y:0};
         this.pixelScale = 16;
         this.disposed = false;
+        this.health = health;
 
         this.updateAABB();
     }
 
     tick(game,deltaTime){
+
+        if (this.health <= 0) this.disposed = true;
 
         if (this.animation != null){
             this.animation.tick(game,deltaTime);
@@ -45,9 +49,12 @@ class Entity{
             if (this.moveDirection.x > 0) this.horizontalFlip = true;
 
             this.updateAABB();
+            this.facingDirection.x = this.moveDirection.x;
+            this.facingDirection.y = this.moveDirection.y;
         }
         this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
         this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
+
     }
 
     render(game){
@@ -72,7 +79,10 @@ class Entity{
     }
 
     onCollision(otherEntity){
-        
+    }
+
+    hit(ammount){
+        this.health -= ammount;
     }
 
     canMove(game,x,y){
