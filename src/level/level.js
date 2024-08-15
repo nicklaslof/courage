@@ -13,9 +13,11 @@ class Level{
         this.entities = [];
         this.lights = [];
 
-        this.lights.push(new Light(736,736,0xff00ffff,256,256));
-        this.lights.push(new Light(1080,736,0xff0055ff,256,256));
+        this.lights.push(new Light(736,736,0xff00ffff,360,360));
+        this.lights.push(new Light(1080,736,0xff0055ff,360,360));
         this.lights.push(new Light(880,856,0xff0000ff,360,360));
+
+        //Tiles.wall1.sprite.c = 0xff0000ff;
 
         for (let x = 10; x < 18; x++){
             this.tiles[x+10*this.width] = Tiles.wall1;

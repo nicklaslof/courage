@@ -72,7 +72,7 @@ class Entity{
     }
 
     onCollision(otherEntity){
-        this.disposed = true;
+        
     }
 
     canMove(game,x,y){

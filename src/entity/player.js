@@ -27,13 +27,17 @@ class Player extends Entity{
         if (this.moveDirection.x != 0 || this.moveDirection.y != 0) this.animation.setCurrentState("walk");
         else this.animation.setCurrentState("idle");
         super.tick(game,deltaTime);
-        // Overwrite player position because player should always be rendered at center of the screen
+        // Overwrite player position set in the parent class tick function because player should always be rendered at center of the screen
         this.sprite.x = game.cameraCenterX;
         this.sprite.y = game.cameraCenterY;
     }
 
     render(game){
         super.render(game);
+    }
+
+    onCollision(entity){
+        entity.disposed = true;
     }
 }
 export default Player;
