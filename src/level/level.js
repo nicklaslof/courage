@@ -41,7 +41,10 @@ class Level{
         this.player = new Player(10*64,11*64,48);
 
 
-        this.entities.push(new Enemy(12*32,12*32));
+        this.entities.push(new Enemy(11*64,11*64));
+        this.entities.push(new Enemy(11*64,12*64));
+        this.entities.push(new Enemy(13*64,13*64));
+        this.entities.push(new Enemy(12*64,11*64));
         this.entities.push(this.player);
 
     }
@@ -49,6 +52,29 @@ class Level{
     tick(game,deltaTime){
         this.entities.forEach(e => e.tick(game,deltaTime));
         this.lights.forEach(l => l.tick(game, deltaTime));
+
+        // This is ugly an not efficent. Fix if I have time and space.
+        this.entities.forEach(e1 => {
+            this.entities.forEach(e2 => {
+                if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
+                    console.log("Collision");
+                    e1.onCollision(e2);
+                    if (e1.disposed) this.removeEntity(e1);
+                }
+            });
+        })
+    }
+
+    removeEntity(entity){
+        this.removeFromList(entity,this.entities);
+    }
+
+    removeFromList(object,list){
+        for(let i = list.length - 1; i >= 0; i--) {
+            if(list[i] === object) {
+                list.splice(i, 1);
+            }
+        }
     }
 
     render(game){

@@ -5,7 +5,7 @@ import Entity from "./entity.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
-        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),{minX:12,minY:10,maxX:52,maxY:58});
+        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),{minX:16,minY:10,maxX:48,maxY:58});
         this.speed = 128;
         this.pixelScale = pixelScale;
         
@@ -27,15 +27,13 @@ class Player extends Entity{
         if (this.moveDirection.x != 0 || this.moveDirection.y != 0) this.animation.setCurrentState("walk");
         else this.animation.setCurrentState("idle");
         super.tick(game,deltaTime);
+        // Overwrite player position because player should always be rendered at center of the screen
+        this.sprite.x = game.cameraCenterX;
+        this.sprite.y = game.cameraCenterY;
     }
 
     render(game){
-        // Always render player at center of the screen
-        this.sprite.x = game.cameraCenterX;
-        this.sprite.y = game.cameraCenterY;
-        this.sprite.horizontalFlip = !this.horizontalFlip;
-        this.sprite.render(game);
-
+        super.render(game);
     }
 }
 export default Player;

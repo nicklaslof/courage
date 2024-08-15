@@ -2,7 +2,7 @@ import Tiles from "../tile/tiles.js";
 
 class Entity{
 
-    constructor(x,y,sprite,AABB={minX:0,minY:0,maxX:64,maxY:64}){
+    constructor(x,y,sprite,collisionBox={minX:0,minY:0,maxX:64,maxY:64}){
         this.x = x;
         this.y = y;
         this.sprite = sprite;
@@ -10,10 +10,14 @@ class Entity{
         this.moveDirection = {x:0,y:0};
         this.speed = 1;
         this.animation = null;
-        this.AABB = AABB;
+        this.collisionBox = collisionBox;
+        this.AABB = {minX:0,minY:0,maxX:0,maxY:0};
         this.tempAABB = {minX:0,minY:0,maxX:0,maxY:0};
         this.tempVector = {x:0, y:0};
         this.pixelScale = 16;
+        this.disposed = false;
+
+        this.updateAABB();
     }
 
     tick(game,deltaTime){
@@ -39,24 +43,45 @@ class Entity{
     
             if (this.moveDirection.x < 0) this.horizontalFlip = false;
             if (this.moveDirection.x > 0) this.horizontalFlip = true;
-        }
 
+            this.updateAABB();
+        }
+        this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
+        this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
     }
 
     render(game){
-        this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
-        this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
-        this.sprite.horizontalFlip = this.horizontalFlip;
+
+        this.sprite.horizontalFlip = !this.horizontalFlip;
         this.sprite.render(game);
+    }
+
+    updateAABB(){
+        this.AABB.minX = this.collisionBox.minX + this.x;
+        this.AABB.maxX = this.collisionBox.maxX + this.x;
+        this.AABB.minY = this.collisionBox.minY + this.y;
+        this.AABB.maxY = this.collisionBox.maxY + this.y;
+        //console.log(this.AABB);
+    }
+
+    // Do a AABB test against an entity
+    doesCollide(otherEntity){
+        if (otherEntity.AABB == null || this.AABB == null || otherEntity == this) return false;
+        return (otherEntity.AABB.minX <= this.AABB.maxX && otherEntity.AABB.maxX >= this.AABB.minX) &&
+         (otherEntity.AABB.minY <= this.AABB.maxY && otherEntity.AABB.maxY >= this.AABB.minY);
+    }
+
+    onCollision(otherEntity){
+        this.disposed = true;
     }
 
     canMove(game,x,y){
         
         // Set our AABB that will be tested for collision. The AABB is our size + the position we want to move to.
-        this.tempAABB.minX = this.AABB.minX + x;
-        this.tempAABB.maxX = this.AABB.maxX + x;
-        this.tempAABB.minY = this.AABB.minY + y;
-        this.tempAABB.maxY = this.AABB.maxY + y;
+        this.tempAABB.minX = this.collisionBox.minX + x;
+        this.tempAABB.maxX = this.collisionBox.maxX + x;
+        this.tempAABB.minY = this.collisionBox.minY + y;
+        this.tempAABB.maxY = this.collisionBox.maxY + y;
 
         // check in a radius around the entity. Since out position is in the upper left corner we must transform it to the middle first. Otherwise
         // the check will only be positive on one side. This is only used to get the surronding tiles. The actual collision is using the AABB above.
