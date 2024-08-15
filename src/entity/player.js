@@ -5,7 +5,7 @@ import Entity from "./entity.js";
 
 class Player extends Entity{
     constructor(x,y){
-        super(x,y,new Sprite(x,y,0,112,16,16,64,64,0xffffffff));
+        super(x,y,new Sprite(x,y,0,112,16,16,64,64,0xffffffff),{minX:12,minY:0,maxX:52,maxY:64});
         this.speed = 128;
 
         this.animation = new Animation();

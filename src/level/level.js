@@ -9,7 +9,7 @@ class Level{
         this.width = width;
         this.height = height;
         this.tiles = new Array(64*64);
-        //this.tiles.fill(Tiles.air);
+
         this.entities = [];
         this.lights = [];
 
@@ -38,7 +38,7 @@ class Level{
         this.tiles[18+14*this.width] = Tiles.wall_bottom_right_corner;
         
 
-        this.player = new Player(10*64,10*64);
+        this.player = new Player(10*64,11*64);
 
 
         this.entities.push(new Enemy(12*32,12*32));
@@ -52,16 +52,10 @@ class Level{
     }
 
     render(game){
-    
-
         for(let x = 0; x < this.width; x++){
             for (let y = 0; y < this.height; y++){
-                
                 let tile = this.tiles[x+y*this.width];
                 if (tile != null){
-                    //if (x ==10){
-                   //     console.log("player.x: "+ this.player.x+ " player.sprite.x: " + this.player.sprite.x+ " tile.x "+ x*32 + " tile.renderX:" + ( (game.cameraCenterX - this.player.x) + (x*32)));
-                   // }
                     tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*64);
                     tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*64);
                     tile.render(game);
@@ -74,6 +68,12 @@ class Level{
 
     renderLight(game){
         this.lights.forEach(l => l.render(game));
+    }
+
+    getTileAndTilePositionAtWorldPosition(x,y){
+        x = Math.floor(x/64);
+        y = Math.floor(y/64);
+        return {tileX:x,tileY:y, tile:this.tiles[x+y*this.width]};
     }
 
 }
