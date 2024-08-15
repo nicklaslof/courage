@@ -4,15 +4,17 @@ import Animation from "./animation.js";
 import Entity from "./entity.js";
 
 class Player extends Entity{
-    constructor(x,y){
-        super(x,y,new Sprite(x,y,0,112,16,16,64,64,0xffffffff),{minX:12,minY:0,maxX:52,maxY:64});
+    constructor(x,y,pixelScale){
+        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),{minX:12,minY:10,maxX:52,maxY:58});
         this.speed = 128;
+        this.pixelScale = pixelScale;
+        
 
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("walk", new Sprite(x,y,16,112,16,16,64,64,0xffffffff),160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,64,64,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,64,64,0xffffffff),160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,64,64,0xffffffff),240);
+        this.animation.addState("walk", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
        
         this.animation.setCurrentState("idle");
 

@@ -95,7 +95,7 @@ class Game{
         this.fps++;
 
         if (this.fpsCounter > 1000){
-        //    console.log("FPS: "+this.fps);
+            console.log("FPS: "+this.fps);
             this.fpsCounter = this.fps = 0;
         }
     }

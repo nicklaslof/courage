@@ -13,6 +13,7 @@ class Entity{
         this.AABB = AABB;
         this.tempAABB = {minX:0,minY:0,maxX:0,maxY:0};
         this.tempVector = {x:0, y:0};
+        this.pixelScale = 16;
     }
 
     tick(game,deltaTime){
@@ -60,7 +61,7 @@ class Entity{
         // check in a radius around the entity. Since out position is in the upper left corner we must transform it to the middle first. Otherwise
         // the check will only be positive on one side. This is only used to get the surronding tiles. The actual collision is using the AABB above.
         var radius = 32;
-        var halfScale = 32;
+        var halfScale = this.pixelScale/2;
         let x1 = Math.round(x + halfScale + radius);
         let y1 = Math.round(y + halfScale + radius);
         let x2 = Math.round(x + halfScale - radius);

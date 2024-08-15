@@ -22,7 +22,7 @@ class Level{
             this.tiles[18+10*this.width] = Tiles.wall_rightend;
             this.tiles[9+10*this.width] = Tiles.wall_leftend;
             this.tiles[18+11*this.width] = Tiles.wall_right;
-            this.tiles[18+12*this.width] = Tiles.wall_right;
+            this.tiles[18+12*this.width] = Tiles.floor1;
             this.tiles[18+13*this.width] = Tiles.wall_right;
             this.tiles[9+11*this.width] = Tiles.wall_left;
             this.tiles[9+12*this.width] = Tiles.wall_left;
@@ -38,7 +38,7 @@ class Level{
         this.tiles[18+14*this.width] = Tiles.wall_bottom_right_corner;
         
 
-        this.player = new Player(10*64,11*64);
+        this.player = new Player(10*64,11*64,48);
 
 
         this.entities.push(new Enemy(12*32,12*32));
