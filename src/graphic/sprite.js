@@ -11,6 +11,7 @@ class Sprite{
         this.setupUV(texX,texY,texW,texH);
         this.renderOffsetX = 0;
         this.renderOffsetY = 0;
+        this.ticked = false;            // To avoid ghost frames when a newly added sprite has been added but has the wrong x and y position on the first render
     }
 
     setupUV(texX,texY,texW,texH){
@@ -20,11 +21,12 @@ class Sprite{
         this.v1 = this.u1 + (texH/TZ);  // WebGL UVs of the texture
     }
 
-    tick(deltaTime){
-       
+    tick(){
+       this.ticked = true;
     }
 
     render(game){
+        if (!this.ticked) return;       // To avoid ghost frames when a newly added sprite has been added but has the wrong x and y position on the first render
         game.gl.col = this.c;
         game.gl.flip = this.horizontalFlip;
         game.gl.img(game.texture.glTexture.tex,(-this.sizeX/2)+this.renderOffsetX,(-this.sizeY/2)+this.renderOffsetY,this.sizeX,this.sizeY,0,this.x,this.y,1,1, this.u0, this.u1, this.v0, this.v1);

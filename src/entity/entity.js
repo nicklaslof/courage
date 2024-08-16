@@ -54,6 +54,7 @@ class Entity{
         }
         this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
         this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
+        this.sprite.tick();
 
     }
 
@@ -127,6 +128,11 @@ class Entity{
         // Check with the tile if this entity will collide. Also pass in the tile position since each tile is a singleton and doesn't have a state but
         // it needs this position to do the calculation.
         return tileResult.tile.doesCollideWithEntity(this,tileResult.tileX,tileResult.tileY);
+    }
+
+    normalize(v) {
+        let magnitude = Math.hypot(v.x, v.y);
+        return magnitude ? (v.x /= magnitude, v.y /= magnitude, v) : v;
     }
 }
 

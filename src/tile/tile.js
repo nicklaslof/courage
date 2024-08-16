@@ -12,6 +12,7 @@ class Tile{
     }
 
     render(game){
+        this.sprite.tick(); // The sprite must be ticked once to make it visible to avoid ghost rendering of new unticked sprites with the wrong position.
         this.sprite.render(game);
     }
 

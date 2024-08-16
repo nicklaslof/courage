@@ -7,10 +7,11 @@ import Entity from "./entity.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
-        this.speed = 128;
+        this.speed = 176;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;
+        this.aimX = this.aimY = 0;
         
 
         this.animation = new Animation();
@@ -20,6 +21,8 @@ class Player extends Entity{
         .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
        
         this.animation.setCurrentState("idle");
+
+        this.aimSprite = new Sprite(this.x,this.y,0,71,7,7,24,24,0xffffffff);
 
     }
 
@@ -35,6 +38,19 @@ class Player extends Entity{
         this.sprite.x = game.cameraCenterX;
         this.sprite.y = game.cameraCenterY;
 
+        this.aimX += game.input.pointer.x;
+        this.aimY += game.input.pointer.y;
+
+        if (this.aimX > 200) this.aimX = 200;
+        if (this.aimX < -200) this.aimX = -200;
+        if (this.aimY > 200) this.aimY = 200;
+        if (this.aimY < -200) this.aimY = -200;
+
+
+        this.aimSprite.x = game.cameraCenterX+this.aimX;
+        this.aimSprite.y = game.cameraCenterY+this.aimY;
+        this.aimSprite.tick();
+
         if (this.fireDelay > 0){
             this.fireDelay -= deltaTime;
         }
@@ -42,14 +58,24 @@ class Player extends Entity{
         if (this.fireDelay <= 0 && !this.canShoot) this.canShoot = true;
 
         if (game.input.firePressed && this.canShoot){
-            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,400,800,this.facingDirection.x, this.facingDirection.y,this));
+            let aim = {x:this.aimX ,y:this.aimY};
+            this.normalize(aim);
+
+            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,400,720,aim.x, aim.y,this));
             this.canShoot = false;
-            this.fireDelay = 360;
+            this.fireDelay = 180;
         }
+
+
     }
 
     render(game){
         super.render(game);
+
+    }
+
+    renderUI(game){
+        this.aimSprite.render(game);
     }
 
     onCollision(entity){

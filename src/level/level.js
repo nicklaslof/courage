@@ -62,7 +62,7 @@ class Level{
         this.entities.forEach(e1 => {
             this.entities.forEach(e2 => {
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
-                    console.log("Collision");
+                    //console.log("Collision");
                     e1.onCollision(e2);
                 }
                 if (e1.disposed) this.removeEntity(e1);
@@ -103,6 +103,10 @@ class Level{
 
     renderLight(game){
         this.lights.forEach(l => l.render(game));
+    }
+
+    renderUI(game){
+        this.player.renderUI(game);
     }
 
     getTileAndTilePositionAtWorldPosition(x,y){

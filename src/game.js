@@ -10,6 +10,7 @@ class Game{
         this.canvas = document.getElementById("g");
         this.canvas.width = W;
         this.canvas.height = H;
+
         this.gl = TinySprite(this.canvas);
         this.gl.flush();
 
@@ -18,9 +19,12 @@ class Game{
         this.image.src = "t.png";
 
         this.keys =[];
+        this.buttons = [];
         onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
         this.input = new Input();
-
+        onclick=e=> this.canvas.requestPointerLock();
+        onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
+        onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
 
         this.setupLightBuffer();
 
@@ -87,12 +91,15 @@ class Game{
         this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
 
         this.gl.flush();
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
+        this.screen.renderUI(this);
+        this.gl.flush();
 
         this.fpsCounter += deltaTime;
         this.fps++;
 
         if (this.fpsCounter > 1000){
-            console.log("FPS: "+this.fps);
+            //console.log("FPS: "+this.fps);
             this.fpsCounter = this.fps = 0;
         }
     }
