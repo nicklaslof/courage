@@ -101,7 +101,6 @@ class Entity{
     }
 
     hit(game,ammount){
-        console.log(this.hitDelayCounter);
         if (this.hitDelayCounter >0) return;
         this.health -= ammount;
         this.onHit(game);

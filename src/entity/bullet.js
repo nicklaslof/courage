@@ -10,17 +10,26 @@ class Bullet extends Entity{
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
         this.shootingEntity = shootingEntity;
+        this.light = null;
     }
 
     tick(game,deltaTime){
+        if (this.light == null){
+            this.light = game.screen.level.addLight(this.x,this.y,0xff007777,64,64,this.ttl);
+            this.light.renderOffsetX = -20;
+            this.light.renderOffsetY = -24;
+        }
         super.tick(game,deltaTime);
+        this.light.x = this.x;
+        this.light.y = this.y;
         this.ttl -= deltaTime;
-        if (this.ttl <= 0) this.disposed = true;
+        if (this.ttl <= 0)this.disposed = true;
     }
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         this.disposed = true;
+        this.light.disposed = true;
         otherEntity.hit(game,1);
     }
 }

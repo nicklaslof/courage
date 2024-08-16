@@ -7,7 +7,7 @@ class Enemy extends Entity{
         this.calculatePlayerDirectionVector = {x:0, y:0};
 
         this.speed = 112;
-        this.health = 2;
+        this.health = 3;
         
     }
 
@@ -35,7 +35,7 @@ class Enemy extends Entity{
     }
 
     onHit(game){
-        game.playEnemyHit();
+        if (this.health>0) game.playEnemyHit();
     }
 
     render(game){

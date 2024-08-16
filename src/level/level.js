@@ -40,7 +40,7 @@ class Level{
             for (let y = 1; y < 63;y++){
                 this.addTile(x,y,Tiles.floor1);
                 if (Math.random() < 0.1){
-                    this.lights.push(new Light(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,360,360));
+                    this.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,320,320,10000);
                 }
 
                 if (Math.random() < 0.08){
@@ -51,6 +51,8 @@ class Level{
         
 
         this.player = new Player(72,72,48);
+
+        //this.addLight(72,72,0xffffffff,320,320,100);
 
         //this.entities.push(new Enemy(128,128));
 
@@ -67,7 +69,10 @@ class Level{
 
     tick(game,deltaTime){
         this.entities.forEach(e => e.tick(game,deltaTime));
-        this.lights.forEach(l => l.tick(game, deltaTime));
+        this.lights.forEach(l => {
+            l.tick(game, deltaTime);
+            if (l.disposed) this.removeLight(l);
+        });
 
         // This is ugly an not efficent. Fix if I have time and space.
         this.entities.forEach(e1 => {
@@ -83,6 +88,18 @@ class Level{
 
     addEntity(entity){
         this.entities.push(entity);
+    }
+
+    // Add a new light to the scene and return it.
+    addLight(x,y,c,sizeX,sizeY,ttl){
+        let l = new Light(x,y,c,sizeX,sizeY,ttl);
+        this.lights.push(l);
+        return l;
+    }
+
+    removeLight(light){
+        console.log("removing light "+light);
+        this.removeFromList(light,this.lights);
     }
 
     addTile(x,y,tile){
