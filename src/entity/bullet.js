@@ -18,10 +18,10 @@ class Bullet extends Entity{
         if (this.ttl <= 0) this.disposed = true;
     }
 
-    onCollision(otherEntity){
+    onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         this.disposed = true;
-        otherEntity.hit(1);
+        otherEntity.hit(game,1);
     }
 }
 

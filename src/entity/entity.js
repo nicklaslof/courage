@@ -24,7 +24,14 @@ class Entity{
 
     tick(game,deltaTime){
 
-        if (this.health <= 0) this.disposed = true;
+        if (this.health <= 0){
+            this.onDeath(game);
+            this.disposed = true;
+        }
+        
+        if (this.disposed){
+            return;
+        }
 
         if (this.animation != null){
             this.animation.tick(game,deltaTime);
@@ -86,8 +93,17 @@ class Entity{
     onCollision(otherEntity){
     }
 
-    hit(ammount){
+    hit(game,ammount){
         this.health -= ammount;
+        this.onHit(game);
+    }
+
+    onHit(game){
+        
+    }
+
+    onDeath(game){
+
     }
 
     canMove(game,x,y){

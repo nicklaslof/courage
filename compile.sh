@@ -17,9 +17,9 @@ cat ../src/i.css >> index-template.html
 echo "</style>" >> index-template.html
 echo "<canvas id=\"g\"></canvas><canvas id=\"t\"></canvas>" >> index-template.html
 #echo "<canvas id=\"c\"></canvas><canvas id=\"u\"></canvas>" >> index-template.html
-#echo "<script>" >> index-template.html
-#cat  ../src/lib/z.js >> index-template.html
-#echo "</script>" >> index-template.html
+echo "<script>" >> index-template.html
+cat  ../src/lib/z.js >> index-template.html
+echo "</script>" >> index-template.html
 #echo "<script>" >> index-template.html
 #cat  ../src/lib/noise.js >> index-template.html
 #echo "</script>" >> index-template.html

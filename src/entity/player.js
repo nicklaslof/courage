@@ -63,7 +63,8 @@ class Player extends Entity{
 
             game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,400,720,aim.x, aim.y,this));
             this.canShoot = false;
-            this.fireDelay = 180;
+            this.fireDelay = 128;
+            game.playShoot();
         }
 
 

@@ -6,7 +6,8 @@ class Enemy extends Entity{
         super(x,y,new Sprite(x,y,0,112,16,16,48,48,0xffffffff),3,{minX:16,minY:10,maxX:48,maxY:58});
         this.calculatePlayerDirectionVector = {x:0, y:0};
 
-        this.speed = 50;
+        this.speed = 128;
+        this.health = 5;
         
     }
 
@@ -27,6 +28,14 @@ class Enemy extends Entity{
         } else {
             this.moveDirection.x = this.moveDirection.y = 0;
         }
+    }
+
+    onDeath(game){
+        game.playEnemyKilled();
+    }
+
+    onHit(game){
+        game.playEnemyHit();
     }
 
     render(game){

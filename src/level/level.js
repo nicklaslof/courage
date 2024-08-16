@@ -43,7 +43,7 @@ class Level{
                     this.lights.push(new Light(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,360,360));
                 }
 
-                if (Math.random() < 0.02){
+                if (Math.random() < 0.08){
                     this.entities.push(new Enemy(x*64,y*64));
                 }
             }
@@ -74,7 +74,7 @@ class Level{
             this.entities.forEach(e2 => {
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
                     //console.log("Collision");
-                    e1.onCollision(e2);
+                    e1.onCollision(game,e2);
                 }
                 if (e1.disposed) this.removeEntity(e1);
             });
