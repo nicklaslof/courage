@@ -32,10 +32,19 @@ class Enemy extends Entity{
 
     onDeath(game){
         game.playEnemyKilled();
+        for (let i = 0; i < 32;i++){
+            game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},100);
+        }
+        
     }
 
     onHit(game){
-        if (this.health>0) game.playEnemyHit();
+        if (this.health>0){
+            game.playEnemyHit();
+            for (let i = 0; i < 4;i++){
+                game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,4),game.getRandom(1,4),600,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},100);
+            }
+        }
     }
 
     render(game){

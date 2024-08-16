@@ -1,5 +1,6 @@
 import Bullet from "../entity/bullet.js";
 import Enemy from "../entity/enemy.js";
+import Particle from "../entity/particle.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
@@ -13,6 +14,7 @@ class Level{
 
         this.entities = [];
         this.lights = [];
+        this.particles = [];
 
         //Tiles.wall1.sprite.c = 0xff0000ff;
 
@@ -84,10 +86,19 @@ class Level{
                 if (e1.disposed) this.removeEntity(e1);
             });
         })
+
+        this.particles.forEach(p => {
+            p.tick(game,deltaTime);
+            if (p.disposed) this.removeParticle(p);
+        });
     }
 
     addEntity(entity){
         this.entities.push(entity);
+    }
+
+    addParticle(x,y,c,sizeX, sizeY, ttl,moveDirection,speed){
+        this.particles.push(new Particle(x,y,0,64,7,7,sizeX,sizeY,c,ttl,moveDirection,speed));
     }
 
     // Add a new light to the scene and return it.
@@ -98,8 +109,11 @@ class Level{
     }
 
     removeLight(light){
-        console.log("removing light "+light);
         this.removeFromList(light,this.lights);
+    }
+
+    removeParticle(particle){
+        this.removeFromList(particle,this.particles);
     }
 
     addTile(x,y,tile){
@@ -132,6 +146,7 @@ class Level{
         }
 
         this.entities.forEach(e => e.render(game));
+        this.particles.forEach(p => p.render(game));
     }
 
     renderLight(game){

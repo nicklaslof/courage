@@ -104,6 +104,11 @@ class Game{
         }
     }
 
+    // Generate a random number between min and max;
+    getRandom(min, max){
+        return Math.random() * (max - min) + min
+    }
+
     playShoot(){
         //zzfx(...[1.06,,194,.03,.05,.04,1,1.81,3.5,.2,,,.06,,,,,.72,.03,.05]);
         zzfx(...[1.2,2,242,.02,.02,.001,,1.4,-80,,,,,,3.6,.1,.18,.87,.03,,-1374]);

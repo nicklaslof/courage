@@ -29,7 +29,7 @@ class Bullet extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         this.disposed = true;
-        this.light.disposed = true;
+        if(this.light != null) this.light.disposed = true;
         otherEntity.hit(game,1);
     }
 }
