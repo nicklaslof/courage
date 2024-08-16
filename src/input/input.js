@@ -20,11 +20,16 @@ class Input{
 
         if (gp != null){
             this.hasGamepad = true;
+            
             if (gp.axes[0] >0.4) this.axes.x = gp.axes[0];
             if (gp.axes[0] <-0.4) this.axes.x = gp.axes[0];
             if (gp.axes[1] >0.4) this.axes.y = gp.axes[1];
             if (gp.axes[1] <-0.4) this.axes.y = gp.axes[1];
-            if (gp.buttons[0].pressed) this.firePressed = true;
+            if (gp.axes[2] >0.4) this.pointer.x = gp.axes[2]*3;
+            if (gp.axes[2] <-0.4) this.pointer.x = gp.axes[2]*3;
+            if (gp.axes[3] >0.4) this.pointer.y = gp.axes[3]*3;
+            if (gp.axes[3] <-0.4) this.pointer.y = gp.axes[3]*3;
+            if (gp.buttons[7].pressed) this.firePressed = true;
             // usePressedPreviously is to stop the usekey to spam a new click when holding it down
             if (gp.buttons[3].pressed && !this.usePressedPreviously) this.usePressed = true;
             this.usePressedPreviously = gp.buttons[3].pressed;
