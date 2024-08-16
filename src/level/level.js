@@ -5,6 +5,7 @@ import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
+import Room from "./room.js";
 
 class Level{
     constructor(width,height){
@@ -16,55 +17,10 @@ class Level{
         this.lights = [];
         this.particles = [];
 
-        //Tiles.wall1.sprite.c = 0xff0000ff;
-
-        /*for (let x = 10; x < 64; x++){
-            this.addTile(x,10,Tiles.wall1);
-            this.addTile(18,10,Tiles.wall_rightend);
-            this.addTile(9,10,Tiles.wall_leftend);
-            this.addTile(18,11,Tiles.wall_right);
-            this.addTile(18,12,Tiles.floor1);
-            this.addTile(18,13,Tiles.wall_right);
-            this.addTile(9,11,Tiles.wall_left);
-            this.addTile(9,12,Tiles.wall_left);
-            this.addTile(9,13,Tiles.wall_left);
-            this.addTile(x,11,Tiles.floor1);
-            this.addTile(x,12,Tiles.floor1);
-            this.addTile(x,13,Tiles.floor1);
-
-            this.addTile(x,14,Tiles.wall_bottom);
-        }
-
-        this.addTile(9,14,Tiles.wall_bottom_left_corner);
-        this.addTile(18,14,Tiles.wall_bottom_right_corner);*/
-
-        for (let x = 1; x < 63;x++){
-            for (let y = 1; y < 63;y++){
-                this.addTile(x,y,Tiles.floor1);
-                if (Math.random() < 0.1){
-                    this.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,320,320,10000);
-                }
-
-                if (Math.random() < 0.08){
-                    this.entities.push(new Enemy(x*64,y*64));
-                }
-            }
-        }
+        new Room(this,0,0,10,6);
         
 
-        this.player = new Player(72,72,48);
-
-        //this.addLight(72,72,0xffffffff,320,320,100);
-
-        //this.entities.push(new Enemy(128,128));
-
-
-        /*this.entities.push(new Enemy(11*64,11*64));
-        this.entities.push(new Enemy(11*64,12*64));
-        this.entities.push(new Enemy(13*64,13*64));
-        this.entities.push(new Enemy(12*64,11*64));*/
-
-        //this.entities.push(new Bullet(14*64,12*64,2000));
+        this.player = new Player(2*64,2*64,48);
         this.entities.push(this.player);
 
     }
