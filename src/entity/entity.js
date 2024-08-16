@@ -32,8 +32,12 @@ class Entity{
         }
 
         if (this.moveDirection.x != 0 || this.moveDirection.y != 0){
+            //Normalize the moveDirection so the entity doesn't walk faster when walking in both x and y axis.
+            this.normalize(this.moveDirection);
+            
             this.tempVector.x = this.x + this.moveDirection.x * this.speed * deltaTime/1000;
             this.tempVector.y = this.y + this.moveDirection.y * this.speed * deltaTime/1000;
+            
             
             // Check against the environment (tiles) if we can move. Do the check on X and Y coordinates in two seperate calls.
             // If we check both in the same call that will make us stuck in a wall instead of sliding against it.
@@ -133,6 +137,10 @@ class Entity{
     normalize(v) {
         let magnitude = Math.hypot(v.x, v.y);
         return magnitude ? (v.x /= magnitude, v.y /= magnitude, v) : v;
+    }
+
+    length(v){
+        return Math.hypot(v.x, v.y);
     }
 }
 

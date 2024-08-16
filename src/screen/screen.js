@@ -5,7 +5,7 @@ class Screen{
         this.width = width;
         this.height = height;
 
-        this.level = new Level(32,32);
+        this.level = new Level(64,64);
     }
 
     tick(game, deltaTime){

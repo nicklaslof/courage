@@ -3,7 +3,7 @@ import Entity from "./entity.js";
 
 class Bullet extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity){
-        super(x,y,new Sprite(x,y,0,64,6,6,16,16,0xff00ffff),1,{minX:0,minY:0,maxX:6,maxY:6});
+        super(x,y,new Sprite(x,y,0,64,6,6,16,16,0xff00ffff),1,{minX:-6,minY:-6,maxX:6,maxY:6});
         this.sprite.renderOffsetX = -24;
         this.sprite.renderOffsetY = -24;
         this.ttl = ttl;
