@@ -3,6 +3,7 @@ import Screen from "./screen/screen.js";
 import { TinySprite } from './lib/tinysprite.js';
 import GlTexture from "./graphic/gltexture.js";
 import Input from "./input/input.js";
+import {zzfx} from './lib/z.js'
 
 class Game{
 
