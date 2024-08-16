@@ -5,7 +5,6 @@ class Tile{
     constructor(texX,texY,texW,texH,c=0xffffffff,AABB={minX:0,minY:0,maxX:64,maxY:64}){
         this.sprite = new Sprite(0,0,texX,texY,texW,texH,16,16,c);
         this.sprite.sizeX = this.sprite.sizeY = 64;
-        console.log("created tile "+this.sprite);
         this.AABB = AABB;
         this.tempAABB = {minX:0,minY:0,maxX:0,maxY:0};
         return this;

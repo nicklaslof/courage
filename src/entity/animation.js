@@ -16,8 +16,6 @@ class Animation{
             this.states.set(name,state);
         }
         state.push({sprite:sprite,delay});
-
-        console.log(this.states);
         return this;
     }
 
