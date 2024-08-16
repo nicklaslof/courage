@@ -12,6 +12,8 @@ class Player extends Entity{
         this.canShoot = true;
         this.fireDelay = 0;
         this.aimX = this.aimY = 0;
+        this.health = 80;
+        this.hitDelay = 240;
         
 
         this.animation = new Animation();
@@ -72,15 +74,20 @@ class Player extends Entity{
 
     render(game){
         super.render(game);
+    }
 
+    onCollision(game,otherEntity){
+        if (otherEntity instanceof Bullet && otherEntity.shootingEntity == this) return;
+        this.hit(game,1);
     }
 
     renderUI(game){
         this.aimSprite.render(game);
     }
 
-    onCollision(entity){
-        //entity.disposed = true;
+    onHit(game){
+        //if (entity instanceof Bullet && entity.shootingEntity == this) return;
+        game.playPlayerHit();
     }
 }
 export default Player;

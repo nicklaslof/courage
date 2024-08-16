@@ -1,4 +1,5 @@
 import Tiles from "../tile/tiles.js";
+import Bullet from "./bullet.js";
 
 class Entity{
 
@@ -18,6 +19,8 @@ class Entity{
         this.pixelScale = 16;
         this.disposed = false;
         this.health = health;
+        this.hitDelay = 120;
+        this.hitDelayCounter = this.hitDelay ;
 
         this.updateAABB();
     }
@@ -27,6 +30,10 @@ class Entity{
         if (this.health <= 0){
             this.onDeath(game);
             this.disposed = true;
+        }
+
+        if (this.hitDelayCounter > 0){
+            this.hitDelayCounter -= deltaTime;
         }
         
         if (this.disposed){
@@ -90,12 +97,15 @@ class Entity{
          (otherEntity.AABB.minY <= this.AABB.maxY && otherEntity.AABB.maxY >= this.AABB.minY);
     }
 
-    onCollision(otherEntity){
+    onCollision(game,otherEntity){
     }
 
     hit(game,ammount){
+        console.log(this.hitDelayCounter);
+        if (this.hitDelayCounter >0) return;
         this.health -= ammount;
         this.onHit(game);
+        this.hitDelayCounter = this.hitDelay;
     }
 
     onHit(game){
