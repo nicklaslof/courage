@@ -23,7 +23,6 @@ class Particle{
         this.x += this.moveDirection.x * this.speed * deltaTime/1000;
         this.y += this.moveDirection.y * this.speed * deltaTime/1000;
 
-        console.log(this.x+" "+this.y);
         this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
         this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
         this.sprite.tick();
