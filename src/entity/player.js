@@ -68,7 +68,7 @@ class Player extends Entity{
             this.fireDelay = 128;
             game.playShoot();
         }
-
+       //console.log(this.x/64+" "+this.y/64);
 
     }
 

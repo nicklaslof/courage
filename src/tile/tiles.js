@@ -10,6 +10,7 @@ class Tiles{
     static wall_bottom_left_corner = new Tile(0,32,16,16,0xffcc9999);
     static wall_bottom_right_corner = new Tile(32,32,16,16,0xffcc9999);
     static floor1 = new Tile(0,0,16,16,0xffffffff);
+    static air = new Tile(0,0,0,0,0xffffffff);
 }
 
 

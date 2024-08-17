@@ -17,39 +17,83 @@ class Level{
         this.rooms = [];
 
         this.generateRooms(game);
-
+        
         let startRoom = this.rooms[Math.floor(game.getRandom(0,this.rooms.length-1))];
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
     }
 
     generateRooms(game) {
-        const roomMargin = 2;
-        for (let i = 0; i < 15; i++) {
-            let rp = this.generateRoomProperties(game, roomMargin, 20, 20);
-            let room = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
-            
-            while (!this.rooms.every(r => !r.intersect(room)) || this.roomTooBig(rp)) {
-                rp = this.generateRoomProperties(game, roomMargin, 
-                    this.roomTooBig(rp) ? rp.width - 1 : rp.width, 
-                    this.roomTooBig(rp) ? rp.height - 1 : rp.height
-                );
-                room = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
-            }
-            
-            this.rooms.push(room);
-            room.generateRoom(this, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
-        }
-    }
+        let roomMargin = 1;
+        let rp = this.generateRoomProperties(game, roomMargin, 15, 15);
+        rp.x = this.width / 2;
+        rp.y = this.height / 2;
 
-    roomTooBig(rp){
-        return (rp.x + rp.width > this.width-1 || rp.y + rp.height > this.height-1);
+        let newRoom = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+        let previousRoom = null, previousDirection = null;
+
+        for (let i = 0; i < 6; i++) {
+            this.rooms.push(newRoom);
+            newRoom.generateRoom(this, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
+
+            if (previousRoom) {
+                let [prevCenterX, prevCenterY] = [Math.floor(previousRoom.x + previousRoom.width / 2), Math.floor(previousRoom.y + previousRoom.height / 2)];
+                let [startX, startY, endX, endY] = [prevCenterX, prevCenterY, prevCenterX, prevCenterY];
+
+                switch (previousDirection) {
+                    case 0:
+                        [startY, endY] = [previousRoom.y, newRoom.y + newRoom.height - 2];
+                        for (let y = startY; y > endY; y--) this.addTile(startX, y, Tiles.floor1);
+                        break;
+                    case 1:
+                        [startY, endY] = [previousRoom.y + previousRoom.height - 1, newRoom.y + 1];
+                        for (let y = startY; y < endY; y++) this.addTile(startX, y, Tiles.floor1);
+                        break;
+                    case 2:
+                        [startX, endX] = [previousRoom.x + previousRoom.width - 1, newRoom.x + 1];
+                        for (let x = startX; x < endX; x++) this.addTile(x, startY, Tiles.floor1);
+                        break;
+                    case 3:
+                        [startX, endX] = [previousRoom.x, newRoom.x + 1];
+                        for (let x = startX; x > endX; x--) this.addTile(x, startY, Tiles.floor1);
+                        break;
+                }
+            }
+
+            previousRoom = newRoom;
+            let roomCreated = false;
+
+            while (!roomCreated) {
+                let nextDirection = Math.floor(game.getRandom(0, 4));
+                rp = this.generateRoomProperties(game, roomMargin, 15, 15);
+
+                let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-1, 1))];
+                switch (nextDirection) {
+                    case 0:
+                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y - roomMargin - roomDistance - rp.height];
+                        break;
+                    case 1:
+                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y + roomMargin + previousRoom.height + roomDistance];
+                        break;
+                    case 2:
+                        [rp.x, rp.y] = [previousRoom.x + roomMargin + previousRoom.width + roomDistance, previousRoom.y - roomLocationVariation];
+                        break;
+                    case 3:
+                        [rp.x, rp.y] = [previousRoom.x - roomMargin - roomDistance - rp.width, previousRoom.y - roomLocationVariation];
+                        break;
+                }
+
+                newRoom = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+                roomCreated = this.rooms.every(room => !room.intersect(newRoom));
+                previousDirection = nextDirection;
+            }
+        }
     }
 
     generateRoomProperties(game, roomMargin,maxWidth,maxHeight){
         return {
-            x : Math.floor(game.getRandom(roomMargin,this.width-roomMargin)),
-            y : Math.floor(game.getRandom(roomMargin,this.height-roomMargin)),
+            x : 0,
+            y : 0,
             width : Math.floor(game.getRandom(8,maxWidth)),
             height : Math.floor(game.getRandom(8,maxHeight)),
             floorColor : 0xffcccccc,

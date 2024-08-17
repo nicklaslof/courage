@@ -17,13 +17,15 @@ class Room{
         this.wallColor = wallColor;
         this.x = startTileX;
         this.y = startTileY;
+        this.width = width;
+        this.height = height;
 
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
                 if (y == startTileY && x > startTileX && x < startTileX+width-1) level.addTile(x,y,Tiles.wall1,this);
                 else if (x == startTileX && y == startTileY) level.addTile(x,y,Tiles.wall_leftend,this);
                 else if (x == startTileX+width-1 && y == startTileY) level.addTile(x,y,Tiles.wall_rightend,this);
-                //else if (x == startTileX && y < startTileY+height-1) level.addTile(x,y,Tiles.wall_left,this);
+                else if (x == startTileX && y < startTileY+height-1) level.addTile(x,y,Tiles.wall_left,this);
                 else if (x == startTileX+width-1 && y < startTileY + height-1) level.addTile(x,y,Tiles.wall_right,this);
                 else if (y == startTileY+height-1 && x > startTileX && x < startTileX+width-1) level.addTile(x,y,Tiles.wall_bottom,this);
                 else if (x == startTileX && y == startTileY+height-1) level.addTile(x,y,Tiles.wall_bottom_left_corner,this);

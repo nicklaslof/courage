@@ -147,12 +147,14 @@ class Entity{
         // Get the tile on the worldPosition x and y.
         let level = game.screen.level;
         let tileResult = level.getTileAndTilePositionAtWorldPosition(x,y);
-
+        console.log(tileResult.tile);
         // The result contains an object with the tile and the tileposition (not world position).
-        // If no tile was found return that we collide so we accidently doesn't walk outside the level. (This should happen (famous last words)).
-        // If the tile is a floor tile return false since we wouldn't be able to move otherwise.
-        if (tileResult.tile == null) return true;
+
+        // If the tile is a floor tile return false since we wouldn't be able to move otherwise.        
         if (tileResult.tile == Tiles.floor1) return false;
+
+        // If no tile is avaiable set it to air which will block the player to enter outside a corridor.
+        if (tileResult.tile == null) tileResult.tile = Tiles.air;
 
         // Check with the tile if this entity will collide. Also pass in the tile position since each tile is a singleton and doesn't have a state but
         // it needs this position to do the calculation.
