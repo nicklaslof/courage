@@ -1,8 +1,5 @@
-import Bullet from "../entity/bullet.js";
-import Enemy from "../entity/enemy.js";
 import Particle from "../entity/particle.js";
 import Player from "../entity/player.js";
-import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
@@ -19,12 +16,45 @@ class Level{
         this.particles = [];
         this.rooms = [];
 
-        this.rooms.push(new Room(this,0,0,Math.floor(game.getRandom(5,15)),Math.floor(game.getRandom(5,15)),0xffcccccc,0xff999999));
-        
+        this.generateRooms(game);
 
-        this.player = new Player(2*64,2*64,48);
+        let startRoom = this.rooms[Math.floor(game.getRandom(0,this.rooms.length-1))];
+        this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
+    }
 
+    generateRooms(game) {
+        const roomMargin = 2;
+        for (let i = 0; i < 15; i++) {
+            let rp = this.generateRoomProperties(game, roomMargin, 20, 20);
+            let room = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+            
+            while (!this.rooms.every(r => !r.intersect(room)) || this.roomTooBig(rp)) {
+                rp = this.generateRoomProperties(game, roomMargin, 
+                    this.roomTooBig(rp) ? rp.width - 1 : rp.width, 
+                    this.roomTooBig(rp) ? rp.height - 1 : rp.height
+                );
+                room = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+            }
+            
+            this.rooms.push(room);
+            room.generateRoom(this, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
+        }
+    }
+
+    roomTooBig(rp){
+        return (rp.x + rp.width > this.width-1 || rp.y + rp.height > this.height-1);
+    }
+
+    generateRoomProperties(game, roomMargin,maxWidth,maxHeight){
+        return {
+            x : Math.floor(game.getRandom(roomMargin,this.width-roomMargin)),
+            y : Math.floor(game.getRandom(roomMargin,this.height-roomMargin)),
+            width : Math.floor(game.getRandom(8,maxWidth)),
+            height : Math.floor(game.getRandom(8,maxHeight)),
+            floorColor : 0xffcccccc,
+            wallColor : 0xff999999,
+        }
     }
 
     tick(game,deltaTime){

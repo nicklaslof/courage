@@ -2,21 +2,28 @@ import Tiles from "../tile/tiles.js";
 
 class Room{
 
-    constructor(level, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff){
+    constructor(level, roomMargin, startTileX, startTileY, width, height){
+        this.AABB = {minX:startTileX-roomMargin,minY:startTileY-roomMargin,maxX:startTileX+width+roomMargin,maxY:startTileY+height+roomMargin};
+        //Debug
         /*console.log("Room size: "+width +" x "+ height);
         console.log("startTileX "+startTileX+ " startTileY "+startTileY);
         console.log("endTileX " + (startTileX+width) + " endTileY "+(startTileY+height));
-        */
+        console.log(this.AABB);
+        console.log("---------------------");*/
+    }
 
+    generateRoom(level, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff){
         this.floorColor = floorColor;
         this.wallColor = wallColor;
+        this.x = startTileX;
+        this.y = startTileY;
 
-        for (let x = startTileX; x < width; x++){
-            for (let y = startTileY; y < height; y++){
+        for (let x = startTileX; x < startTileX+width; x++){
+            for (let y = startTileY; y < startTileY+height; y++){
                 if (y == startTileY && x > startTileX && x < startTileX+width-1) level.addTile(x,y,Tiles.wall1,this);
                 else if (x == startTileX && y == startTileY) level.addTile(x,y,Tiles.wall_leftend,this);
                 else if (x == startTileX+width-1 && y == startTileY) level.addTile(x,y,Tiles.wall_rightend,this);
-                else if (x == startTileX && y < startTileY+height-1) level.addTile(x,y,Tiles.wall_left,this);
+                //else if (x == startTileX && y < startTileY+height-1) level.addTile(x,y,Tiles.wall_left,this);
                 else if (x == startTileX+width-1 && y < startTileY + height-1) level.addTile(x,y,Tiles.wall_right,this);
                 else if (y == startTileY+height-1 && x > startTileX && x < startTileX+width-1) level.addTile(x,y,Tiles.wall_bottom,this);
                 else if (x == startTileX && y == startTileY+height-1) level.addTile(x,y,Tiles.wall_bottom_left_corner,this);
@@ -29,6 +36,11 @@ class Room{
                 }
             }
         }
+    }
+
+    intersect(otherRoom){
+        return (otherRoom.AABB.minX <= this.AABB.maxX && otherRoom.AABB.maxX >= this.AABB.minX)&&
+        (otherRoom.AABB.minY <= this.AABB.maxY && otherRoom.AABB.maxY >= this.AABB.minY);
     }
 
     getFloorColor(){
