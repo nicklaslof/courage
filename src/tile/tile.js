@@ -7,11 +7,13 @@ class Tile{
         this.sprite.sizeX = this.sprite.sizeY = 64;
         this.AABB = AABB;
         this.tempAABB = {minX:0,minY:0,maxX:0,maxY:0};
+        this.c = c;
         return this;
     }
 
     render(game){
         this.sprite.tick(); // The sprite must be ticked once to make it visible to avoid ghost rendering of new unticked sprites with the wrong position.
+        this.sprite.c = this.c;
         this.sprite.render(game);
     }
 

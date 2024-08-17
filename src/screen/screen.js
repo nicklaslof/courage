@@ -1,11 +1,11 @@
 import Level from "../level/level.js";
 
 class Screen{
-    constructor(width, height){
+    constructor(game,width, height){
         this.width = width;
         this.height = height;
 
-        this.level = new Level(64,64);
+        this.level = new Level(game,64,64);
     }
 
     tick(game, deltaTime){

@@ -8,16 +8,18 @@ import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(width,height){
+    constructor(game,width,height){
         this.width = width;
         this.height = height;
         this.tiles = new Array(this.width*this.height);
+        this.tileOwner = new Array(this.width*this.height);
 
         this.entities = [];
         this.lights = [];
         this.particles = [];
+        this.rooms = [];
 
-        new Room(this,0,0,10,6);
+        this.rooms.push(new Room(this,0,0,Math.floor(game.getRandom(5,15)),Math.floor(game.getRandom(5,15)),0xffcccccc,0xff999999));
         
 
         this.player = new Player(2*64,2*64,48);
@@ -72,9 +74,10 @@ class Level{
         this.removeFromList(particle,this.particles);
     }
 
-    addTile(x,y,tile){
+    addTile(x,y,tile,owner=null){
         if (x < 0 || x > this.width-1 || y < 0 || y > this.height-1) return;
         this.tiles[x + y * this.width] = tile;
+        if (owner !=null) this.tileOwner[x + y * this.width] = owner;
     }
 
     removeEntity(entity){
@@ -93,9 +96,14 @@ class Level{
         for(let x = 0; x < this.width; x++){
             for (let y = 0; y < this.height; y++){
                 let tile = this.tiles[x+y*this.width];
+                let owner = this.tileOwner[x+y*this.width];
                 if (tile != null){
                     tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*64);
                     tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*64);
+                    if (owner != null){
+                        if (tile == Tiles.floor1) tile.c = owner.getFloorColor();
+                        else tile.c = owner.getWallColor();
+                    }
                     tile.render(game);
                 }
             }
