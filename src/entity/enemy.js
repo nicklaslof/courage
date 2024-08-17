@@ -21,7 +21,7 @@ class Enemy extends Entity{
         this.calculatePlayerDirectionVector.x = player.x - this.x;
         this.calculatePlayerDirectionVector.y = player.y - this.y;
 
-        if (this.length(this.calculatePlayerDirectionVector) < 512) {
+        if (this.length(this.calculatePlayerDirectionVector) < 512 && this.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
             this.normalize(this.calculatePlayerDirectionVector);
             this.moveDirection.x = this.calculatePlayerDirectionVector.x;
             this.moveDirection.y = this.calculatePlayerDirectionVector.y;

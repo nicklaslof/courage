@@ -1,4 +1,5 @@
 import Tiles from "../tile/tiles.js";
+import Enemy from "../entity/enemy.js";
 
 class Room{
 
@@ -35,6 +36,10 @@ class Room{
                 if (Math.random() < 0.1){
                     let size = 200+Math.random()*320;
                     level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
+                }
+
+                if (Math.random()< 0.2 && level.getTile(x,y) == Tiles.floor1){
+                    level.addEntity(new Enemy(x*64,y*64));
                 }
             }
         }

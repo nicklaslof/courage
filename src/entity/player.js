@@ -7,7 +7,7 @@ import Entity from "./entity.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
-        this.speed = 176;
+        this.speed = 208;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;

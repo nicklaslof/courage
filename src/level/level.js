@@ -154,6 +154,11 @@ class Level{
         if (owner !=null) this.tileOwner[x + y * this.width] = owner;
     }
 
+    getTile(x,y){
+        if (x < 0 || x > this.width-1 || y < 0 || y > this.height-1) return null;
+        return this.tiles[x+y*this.width];
+    }
+
     removeEntity(entity){
         this.removeFromList(entity,this.entities);
     }
