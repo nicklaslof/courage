@@ -165,39 +165,6 @@ class Entity{
         let magnitude = Math.hypot(v.x, v.y);
         return magnitude ? (v.x /= magnitude, v.y /= magnitude, v) : v;
     }
-
-    length(v){
-        return Math.hypot(v.x, v.y);
-    }
-
-    // Raycast between two entities positions. If there is anything blocking the view the entity can't see the other entity
-    // I had to include the upper wall here since we are actually walking inside it.
-    canEntitySee(level,x1,y1,x2,y2){
-        let points = this.getPointsBetween(Math.round(x1/64),Math.round(y1/64),Math.round(x2/64),Math.round(y2/64));
-        for (let i = 0; i < points.length;i++){
-            let p = points[i];
-            let tile = level.getTile(p.x,p.y);
-            if (tile != Tiles.floor1 && tile != Tiles.wall1) return false;
-
-        }
-        return true;
-    }
-
-    // Bresinheims line algorithm to get all x and y coordinates in a straight line between two points. Useful for simple raycasting
-    getPointsBetween(x1, y1, x2, y2) {
-        let points = [], dx = Math.abs(x2 - x1), dy = Math.abs(y2 - y1);
-        let sx = x1 < x2 ? 1 : -1, sy = y1 < y2 ? 1 : -1, err = dx - dy;
-    
-        while (true) {
-            points.push({x: x1, y: y1});
-            if (x1 === x2 && y1 === y2) break;
-            let e2 = 2 * err;
-            if (e2 > -dy) err -= dy, x1 += sx;
-            if (e2 < dx) err += dx, y1 += sy;
-        }
-        return points;
-    }
-    
 }
 
 export default Entity;
