@@ -9,7 +9,7 @@ class Level{
         this.width = width;
         this.height = height;
         this.tiles = new Array(this.width*this.height);
-        this.tileOwner = new Array(this.width*this.height);
+        this.tileRoom = new Array(this.width*this.height);
 
         this.entities = [];
         this.lights = [];
@@ -29,7 +29,7 @@ class Level{
         rp.x = this.width / 2;
         rp.y = this.height / 2;
 
-        let newRoom = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+        let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
 
         for (let i = 0; i < 6; i++) {
@@ -51,9 +51,9 @@ class Level{
             
                 let findPath = (x, y, dx, dy) => {
                     for (let i = 0; i < 5; i++) {
-                        this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff0000ff, 32, 32, 10000);
+                       // this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff0000ff, 32, 32, 10000);
                         if (this.getTile(x + i * dx, y + i * dy) == Tiles.floor1) {
-                            this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff00ff00, 32, 32, 10000);
+                          //  this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff00ff00, 32, 32, 10000);
                             return { pathFound: true, length: i + 1 };
                         }
                     }
@@ -97,7 +97,7 @@ class Level{
                         break;
                 }
 
-                newRoom = new Room(this, roomMargin, rp.x, rp.y, rp.width, rp.height);
+                newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
                 previousDirection = nextDirection;
             }
@@ -162,15 +162,20 @@ class Level{
         this.removeFromList(particle,this.particles);
     }
 
-    addTile(x,y,tile,owner=null){
+    addTile(x,y,tile,room=null){
         if (x < 0 || x > this.width-1 || y < 0 || y > this.height-1) return;
         this.tiles[x + y * this.width] = tile;
-        if (owner !=null) this.tileOwner[x + y * this.width] = owner;
+        if (room !=null) this.tileRoom[x + y * this.width] = room;
     }
 
     getTile(x,y){
         if (x < 0 || x > this.width-1 || y < 0 || y > this.height-1) return null;
         return this.tiles[x+y*this.width];
+    }
+
+    getTileRoom(x,y){
+        if (x < 0 || x > this.width-1 || y < 0 || y > this.height-1) return null;
+        return this.tileRoom[x+y*this.width];
     }
 
     removeEntity(entity){
@@ -189,13 +194,13 @@ class Level{
         for(let x = 0; x < this.width; x++){
             for (let y = 0; y < this.height; y++){
                 let tile = this.tiles[x+y*this.width];
-                let owner = this.tileOwner[x+y*this.width];
+                let tileRoom = this.tileRoom[x+y*this.width];
                 if (tile != null){
                     tile.sprite.x = (game.cameraCenterX - this.player.x) + (x*64);
                     tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*64);
-                    if (owner != null){
-                        if (tile == Tiles.floor1) tile.c = owner.getFloorColor();
-                        else tile.c = owner.getWallColor();
+                    if (tileRoom != null){
+                        if (tile == Tiles.floor1) tile.c = tileRoom.getFloorColor();
+                        else tile.c = tileRoom.getWallColor();
                     }
                     tile.render(game);
                 }

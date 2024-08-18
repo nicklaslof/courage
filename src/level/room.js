@@ -1,9 +1,10 @@
 import Tiles from "../tile/tiles.js";
 import Enemy from "../entity/enemy.js";
+import Mobspawner from "../entity/mobspawner.js";
 
 class Room{
-
-    constructor(level, roomMargin, startTileX, startTileY, width, height){
+    static id = 0;
+    constructor(roomMargin, startTileX, startTileY, width, height){
         this.AABB = {minX:startTileX-roomMargin,minY:startTileY-roomMargin,maxX:startTileX+width+roomMargin,maxY:startTileY+height+roomMargin};
         //Debug
         /*console.log("Room size: "+width +" x "+ height);
@@ -20,6 +21,8 @@ class Room{
         this.y = startTileY;
         this.width = width;
         this.height = height;
+        this.mobSpawners = [];
+        this.initialMobSpawnerPlaced = false;
 
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
@@ -38,11 +41,15 @@ class Room{
                     level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
                 }
 
-                //if (Math.random()< 0.2 && level.getTile(x,y) == Tiles.floor1){
-                //    level.addEntity(new Enemy(x*64,y*64));
-                //}
+                if (Math.random()< 0.09 && level.getTile(x,y) == Tiles.floor1){
+                    this.mobSpawners.push(new Mobspawner(x,y,[Enemy],6,!this.initialMobSpawnerPlaced?2000:null));
+                    this.initialMobSpawnerPlaced = true;
+                }
+                
             }
         }
+        Room.id++;
+        this.roomId = Room.id;
     }
 
     intersect(otherRoom){
@@ -56,6 +63,15 @@ class Room{
 
     getWallColor(){
         return this.wallColor;
+    }
+
+    onPlayerEnter(game){
+        console.log("PLAYER ENTERED!");
+        this.mobSpawners.forEach(m => m.onPlayerEnter(game));
+    }
+
+    tick(game,deltaTime){
+        this.mobSpawners.forEach(m => m.tick(game,deltaTime));
     }
 }
 

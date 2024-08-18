@@ -7,7 +7,7 @@ import Entity from "./entity.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
-        this.speed = 808;
+        this.speed = 192;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;
@@ -25,10 +25,14 @@ class Player extends Entity{
         this.animation.setCurrentState("idle");
 
         this.aimSprite = new Sprite(this.x,this.y,0,71,7,7,24,24,0xffffffff);
+        this.currentTile = null;
+        this.currentRoom = this.previousRoom = null;
 
     }
 
     tick(game,deltaTime){
+        this.currentTile = game.screen.level.getTile(Math.floor(this.x/64),Math.floor(this.y/64));
+        this.currentRoom = game.screen.level.getTileRoom(Math.floor(this.x/64),Math.floor(this.y/64));
         this.moveDirection.x = game.input.axes.x;
         this.moveDirection.y = game.input.axes.y;
 
@@ -68,7 +72,12 @@ class Player extends Entity{
             this.fireDelay = 128;
             game.playShoot();
         }
-       //console.log(this.x/64+" "+this.y/64);
+        if (this.currentRoom != null && this.previousRoom != this.currentRoom){
+            this.roomChange(game);
+            this.previousRoom = this.currentRoom;
+        }
+
+        if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
 
     }
 
@@ -79,6 +88,11 @@ class Player extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity instanceof Bullet && otherEntity.shootingEntity == this) return;
         this.hit(game,1);
+    }
+
+    roomChange(game){
+        console.log("Room changed:" + this.currentRoom.roomId);
+        if (this.currentRoom != null) this.currentRoom.onPlayerEnter(game);
     }
 
     renderUI(game){
