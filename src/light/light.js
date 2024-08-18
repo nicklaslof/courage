@@ -1,6 +1,6 @@
 class Light{
 
-    constructor(x,y,c,sizeX=550,sizeY=550,ttl=10000) {
+    constructor(x,y,c,sizeX=550,sizeY=550,ttl=10000,flicker=false) {
         this.x = x;
         this.y = y;
         this.renderX = 0;
@@ -16,6 +16,8 @@ class Light{
         this.disposed = false;
         this.renderOffsetX = 0;
         this.renderOffsetY = 0;
+        this.flicker = flicker;
+        this.flickerCounter = Math.random()*1000;
     }
     tick(game, deltaTime){
         if (this.ttl < 10000){
@@ -23,6 +25,14 @@ class Light{
         }
 
         if (this.ttl <= 0) this.disposed = true;
+        
+        if (this.flicker){
+            this.flickerCounter += deltaTime;
+            let s = Math.sin(this.flickerCounter/120);
+            this.sizeX += s/2;
+            this.sizeY += s/2;
+        }
+
         this.sizeX = Math.max(0,this.sizeX);
         this.sizeY = Math.max(0,this.sizeY);
         this.renderX = (game.cameraCenterX - game.screen.level.player.x) + this.x;

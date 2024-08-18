@@ -14,6 +14,7 @@ class Level{
         this.entities = [];
         this.lights = [];
         this.particles = [];
+        this.decorations = [];
         this.rooms = [];
 
         this.generateRooms(game);
@@ -126,7 +127,6 @@ class Level{
         this.entities.forEach(e1 => {
             this.entities.forEach(e2 => {
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
-                    //console.log("Collision");
                     e1.onCollision(game,e2);
                 }
                 if (e1.disposed) this.removeEntity(e1);
@@ -137,10 +137,16 @@ class Level{
             p.tick(game,deltaTime);
             if (p.disposed) this.removeParticle(p);
         });
+
+        this.decorations.forEach(d => d.tick(game,deltaTime));
     }
 
     addEntity(entity){
         this.entities.push(entity);
+    }
+
+    addDecoration(decoration){
+        this.decorations.push(decoration);
     }
 
     addParticle(x,y,c,sizeX, sizeY, ttl,moveDirection,speed){
@@ -148,8 +154,8 @@ class Level{
     }
 
     // Add a new light to the scene and return it.
-    addLight(x,y,c,sizeX,sizeY,ttl){
-        let l = new Light(x,y,c,sizeX,sizeY,ttl);
+    addLight(x,y,c,sizeX,sizeY,ttl,flicker=false){
+        let l = new Light(x,y,c,sizeX,sizeY,ttl,flicker);
         this.lights.push(l);
         return l;
     }
@@ -206,6 +212,8 @@ class Level{
                 }
             }
         }
+
+        this.decorations.forEach(d => d.render(game));
 
         this.entities.forEach(e => e.render(game));
         this.particles.forEach(p => p.render(game));

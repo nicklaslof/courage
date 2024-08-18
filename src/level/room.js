@@ -1,6 +1,7 @@
 import Tiles from "../tile/tiles.js";
 import Enemy from "../entity/enemy.js";
 import Mobspawner from "../entity/mobspawner.js";
+import Decoration from "../entity/decoration.js";
 
 class Room{
     static id = 0;
@@ -38,16 +39,32 @@ class Room{
 
                 if (Math.random() < 0.1){
                     let size = 200+Math.random()*320;
-                    level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
+                    //level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
+                    
                 }
 
                 if (Math.random()< 0.09 && level.getTile(x,y) == Tiles.floor1){
                     this.mobSpawners.push(new Mobspawner(x,y,[Enemy],6,!this.initialMobSpawnerPlaced?2000:null));
                     this.initialMobSpawnerPlaced = true;
                 }
-                
             }
         }
+
+        //Add decorations
+        for(let x=startTileX;x<startTileX+width;x++)
+            for(let y=startTileY;y<startTileY+height;y++){
+                let t=level.getTile(x,y),r=Math.random()<0.2;
+                if(r) switch(t){
+                    case Tiles.wall1:level.addDecoration(new Decoration(level,x*64,y*64,8,24,"t"));break;
+                    case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64,y*64-32,8,24,"t"));break;
+                    case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+23,y*64,8,24,"t"));break;
+                    case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64-22,y*64,8,24,"t"));
+                }
+            }
+
+
+
+        
         Room.id++;
         this.roomId = Room.id;
     }
@@ -66,7 +83,6 @@ class Room{
     }
 
     onPlayerEnter(game){
-        console.log("PLAYER ENTERED!");
         this.mobSpawners.forEach(m => m.onPlayerEnter(game));
     }
 
