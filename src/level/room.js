@@ -38,9 +38,9 @@ class Room{
                     level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
                 }
 
-                if (Math.random()< 0.2 && level.getTile(x,y) == Tiles.floor1){
-                    level.addEntity(new Enemy(x*64,y*64));
-                }
+                //if (Math.random()< 0.2 && level.getTile(x,y) == Tiles.floor1){
+                //    level.addEntity(new Enemy(x*64,y*64));
+                //}
             }
         }
     }

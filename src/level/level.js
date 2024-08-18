@@ -24,7 +24,7 @@ class Level{
     }
 
     generateRooms(game) {
-        let roomMargin = 1;
+        let roomMargin = 0;
         let rp = this.generateRoomProperties(game, roomMargin, 15, 15);
         rp.x = this.width / 2;
         rp.y = this.height / 2;
@@ -35,30 +35,44 @@ class Level{
         for (let i = 0; i < 6; i++) {
             this.rooms.push(newRoom);
             newRoom.generateRoom(this, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
-
+            // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
+            // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
+            // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
+            // into the tilemap overwriting the walls. It looks a bit ugly and can possibly be fixed with correct tile replacement.
             if (previousRoom) {
-                let [prevCenterX, prevCenterY] = [Math.floor(previousRoom.x + previousRoom.width / 2), Math.floor(previousRoom.y + previousRoom.height / 2)];
-                let [startX, startY, endX, endY] = [prevCenterX, prevCenterY, prevCenterX, prevCenterY];
-
-                switch (previousDirection) {
-                    case 0:
-                        [startY, endY] = [previousRoom.y, newRoom.y + newRoom.height - 2];
-                        for (let y = startY; y > endY; y--) this.addTile(startX, y, Tiles.floor1);
-                        break;
-                    case 1:
-                        [startY, endY] = [previousRoom.y + previousRoom.height - 1, newRoom.y + 1];
-                        for (let y = startY; y < endY; y++) this.addTile(startX, y, Tiles.floor1);
-                        break;
-                    case 2:
-                        [startX, endX] = [previousRoom.x + previousRoom.width - 1, newRoom.x + 1];
-                        for (let x = startX; x < endX; x++) this.addTile(x, startY, Tiles.floor1);
-                        break;
-                    case 3:
-                        [startX, endX] = [previousRoom.x, newRoom.x + 1];
-                        for (let x = startX; x > endX; x--) this.addTile(x, startY, Tiles.floor1);
-                        break;
+                let possiblePaths = [], isHorizontal = previousDirection < 2,
+                    dir = [
+                        { dx: 0, dy: -1, sx: 2, sy: 0, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: 0 },
+                        { dx: 0, dy: 1, sx: 2, sy: previousRoom.height, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: -1 },
+                        { dx: 1, dy: 0, sx: previousRoom.width, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: -1, offsetY: 0 },
+                        { dx: -1, dy: 0, sx: 0, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: 0, offsetY: 0 }
+                    ][previousDirection],
+                    [sx, sy] = [previousRoom.x + dir.sx, previousRoom.y + dir.sy];
+            
+                let findPath = (x, y, dx, dy) => {
+                    for (let i = 0; i < 5; i++) {
+                        this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff0000ff, 32, 32, 10000);
+                        if (this.getTile(x + i * dx, y + i * dy) == Tiles.floor1) {
+                            this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff00ff00, 32, 32, 10000);
+                            return { pathFound: true, length: i + 1 };
+                        }
+                    }
+                    return { pathFound: false, length: 5 };
+                };
+            
+                for (let i = 0; i < dir.ex + dir.ey; i++) {
+                    const { pathFound } = findPath(isHorizontal ? sx + i : sx, isHorizontal ? sy : sy + i, dir.dx, dir.dy);
+                    if (pathFound) possiblePaths.push(isHorizontal ? sx + i : sy + i);
+                }
+            
+                let p = possiblePaths[Math.floor(game.getRandom(0, possiblePaths.length - 1))],
+                    { length } = findPath(isHorizontal ? p : sx, isHorizontal ? sy : p, dir.dx, dir.dy);
+            
+                for (let i = 0; i < length; i++) {
+                    this.addTile(isHorizontal ? p : sx + i * dir.dx + dir.offsetX, isHorizontal ? sy + i * dir.dy + dir.offsetY : p, Tiles.floor1);
                 }
             }
+            
 
             previousRoom = newRoom;
             let roomCreated = false;
@@ -67,7 +81,7 @@ class Level{
                 let nextDirection = Math.floor(game.getRandom(0, 4));
                 rp = this.generateRoomProperties(game, roomMargin, 15, 15);
 
-                let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-1, 1))];
+                let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-3,3))];
                 switch (nextDirection) {
                     case 0:
                         [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y - roomMargin - roomDistance - rp.height];
