@@ -211,6 +211,7 @@ class Level{
                     tile.sprite.y = (game.cameraCenterY - this.player.y) + (y*64);
                     if (tileRoom != null){
                         if (tile == Tiles.floor1) tile.c = tileRoom.getFloorColor();
+                        else if (tile == Tiles.lava) tile.c = Tiles.lava.c;
                         else tile.c = tileRoom.getWallColor();
                     }
                     tile.render(game);

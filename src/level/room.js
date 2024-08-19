@@ -27,9 +27,13 @@ class Room{
         // Roomtype:
         // n = normal
         // r = red battle room
+        // l = lava
         this.roomType = "n";
 
         if (Math.random()< 0.2) this.roomType = "r";
+        else if (Math.random()< 0.9 && this.width + this.height > 40) this.roomType = "l";
+
+        console.log("Room type: "+this.roomType);
 
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
@@ -43,11 +47,24 @@ class Room{
                 else if (x == startTileX+width-1 && y == startTileY+height-1) level.addTile(x,y,Tiles.wall_bottom_right_corner,this);
                 else level.addTile(x,y,Tiles.floor1,this);
 
-                if (Math.random() < 0.1){
-                    let size = 200+Math.random()*320;
-                    //level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
-                    
+            }
+        }
+        if (this.roomType == "l"){
+            let cx = Math.floor(this.x + this.width/2);
+            let cy = Math.floor(this.y+ this.height/2);
+            
+            let s = Math.floor(game.getRandom(1,5));
+            for (let x = cx - s; x < cx + s;x++){
+                for (let y = cy -s; y < cy + s;y++){
+                    if (level.getTile(x,y)== Tiles.floor1){
+                        level.addTile(x,y,Tiles.lava,this);
+                        level.addLight(x*64,y*64,0xff0055ff,128,128,10000,true);
+                    }
                 }
+            }
+        }
+        for (let x = startTileX; x < startTileX+width; x++){
+            for (let y = startTileY; y < startTileY+height; y++){
                 let r = this.roomType == "n" ? Math.random()<0.05 : Math.random() < 0.1;
                 if (r && level.getTile(x,y) == Tiles.floor1){
                     for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
@@ -60,12 +77,11 @@ class Room{
                         }
                     }
                 }
-
             }
         }
 
         //Add decorations
-        for(let x=startTileX;x<startTileX+width;x++)
+        for(let x=startTileX;x<startTileX+width;x++){
             for(let y=startTileY;y<startTileY+height;y++){
                 let t=level.getTile(x,y);
                 if(Math.random()<0.2) switch(t){
@@ -81,6 +97,8 @@ class Room{
                         if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
                 }
             }
+        }
+
         Room.id++;
         this.roomId = Room.id;
     }
