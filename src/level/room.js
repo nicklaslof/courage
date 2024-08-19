@@ -21,6 +21,7 @@ class Room{
         this.y = startTileY;
         this.width = width;
         this.height = height;
+        this.enemies = [];
 
 
         // Roomtype:
@@ -52,8 +53,11 @@ class Room{
                     for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
                         let spawnX = (x*64)+game.getRandom(-64,64);
                         let spawnY = (y*64)+game.getRandom(-64,64);
-                        if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1)
-                            level.addEntity(new Enemy(spawnX,spawnY));
+                        if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
+                            let e = new Enemy(spawnX,spawnY);
+                            this.enemies.push(e);
+                            level.addEntity(e);
+                        }
                     }
                 }
 
@@ -77,12 +81,12 @@ class Room{
                         if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
                 }
             }
-
-
-
-        
         Room.id++;
         this.roomId = Room.id;
+    }
+
+    removeAllEnemies(level){
+        this.enemies.forEach(e=> level.removeEntity(e));
     }
 
     intersect(otherRoom){

@@ -19,7 +19,9 @@ class Level{
 
         this.generateRooms(game);
         
-        let startRoom = this.rooms[Math.floor(game.getRandom(0,this.rooms.length-1))];
+        // Make the player start in the smallest room and remove all enemies from the room;
+        let startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*height})[0];
+        startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
     }
@@ -33,7 +35,7 @@ class Level{
         let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 10; i++) {
             this.rooms.push(newRoom);
             newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
@@ -65,13 +67,16 @@ class Level{
                     const { pathFound } = findPath(isHorizontal ? sx + i : sx, isHorizontal ? sy : sy + i, dir.dx, dir.dy);
                     if (pathFound) possiblePaths.push(isHorizontal ? sx + i : sy + i);
                 }
-            
-                let p = possiblePaths[Math.floor(game.getRandom(0, possiblePaths.length - 1))],
+                
+                for (let i = 0; i < Math.floor(game.getRandom(1,3)); i++){
+                    let p = possiblePaths[Math.floor(game.getRandom(0, possiblePaths.length - 1))],
                     { length } = findPath(isHorizontal ? p : sx, isHorizontal ? sy : p, dir.dx, dir.dy);
             
-                for (let i = 0; i < length; i++) {
-                    this.addTile(isHorizontal ? p : sx + i * dir.dx + dir.offsetX, isHorizontal ? sy + i * dir.dy + dir.offsetY : p, Tiles.floor1);
+                    for (let i = 0; i < length; i++) {
+                        this.addTile(isHorizontal ? p : sx + i * dir.dx + dir.offsetX, isHorizontal ? sy + i * dir.dy + dir.offsetY : p, Tiles.floor1);
+                    }
                 }
+                
             }
             
 
