@@ -5,6 +5,7 @@ class Decoration{
 
     // Type: 
     // t = torch
+    // c = red carpet
     constructor(level,x,y,sizeX,sizeY,type){
         this.x = x;
         this.y = y;
@@ -12,10 +13,19 @@ class Decoration{
 
         this.animation = new Animation();
 
-        if (type == "t"){
-            this.animation.addState("anim",new Sprite(this.x,this.y,16,65,2,6,sizeX,sizeY,0xffffffff),320).addState("anim",new Sprite(this.x,this.y,18,65,2,6,sizeX,sizeY,0xffffffff),320);
-            level.addLight(x,y,0xff5599dd,576,576,10000,true);
+        switch(type){
+            case "t":
+                this.animation.addState("anim",new Sprite(this.x,this.y,16,65,2,6,sizeX,sizeY,0xffffffff),320).addState("anim",new Sprite(this.x,this.y,18,65,2,6,sizeX,sizeY,0xffffffff),320);
+                level.addLight(x,y,0xff5599dd,576,576,10000,true);
+                break;
+            case "c":
+                this.animation.addState("anim", new Sprite(this.x,this.y,0,0,16,16,64,64,0xff0000ff).setRotation(Math.random()<0.45?3.14:0));
+                break;
+            case "d":
+                this.animation.addState("anim", new Sprite(this.x,this.y,0,0,16,16,64,64,level.getTileRoom(Math.floor(x/64),Math.floor(y/64)).floorColor*10).setRotation(Math.random()<0.45?3.14:0));
+
         }
+        
 
         this.animation.setCurrentState("anim");
     }

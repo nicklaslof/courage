@@ -1,6 +1,5 @@
 import Tiles from "../tile/tiles.js";
 import Enemy from "../entity/enemy.js";
-import Mobspawner from "../entity/mobspawner.js";
 import Decoration from "../entity/decoration.js";
 
 class Room{
@@ -15,15 +14,21 @@ class Room{
         console.log("---------------------");*/
     }
 
-    generateRoom(level, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff){
+    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff){
         this.floorColor = floorColor;
         this.wallColor = wallColor;
         this.x = startTileX;
         this.y = startTileY;
         this.width = width;
         this.height = height;
-        this.mobSpawners = [];
-        this.initialMobSpawnerPlaced = false;
+
+
+        // Roomtype:
+        // n = normal
+        // r = red battle room
+        this.roomType = "n";
+
+        if (Math.random()< 0.2) this.roomType = "r";
 
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
@@ -42,23 +47,34 @@ class Room{
                     //level.addLight(x*64,y*64,Math.random()*Number.MAX_SAFE_INTEGER,size,size,10000);
                     
                 }
-
-                if (Math.random()< 0.09 && level.getTile(x,y) == Tiles.floor1){
-                    this.mobSpawners.push(new Mobspawner(x,y,[Enemy],6,!this.initialMobSpawnerPlaced?2000:null));
-                    this.initialMobSpawnerPlaced = true;
+                let r = this.roomType == "n" ? Math.random()<0.05 : Math.random() < 0.1;
+                if (r && level.getTile(x,y) == Tiles.floor1){
+                    for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
+                        let spawnX = (x*64)+game.getRandom(-64,64);
+                        let spawnY = (y*64)+game.getRandom(-64,64);
+                        if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1)
+                            level.addEntity(new Enemy(spawnX,spawnY));
+                    }
                 }
+
             }
         }
 
         //Add decorations
         for(let x=startTileX;x<startTileX+width;x++)
             for(let y=startTileY;y<startTileY+height;y++){
-                let t=level.getTile(x,y),r=Math.random()<0.2;
-                if(r) switch(t){
+                let t=level.getTile(x,y);
+                if(Math.random()<0.2) switch(t){
                     case Tiles.wall1:level.addDecoration(new Decoration(level,x*64,y*64,8,24,"t"));break;
                     case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64,y*64-32,8,24,"t"));break;
                     case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+23,y*64,8,24,"t"));break;
-                    case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64-22,y*64,8,24,"t"));
+                    case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64-22,y*64,8,24,"t"));break;
+                }
+
+                switch(t){
+                    case Tiles.floor1:
+                        if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
+                        if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
                 }
             }
 
@@ -83,11 +99,11 @@ class Room{
     }
 
     onPlayerEnter(game){
-        this.mobSpawners.forEach(m => m.onPlayerEnter(game));
+        
     }
 
     tick(game,deltaTime){
-        this.mobSpawners.forEach(m => m.tick(game,deltaTime));
+        
     }
 }
 

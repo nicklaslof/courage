@@ -30,7 +30,7 @@ class Game{
 
         this.setupLightBuffer();
 
-        //this.fps = this.fpsCounter = this.deltaTime = 0;
+        this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
         this.screen = new Screen(this,W, H);
@@ -97,13 +97,13 @@ class Game{
         this.screen.renderUI(this);
         this.gl.flush();
 
-        //this.fpsCounter += deltaTime;
-        //this.fps++;
+        this.fpsCounter += deltaTime;
+        this.fps++;
 
-        //if (this.fpsCounter > 1000){
-        //    console.log("FPS: "+this.fps);
-        //    this.fpsCounter = this.fps = 0;
-        //}
+        if (this.fpsCounter > 1000){
+            console.log("FPS: "+this.fps);
+            this.fpsCounter = this.fps = 0;
+        }
     }
 
     // Generate a random number between min and max;

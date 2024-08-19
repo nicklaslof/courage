@@ -7,7 +7,7 @@ import Entity from "./entity.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
-        this.speed = 192;
+        this.speed = 360;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;
@@ -21,7 +21,7 @@ class Player extends Entity{
         this.animation.addState("walk", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
         .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
         .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
-       
+        
         this.animation.setCurrentState("idle");
 
         this.aimSprite = new Sprite(this.x,this.y,0,71,7,7,24,24,0xffffffff);
@@ -67,7 +67,7 @@ class Player extends Entity{
             let aim = {x:this.aimX ,y:this.aimY};
             this.normalize(aim);
 
-            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,400,720,aim.x, aim.y,this));
+            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,400,1000,aim.x, aim.y,this));
             this.canShoot = false;
             this.fireDelay = 128;
             game.playShoot();
@@ -78,6 +78,12 @@ class Player extends Entity{
         }
 
         if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
+
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff117777,640,640,10000,false);
+        this.light.renderOffsetX = 20;
+        this.light.x = this.x;
+        this.light.y = this.y;
+        this.light.tick(game,deltaTime);
 
     }
 

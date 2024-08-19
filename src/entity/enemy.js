@@ -6,8 +6,8 @@ class Enemy extends Entity{
         super(x,y,new Sprite(x,y,0,112,16,16,48,48,0xffffffff),3,{minX:16,minY:10,maxX:48,maxY:58});
         this.calculatePlayerDirectionVector = {x:0, y:0};
 
-        this.speed = 64;
-        this.health = 1+Math.random()*2;
+        this.speed = 128;
+        this.health = 1;
         
     }
 
@@ -21,7 +21,7 @@ class Enemy extends Entity{
         this.calculatePlayerDirectionVector.x = player.x - this.x;
         this.calculatePlayerDirectionVector.y = player.y - this.y;
 
-        if (game.length(this.calculatePlayerDirectionVector) < 256 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+        if (game.length(this.calculatePlayerDirectionVector) < 368 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
             this.normalize(this.calculatePlayerDirectionVector);
             this.moveDirection.x = this.calculatePlayerDirectionVector.x;
             this.moveDirection.y = this.calculatePlayerDirectionVector.y;
