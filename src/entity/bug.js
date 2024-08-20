@@ -20,9 +20,8 @@ class Bug extends Enemy{
 
     tick(game,deltaTime){
         super.tick(game,deltaTime);
-        //his.sprite.setRotation(0);
         let r = Math.atan2(this.moveDirection.y,this.moveDirection.x);
-        this.sprite.setRotation(r-Math.PI/2);
+        this.sprite.setRotation(r+Math.PI/2);
   
     }
 
