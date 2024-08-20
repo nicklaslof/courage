@@ -31,7 +31,7 @@ class Room{
         this.roomType = "n";
 
         if (Math.random()< 0.2) this.roomType = "r";
-        else if (Math.random()< 0.9 && this.width + this.height > 40) this.roomType = "l";
+        else if (Math.random()< 0.9 && this.width * this.height > 400) this.roomType = "l";
 
         console.log("Room type: "+this.roomType);
 
@@ -53,19 +53,20 @@ class Room{
             let cx = Math.floor(this.x + this.width/2);
             let cy = Math.floor(this.y+ this.height/2);
             
-            let s = Math.floor(game.getRandom(1,5));
+            let s = Math.floor(game.getRandom(3,6));
             for (let x = cx - s; x < cx + s;x++){
                 for (let y = cy -s; y < cy + s;y++){
                     if (level.getTile(x,y)== Tiles.floor1){
                         level.addTile(x,y,Tiles.lava,this);
-                        level.addLight(x*64,y*64,0xff0055ff,128,128,10000,true);
+                        level.addLight(x*64,y*64,0xff0055ff,192,192,10000,true);
                     }
                 }
             }
         }
+        // Spawn enimies
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
-                let r = this.roomType == "n" ? Math.random()<0.05 : Math.random() < 0.1;
+                let r = this.roomType == "n" ? Math.random()<0.03 : Math.random() < 0.1;
                 if (r && level.getTile(x,y) == Tiles.floor1){
                     for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
                         let spawnX = (x*64)+game.getRandom(-64,64);

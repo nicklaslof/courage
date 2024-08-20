@@ -36,7 +36,7 @@ class Level{
         let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 6; i++) {
             this.rooms.push(newRoom);
             newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
@@ -129,7 +129,7 @@ class Level{
             if (l.disposed) this.removeLight(l);
         });
 
-        // This is ugly an not efficent. Fix if I have time and space.
+        // This is ugly and not efficent. Fix if I have time and space.
         this.entities.filter(e => !e.idle).forEach(e1 => {
             this.entities.filter(e => !e.idle).forEach(e2 => {
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
@@ -203,6 +203,7 @@ class Level{
     }
 
     render(game){
+        // Render tiles around the player
         for(let x = Math.floor((this.player.x -W)/64); x < Math.floor((this.player.x + W)/64); x++){
             for (let y = Math.floor((this.player.y -H)/64); y < Math.floor((this.player.y + H)/64); y++){
                 let tile = this.tiles[x+y*this.width];

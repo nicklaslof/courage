@@ -36,13 +36,13 @@ class Enemy extends Entity{
         for (let i = 0; i < 32;i++){
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }
-        game.screen.level.addLight(this.x,this.y,0xff00ffff,32,32,200,false);
+        game.screen.level.addLight(this.x,this.y,0xff00ffff,48,48,100,false);
         
     }
 
     onHit(game){
         if (this.health>0){
-            game.playEnemyHit();
+            //game.playEnemyHit();
             for (let i = 0; i < 4;i++){
                 game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,4),game.getRandom(1,4),600,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},100);
             }

@@ -133,7 +133,7 @@ class Entity{
         this.tempAABB.minY = this.collisionBox.minY + y;
         this.tempAABB.maxY = this.collisionBox.maxY + y;
 
-        // check in a radius around the entity. Since out position is in the upper left corner we must transform it to the middle first. Otherwise
+        // check in a radius around the entity. Since our position is in the upper left corner we must transform it to the middle first. Otherwise
         // the check will only be positive on one side. This is only used to get the surronding tiles. The actual collision is using the AABB above.
         var radius = 32;
         var halfScale = this.pixelScale/2;

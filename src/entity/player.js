@@ -79,7 +79,7 @@ class Player extends Entity{
 
         if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
 
-        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff117777,512,512,10000,false);
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff115555,512,512,10000,false);
         this.light.renderOffsetX = 20;
         this.light.x = this.x;
         this.light.y = this.y;

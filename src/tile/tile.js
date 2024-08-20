@@ -1,4 +1,6 @@
+import Bullet from "../entity/bullet.js";
 import Sprite from "../graphic/sprite.js";
+import Tiles from "./tiles.js";
 
 class Tile{
 
@@ -18,7 +20,7 @@ class Tile{
     }
 
     doesCollideWithEntity(entity, tilePosX, tilePosY){
-        
+        if (entity instanceof Bullet && this == Tiles.lava) return false;
         // Set our collision checking AABB to the size of the tilecollision and the position in world coordinates.
         
         this.tempAABB.minX = this.AABB.minX + tilePosX*64;
