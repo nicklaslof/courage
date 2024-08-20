@@ -13,6 +13,7 @@ class Enemy extends Entity{
 
     tick(game,deltaTime){
         super.tick(game,deltaTime);
+        if (this.idle) return;
         this.moveAgainstPlayer(game);
     }
 

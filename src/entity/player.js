@@ -47,10 +47,10 @@ class Player extends Entity{
         this.aimX += game.input.pointer.x;
         this.aimY += game.input.pointer.y;
 
-        if (this.aimX > 200) this.aimX = 200;
-        if (this.aimX < -200) this.aimX = -200;
-        if (this.aimY > 200) this.aimY = 200;
-        if (this.aimY < -200) this.aimY = -200;
+        if (this.aimX > W/2) this.aimX = W/2;
+        if (this.aimX < -W/2) this.aimX = -W/2;
+        if (this.aimY > H/2) this.aimY = H/2;
+        if (this.aimY < -H/2) this.aimY = -H/2;
 
 
         this.aimSprite.x = game.cameraCenterX+this.aimX;

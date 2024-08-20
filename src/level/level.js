@@ -12,6 +12,7 @@ class Level{
         this.tileRoom = new Array(this.width*this.height);
 
         this.entities = [];
+
         this.lights = [];
         this.particles = [];
         this.decorations = [];
@@ -129,8 +130,8 @@ class Level{
         });
 
         // This is ugly an not efficent. Fix if I have time and space.
-        this.entities.forEach(e1 => {
-            this.entities.forEach(e2 => {
+        this.entities.filter(e => !e.idle).forEach(e1 => {
+            this.entities.filter(e => !e.idle).forEach(e2 => {
                 if ((!e1.disposed || !e2.disposed) && e1.doesCollide(e2)){
                     e1.onCollision(game,e2);
                 }
@@ -202,8 +203,8 @@ class Level{
     }
 
     render(game){
-        for(let x = 0; x < this.width; x++){
-            for (let y = 0; y < this.height; y++){
+        for(let x = Math.floor((this.player.x -W)/64); x < Math.floor((this.player.x + W)/64); x++){
+            for (let y = Math.floor((this.player.y -H)/64); y < Math.floor((this.player.y + H)/64); y++){
                 let tile = this.tiles[x+y*this.width];
                 let tileRoom = this.tileRoom[x+y*this.width];
                 if (tile != null){
@@ -221,7 +222,7 @@ class Level{
 
         this.decorations.forEach(d => d.render(game));
 
-        this.entities.forEach(e => e.render(game));
+        this.entities.forEach(e => {if (!e.idle) e.render(game)});
         this.particles.forEach(p => p.render(game));
     }
 

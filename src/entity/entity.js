@@ -21,6 +21,8 @@ class Entity{
         this.health = health;
         this.hitDelay = 120;
         this.hitDelayCounter = this.hitDelay ;
+        this.distanceToPlayer = {x:0, y:0};
+        this.idle = false;
 
         this.updateAABB();
     }
@@ -31,6 +33,14 @@ class Entity{
             this.onDeath(game);
             this.disposed = true;
         }
+        let player = game.screen.level.player;
+        this.distanceToPlayer.x = player.x - this.x;
+        this.distanceToPlayer.y = player.y - this.y;
+
+        if (game.length(this.distanceToPlayer) > 768) this.idle = true;
+        else this.idle = false;
+
+        if (this.idle) return;
 
         if (this.hitDelayCounter > 0){
             this.hitDelayCounter -= deltaTime;
@@ -77,7 +87,7 @@ class Entity{
     }
 
     render(game){
-
+        if (this.idle) return;
         this.sprite.horizontalFlip = !this.horizontalFlip;
         this.sprite.render(game);
     }
