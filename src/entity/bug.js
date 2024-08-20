@@ -4,14 +4,14 @@ import Enemy from "./enemy.js";
 
 class Bug extends Enemy{
 
-    constructor(x,y,c,speed){
-        super(x,y,new Sprite(x,y,0,96,9,8,20,20,c));
+    constructor(x,y,c,speed,size){
+        super(x,y,new Sprite(x,y,0,96,9,8,size,size,c));
         this.speed = speed;
 
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("walk", new Sprite(x,y,0,96,9,8,20,20,c),240)
-        .addState("walk", new Sprite(x,y,0,105,9,8,20,20,c),240);
+        this.animation.addState("walk", new Sprite(x,y,0,96,9,8,size,size,c),240)
+        .addState("walk", new Sprite(x,y,0,105,9,8,size,size,c),240);
         this.animation.setCurrentState("idle");
 
         console.log(this.animation);

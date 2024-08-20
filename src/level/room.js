@@ -2,6 +2,7 @@ import Tiles from "../tile/tiles.js";
 import Enemy from "../entity/enemy.js";
 import Decoration from "../entity/decoration.js";
 import Bug from "../entity/bug.js";
+import Box from "../entity/box.js";
 
 class Room{
     static id = 0;
@@ -73,7 +74,7 @@ class Room{
                         let spawnX = (x*64)+game.getRandom(-64,64);
                         let spawnY = (y*64)+game.getRandom(-64,64);
                         if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
-                            let e = new Bug(spawnX,spawnY,0xff666666,game.getRandom(80,140));
+                            let e = new Bug(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
                             this.enemies.push(e);
                             level.addEntity(e);
                         }
@@ -85,18 +86,19 @@ class Room{
         //Add decorations
         for(let x=startTileX;x<startTileX+width;x++){
             for(let y=startTileY;y<startTileY+height;y++){
-                let t=level.getTile(x,y);
-                if(Math.random()<0.2) switch(t){
+                let currentTile=level.getTile(x,y);
+                if(Math.random()<0.2) switch(currentTile){
                     case Tiles.wall1:level.addDecoration(new Decoration(level,x*64,y*64,8,24,"t"));break;
                     case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64,y*64-32,8,24,"t"));break;
                     case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+23,y*64,8,24,"t"));break;
                     case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64-22,y*64,8,24,"t"));break;
                 }
 
-                switch(t){
+                switch(currentTile){
                     case Tiles.floor1:
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
                         if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
+                        if (Math.random() < 0.05) level.addEntity(new Box(x*64,y*64));
                 }
             }
         }
