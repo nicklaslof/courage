@@ -2,8 +2,8 @@ import Sprite from "../graphic/sprite.js";
 import Entity from "./entity.js";
 
 class Enemy extends Entity{
-    constructor(x,y){
-        super(x,y,new Sprite(x,y,0,112,16,16,48,48,0xffffffff),3,{minX:16,minY:10,maxX:48,maxY:58});
+    constructor(x,y,sprite){
+        super(x,y,sprite,3,{minX:16,minY:10,maxX:48,maxY:58});
         this.calculatePlayerDirectionVector = {x:0, y:0};
 
         this.speed = 128;
@@ -32,7 +32,6 @@ class Enemy extends Entity{
     }
 
     onDeath(game){
-        game.playEnemyKilled();
         for (let i = 0; i < 32;i++){
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }

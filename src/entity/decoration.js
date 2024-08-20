@@ -16,7 +16,7 @@ class Decoration{
         switch(type){
             case "t":
                 this.animation.addState("anim",new Sprite(this.x,this.y,16,65,2,6,sizeX,sizeY,0xffffffff),320).addState("anim",new Sprite(this.x,this.y,18,65,2,6,sizeX,sizeY,0xffffffff),320);
-                level.addLight(x,y,0xff5599dd,576,576,10000,true);
+                level.addLight(x,y,0xff55aaff,576,576,10000,true);
                 break;
             case "c":
                 this.animation.addState("anim", new Sprite(this.x,this.y,0,0,16,16,64,64,0xff0000ff).setRotation(Math.random()<0.45?3.14:0));

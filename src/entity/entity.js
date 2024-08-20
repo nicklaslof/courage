@@ -79,6 +79,9 @@ class Entity{
             this.updateAABB();
             this.facingDirection.x = this.moveDirection.x;
             this.facingDirection.y = this.moveDirection.y;
+            this.onEntityMovement(game,deltaTime);
+        }else{
+            this.onEntityStopMovement(game,deltaTime);
         }
         this.sprite.x = (game.cameraCenterX - game.screen.level.player.x) + this.x;
         this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
@@ -90,6 +93,14 @@ class Entity{
         if (this.idle) return;
         this.sprite.horizontalFlip = !this.horizontalFlip;
         this.sprite.render(game);
+    }
+
+    onEntityMovement(game,deltaTime){
+
+    }
+
+    onEntityStopMovement(game,deltaTime){
+
     }
 
     updateAABB(){

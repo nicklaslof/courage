@@ -24,7 +24,7 @@ class Game{
         this.buttons = [];
         onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
         this.input = new Input();
-        onclick=e=> this.canvas.requestPointerLock();
+        onclick=e=> {if (!this.canvas.hasPointerCapture(0)) this.canvas.requestPointerLock()};
         onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
         onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
 
@@ -78,7 +78,7 @@ class Game{
         this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
 
         // Set the global darkness
-        this.gl.bkg(0.2,0.2,0.2,1.0);
+        this.gl.bkg(0.3,0.3,0.35,1.0);
         this.gl.cls();
         this.gl.flip = false;
         this.gl.col = 0xffffffff;
@@ -145,7 +145,7 @@ class Game{
 
     playShoot(){
         //zzfx(...[1.06,,194,.03,.05,.04,1,1.81,3.5,.2,,,.06,,,,,.72,.03,.05]);
-        zzfx(...[1.2,2,242,.02,.02,.001,,1.4,-80,,,,,,3.6,.1,.18,.87,.03,,-1374]);
+        zzfx(...[.8,2,242,.02,.02,.001,,1.4,-80,,,,,,3.6,.1,.18,.87,.03,,-1374]);
     }
 
     playEnemyKilled(){
@@ -168,6 +168,10 @@ class Game{
 
     playMobSpawner(){
         zzfx(...[2.2,,65,.02,.1,.46,1,2.1,,5,,,.05,.3,20,.5,.27,.3,.2,.11,-3480]);
+    }
+
+    playBugKilled(){
+        zzfx(...[,.95,58,.02,.02,.05,,.3,,13,24,.05,,.7,1.2,,,.4,.02,.01,-1354]); // Blip 87
     }
 
 }

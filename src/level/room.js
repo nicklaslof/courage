@@ -1,6 +1,7 @@
 import Tiles from "../tile/tiles.js";
 import Enemy from "../entity/enemy.js";
 import Decoration from "../entity/decoration.js";
+import Bug from "../entity/bug.js";
 
 class Room{
     static id = 0;
@@ -72,7 +73,7 @@ class Room{
                         let spawnX = (x*64)+game.getRandom(-64,64);
                         let spawnY = (y*64)+game.getRandom(-64,64);
                         if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
-                            let e = new Enemy(spawnX,spawnY);
+                            let e = new Bug(spawnX,spawnY,0xff666666,game.getRandom(80,140));
                             this.enemies.push(e);
                             level.addEntity(e);
                         }
