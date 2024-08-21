@@ -5,6 +5,7 @@ import GlTexture from "./graphic/gltexture.js";
 import Input from "./input/input.js";
 import {zzfx} from './lib/z.js'
 import Tiles from "./tile/tiles.js";
+import UI from "./ui/ui.js";
 
 class Game{
 
@@ -12,6 +13,8 @@ class Game{
         this.canvas = document.getElementById("g");
         this.canvas.width = W;
         this.canvas.height = H;
+
+        this.ui = new UI();
 
         this.gl = TinySprite(this.canvas);
         this.gl.flush();
@@ -62,9 +65,11 @@ class Game{
         let currentTime = performance.now();
         let deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
+        deltaTime = Math.min(32,deltaTime);
 
         this.input.tick(this);
         this.screen.tick(this,deltaTime);
+        this.ui.tick(this,deltaTime);
 
         this.gl.bkg(0,0,0,1);
         this.gl.cls();
@@ -96,6 +101,8 @@ class Game{
         this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
         this.screen.renderUI(this);
         this.gl.flush();
+
+        this.ui.render(this);
 
         this.fpsCounter += deltaTime;
         this.fps++;

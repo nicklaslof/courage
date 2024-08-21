@@ -25,7 +25,7 @@ class Enemy extends Entity{
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }
         game.screen.level.addLight(this.x,this.y,0xff00ffff,48,48,100,false);
-        if (Math.random()< 0.1){
+        if (Math.random()< 0.4){
             game.screen.level.addEntity(new Courage(this.x,this.y,game.getRandom(-1,1)));
         }
         

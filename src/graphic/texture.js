@@ -26,6 +26,7 @@ class Texture{
             ctx.font = "normal 32px monospace";
             ctx.fillStyle = "white";
             ctx.fillText("\u2665",128,60,32);
+            ctx.fillText("\uD83D\uDE31",160,60,32);
 
             // Create light circle
             var radgrad = ctx.createRadialGradient(370,470,0,370,470,250);

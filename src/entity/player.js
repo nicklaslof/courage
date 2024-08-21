@@ -10,12 +10,12 @@ import Box from "./box.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
-        this.speed = 328;
+        this.speed = 360;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;
         this.aimX = this.aimY = 0;
-        this.health = 80;
+        this.health = 20;
         this.hitDelay = 240;
         
 
@@ -87,6 +87,7 @@ class Player extends Entity{
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
+       // console.log(this.x + " "+this.y);
 
     }
 
