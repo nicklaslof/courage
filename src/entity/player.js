@@ -17,6 +17,7 @@ class Player extends Entity{
         this.aimX = this.aimY = 0;
         this.health = 20;
         this.hitDelay = 240;
+        this.courageFullPlayed = false;
         
 
         this.animation = new Animation();
@@ -87,7 +88,10 @@ class Player extends Entity{
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
-       // console.log(this.x + " "+this.y);
+        if (this.health == 100 && !this.courageFullPlayed){
+            this.courageFullPlayed = true;
+            game.playFullCourage();
+        }
 
     }
 

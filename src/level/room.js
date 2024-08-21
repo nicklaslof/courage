@@ -68,7 +68,7 @@ class Room{
         // Spawn enimies
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
-                let r = this.roomType == "n" ? Math.random()<0.03 : Math.random() < 0.1;
+                let r = this.roomType == "n" ? Math.random()<0.09 : Math.random() < 0.2;
                 if (r && level.getTile(x,y) == Tiles.floor1){
                     for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
                         let spawnX = (x*64)+game.getRandom(-64,64);
@@ -98,7 +98,7 @@ class Room{
                     case Tiles.floor1:
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
                         if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
-                        if (Math.random() < 0.05) level.addEntity(new Box(x*64,y*64));
+                        if (Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
                 }
             }
         }

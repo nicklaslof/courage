@@ -21,7 +21,7 @@ class Level{
         this.generateRooms(game);
         
         // Make the player start in the smallest room and remove all enemies from the room;
-        let startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*height})[0];
+        let startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[0];
         startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
@@ -36,7 +36,7 @@ class Level{
         let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 9; i++) {
             this.rooms.push(newRoom);
             newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
@@ -86,7 +86,7 @@ class Level{
 
             while (!roomCreated) {
                 let nextDirection = Math.floor(game.getRandom(0, 4));
-                rp = this.generateRoomProperties(game, roomMargin, 25, 25);
+                rp = this.generateRoomProperties(game, roomMargin, 15, 15);
 
                 let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-3,3))];
                 switch (nextDirection) {
