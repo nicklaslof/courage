@@ -29,8 +29,8 @@ class Light{
         if (this.flicker){
             this.flickerCounter += deltaTime;
             let s = Math.sin(this.flickerCounter/120);
-            this.sizeX += s/2;
-            this.sizeY += s/2;
+            this.sizeX += (s/2)*(deltaTime/2);
+            this.sizeY += (s/2)*(deltaTime/2);
         }
 
         this.sizeX = Math.max(0,this.sizeX);
