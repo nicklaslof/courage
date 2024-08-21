@@ -1,4 +1,5 @@
 import Sprite from "../graphic/sprite.js";
+import Courage from "./courage.js";
 import Entity from "./entity.js";
 
 class Bullet extends Entity{
@@ -28,6 +29,7 @@ class Bullet extends Entity{
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
+        if (otherEntity instanceof Courage) return;
         this.disposed = true;
         if(this.light != null) this.light.disposed = true;
         otherEntity.hit(game,1);

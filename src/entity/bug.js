@@ -13,9 +13,6 @@ class Bug extends Enemy{
         this.animation.addState("walk", new Sprite(x,y,0,96,9,8,size,size,c),240)
         .addState("walk", new Sprite(x,y,0,105,9,8,size,size,c),240);
         this.animation.setCurrentState("idle");
-
-        console.log(this.animation);
-        console.log(this.sprite);
     }
 
     tick(game,deltaTime){

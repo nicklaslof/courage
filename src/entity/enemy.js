@@ -1,10 +1,11 @@
 import Sprite from "../graphic/sprite.js";
+import Courage from "./courage.js";
 import Entity from "./entity.js";
 
 class Enemy extends Entity{
     constructor(x,y,sprite){
         super(x,y,sprite,3,{minX:16,minY:10,maxX:48,maxY:58});
-        this.calculatePlayerDirectionVector = {x:0, y:0};
+
 
         this.speed = 128;
         this.health = 1;
@@ -17,25 +18,16 @@ class Enemy extends Entity{
         this.moveAgainstPlayer(game);
     }
 
-    moveAgainstPlayer(game) {
-        let player = game.screen.level.player;
-        this.calculatePlayerDirectionVector.x = player.x - this.x;
-        this.calculatePlayerDirectionVector.y = player.y - this.y;
-
-        if (game.length(this.calculatePlayerDirectionVector) < 368 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
-            this.normalize(this.calculatePlayerDirectionVector);
-            this.moveDirection.x = this.calculatePlayerDirectionVector.x;
-            this.moveDirection.y = this.calculatePlayerDirectionVector.y;
-        } else {
-            this.moveDirection.x = this.moveDirection.y = 0;
-        }
-    }
+    
 
     onDeath(game){
         for (let i = 0; i < 32;i++){
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }
         game.screen.level.addLight(this.x,this.y,0xff00ffff,48,48,100,false);
+        if (Math.random()< 0.1){
+            game.screen.level.addEntity(new Courage(this.x,this.y,game.getRandom(-1,1)));
+        }
         
     }
 

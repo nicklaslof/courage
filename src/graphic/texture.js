@@ -23,6 +23,10 @@ class Texture{
             ctx.fillStyle = "rgba(0, 0, 0, 0)";
             ctx.fillRect(0,0,2048,2048);
 
+            ctx.font = "normal 32px monospace";
+            ctx.fillStyle = "white";
+            ctx.fillText("\u2665",128,60,32);
+
             // Create light circle
             var radgrad = ctx.createRadialGradient(370,470,0,370,470,250);
             radgrad.addColorStop(0, 'rgba(255,255,255,1)');

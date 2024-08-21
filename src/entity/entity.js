@@ -21,8 +21,11 @@ class Entity{
         this.health = health;
         this.hitDelay = 120;
         this.hitDelayCounter = this.hitDelay ;
+        this.calculatePlayerDirectionVector = {x:0, y:0};
         this.distanceToPlayer = {x:0, y:0};
+        this.moveToPlayerRange = 368;
         this.idle = false;
+        this.normalizeMove = true;
 
         this.updateAABB();
     }
@@ -57,7 +60,7 @@ class Entity{
 
         if (this.moveDirection.x != 0 || this.moveDirection.y != 0){
             //Normalize the moveDirection so the entity doesn't walk faster when walking in both x and y axis.
-            this.normalize(this.moveDirection);
+            if (this.normalizeMove) this.normalize(this.moveDirection);
             
             this.tempVector.x = this.x + this.moveDirection.x * this.speed * deltaTime/1000;
             this.tempVector.y = this.y + this.moveDirection.y * this.speed * deltaTime/1000;
@@ -101,6 +104,20 @@ class Entity{
 
     onEntityStopMovement(game,deltaTime){
 
+    }
+
+    moveAgainstPlayer(game) {
+        let player = game.screen.level.player;
+        this.calculatePlayerDirectionVector.x = player.x - this.x;
+        this.calculatePlayerDirectionVector.y = player.y - this.y;
+
+        if (game.length(this.calculatePlayerDirectionVector) < this.moveToPlayerRange && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+            this.normalize(this.calculatePlayerDirectionVector);
+            this.moveDirection.x = this.calculatePlayerDirectionVector.x;
+            this.moveDirection.y = this.calculatePlayerDirectionVector.y;
+        } else {
+            this.moveDirection.x = this.moveDirection.y = 0;
+        }
     }
 
     updateAABB(){
