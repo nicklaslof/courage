@@ -37,7 +37,6 @@ class Bullet extends Entity{
             this.calculatePlayerDirectionVector.y = this.stopAtLocation.y - this.y;
             if (game.length(this.calculatePlayerDirectionVector) < 32){
                 this.stopMovement = true;
-                console.log(this.stopMovement);
             }
 
         }

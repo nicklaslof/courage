@@ -21,7 +21,7 @@ class Spider extends Bug{
 
     tick(game,deltaTime){
         super.tick(game,deltaTime);
-        if (!this.spit && Math.random() < 0.01){
+        if (!this.spit && Math.random() < 0.005){
             this.spit = true;
             this.spitTimer = 1000;
         }
@@ -36,9 +36,9 @@ class Spider extends Bug{
                 let player = game.screen.level.player;
                 this.calculatePlayerDirectionVector.x = player.x - this.x;
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
-                if (game.length(this.calculatePlayerDirectionVector) < 500 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+                if (game.length(this.calculatePlayerDirectionVector) < 400 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                     this.normalize(this.calculatePlayerDirectionVector);
-                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,6000,180, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
+                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,6000,140, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
                 }
             }
 
