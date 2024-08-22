@@ -5,6 +5,7 @@ import Entity from "./entity.js";
 import Player from "./player.js";
 import Spider from "./spider.js";
 import Tile from "../tile/tile.js";
+import Clown from "./clown.js";
 
 class Bullet extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xff0000ff,stopAtLocation=null){
@@ -46,7 +47,7 @@ class Bullet extends Entity{
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
-        if (!(this.shootingEntity instanceof Player) && otherEntity instanceof Spider) return;
+        if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown)) return;
         if (otherEntity instanceof Courage) return;
         if (otherEntity instanceof Bullet) return;
         this.disposed = true;

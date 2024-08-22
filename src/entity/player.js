@@ -73,7 +73,7 @@ class Player extends Entity{
             let aim = {x:this.aimX ,y:this.aimY};
             this.normalize(aim);
 
-            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,600,1000,aim.x, aim.y,this));
+            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,600,700,aim.x, aim.y,this));
             this.canShoot = false;
             this.fireDelay = 128;
             game.playShoot();

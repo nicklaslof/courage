@@ -18,7 +18,6 @@ class Ghost extends Enemy{
     tick(game,deltaTime){
         super.tick(game,deltaTime);
         if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff7b367a,64,64,10000,false);
-        //this.light.renderOffsetX = 20;
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
@@ -27,7 +26,6 @@ class Ghost extends Enemy{
     onDeath(game){
         super.onDeath(game);
         game.screen.level.removeLight(this.light);
-        
     }
 }
 export default Ghost;
