@@ -196,7 +196,9 @@ class Entity{
 
         // Check with the tile if this entity will collide. Also pass in the tile position since each tile is a singleton and doesn't have a state but
         // it needs this position to do the calculation.
-        return tileResult.tile.doesCollideWithEntity(this,tileResult.tileX,tileResult.tileY);
+        let collides = tileResult.tile.doesCollideWithEntity(this,tileResult.tileX,tileResult.tileY);
+        if (collides) this.onCollision(game,tileResult.tile);
+        return collides;
     }
 
     normalize(v) {

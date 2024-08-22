@@ -33,7 +33,7 @@ class Room{
         // l = lava
         this.roomType = "n";
 
-        if (Math.random()< 0.2) this.roomType = "r";
+        if (Math.random()< 0.1) this.roomType = "r";
         else if (Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
 
         console.log("Room type: "+this.roomType);
