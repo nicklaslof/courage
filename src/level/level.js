@@ -5,9 +5,14 @@ import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(game,width,height){
+    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns){
         this.width = width;
         this.height = height;
+        this.chapter = chapter;
+        this.wallColor = wallColor;
+        this.floorColor = floorColor;
+        this.mobSpawns = mobSpawns;
+        this.name = name;
         this.tiles = new Array(this.width*this.height);
         this.tileRoom = new Array(this.width*this.height);
 
@@ -38,7 +43,7 @@ class Level{
 
         for (let i = 0; i < 9; i++) {
             this.rooms.push(newRoom);
-            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, rp.floorColor, rp.wallColor);
+            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
             // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
             // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
@@ -117,8 +122,10 @@ class Level{
             y : 0,
             width : Math.floor(game.getRandom(8,maxWidth)),
             height : Math.floor(game.getRandom(8,maxHeight)),
-            floorColor : 0xffcccccc,
-            wallColor : 0xff999999,
+            //floorColor : 0xffcccccc,
+           //  wallColor : 0xff999999,
+           //floorColor : 0xff559955,
+           // wallColor : 0xff333333,
         }
     }
 

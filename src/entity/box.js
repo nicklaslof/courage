@@ -3,7 +3,7 @@ import Courage from "./courage.js";
 import Entity from "./entity.js";
 class Box extends Entity{
     constructor(x,y){
-        super(x,y,new Sprite(x,y,0,48,12,11,32,32,0xffffffff),5,{minX:0,minY:0,maxX:24,maxY:42});
+        super(x,y,new Sprite(x,y,0,48,12,11,32,32,0xffffffff),5,{minX:0,minY:0,maxX:36,maxY:36});
         this.hitDelay = 200;
         this.treasureBox = Math.random()< 0.05 ? true:false;
         this.health = this.treasureBox ? 5 : 2;

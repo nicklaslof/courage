@@ -13,8 +13,13 @@ class UI{
     }
 
     render(game){
-        // Draw Fear vs Courage text
         this.context.clearRect(0,0,W,H);
+
+        // Draw levelname
+        let level = game.screen.level;
+        this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
+        
+        // Draw Fear vs Courage text
         this.drawTextAt("Fear",20,50,"white",14);
         this.drawTextAt("Courage",160,50,"white",14);
 
@@ -30,9 +35,9 @@ class UI{
 
         // Draw instructions
         let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
-        this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",12);
-        this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",12);
-        this.drawTextAt("Right mouse button to throw found bombs",screenCord.x,screenCord.y+40,"white",12);
+        this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
+        this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
+        this.drawTextAt("Right mouse button to throw found bombs",screenCord.x,screenCord.y+40,"white",14);
 
         // Draw fear face and heart
         /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);

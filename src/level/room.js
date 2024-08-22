@@ -3,6 +3,7 @@ import Enemy from "../entity/enemy.js";
 import Decoration from "../entity/decoration.js";
 import Bug from "../entity/bug.js";
 import Box from "../entity/box.js";
+import Spider from "../entity/spider.js";
 
 class Room{
     static id = 0;
@@ -33,7 +34,7 @@ class Room{
         this.roomType = "n";
 
         if (Math.random()< 0.2) this.roomType = "r";
-        else if (Math.random()< 0.9 && this.width * this.height > 400) this.roomType = "l";
+        else if (Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
 
         console.log("Room type: "+this.roomType);
 
@@ -55,7 +56,7 @@ class Room{
             let cx = Math.floor(this.x + this.width/2);
             let cy = Math.floor(this.y+ this.height/2);
             
-            let s = Math.floor(game.getRandom(3,6));
+            let s = Math.floor(game.getRandom(3,4));
             for (let x = cx - s; x < cx + s;x++){
                 for (let y = cy -s; y < cy + s;y++){
                     if (level.getTile(x,y)== Tiles.floor1){
@@ -74,7 +75,8 @@ class Room{
                         let spawnX = (x*64)+game.getRandom(-64,64);
                         let spawnY = (y*64)+game.getRandom(-64,64);
                         if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
-                            let e = new Bug(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
+                            let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
+                            let e = new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
                             this.enemies.push(e);
                             level.addEntity(e);
                         }

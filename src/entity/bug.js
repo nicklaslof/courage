@@ -22,7 +22,6 @@ class Bug extends Enemy{
   
     }
 
-
     onEntityMovement(game,deltaTime){
         this.animation.setCurrentState("walk");
     }

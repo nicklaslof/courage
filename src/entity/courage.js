@@ -10,7 +10,7 @@ class Courage extends Entity{
         this.counter=0;
         this.speed = 150;
         this.normalizeMove = false;
-        this.moveToPlayerRange = 96;
+        this.moveToPlayerRange = 192;
 
     }
 
