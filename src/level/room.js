@@ -69,7 +69,7 @@ class Room{
         // Spawn enimies
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){
-                let r = this.roomType == "n" ? Math.random()<0.09 : Math.random() < 0.2;
+                let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
                 if (r && level.getTile(x,y) == Tiles.floor1){
                     for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
                         let spawnX = (x*64)+game.getRandom(-64,64);
