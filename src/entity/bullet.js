@@ -8,7 +8,7 @@ import Tile from "../tile/tile.js";
 import Clown from "./clown.js";
 
 class Bullet extends Entity{
-    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xff0000ff,stopAtLocation=null){
+    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null){
         super(x,y,new Sprite(x,y,0,64,6,6,16,16,c),1,{minX:-6,minY:-6,maxX:6,maxY:6});
         this.sprite.renderOffsetX = -24;
         this.sprite.renderOffsetY = -24;

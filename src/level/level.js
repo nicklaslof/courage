@@ -5,7 +5,7 @@ import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches){
+    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms){
         this.width = width;
         this.height = height;
         this.chapter = chapter;
@@ -18,6 +18,10 @@ class Level{
         this.tileRoom = new Array(this.width*this.height);
         this.globalDarkness = globalDarkness;
         this.torches = torches;
+        this.minRoomSize = minRoomSize;
+        this.maxRoomSize = maxRoomSize;
+        this.numberOfRooms = numberOfRooms;
+        this.allRoomsCreated = false;
 
         this.entities = [];
 
@@ -26,7 +30,9 @@ class Level{
         this.decorations = [];
         this.rooms = [];
 
-        this.generateRooms(game);
+
+
+        this.allRoomsCreated = this.generateRooms(game);
         
         // Make the player start in the smallest room and remove all enemies from the room;
         let startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[0];
@@ -37,14 +43,14 @@ class Level{
 
     generateRooms(game) {
         let roomMargin = 0;
-        let rp = this.generateRoomProperties(game, roomMargin, 15, 15);
+        let rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
         rp.x = this.width / 2;
         rp.y = this.height / 2;
 
         let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
-
-        for (let i = 0; i < 9; i++) {
+        let numberOfRoomsCreated = 0;
+        for (let i = 0; i < this.numberOfRooms; i++) {
             this.rooms.push(newRoom);
             newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
@@ -91,10 +97,13 @@ class Level{
 
             previousRoom = newRoom;
             let roomCreated = false;
-
+            let loopMaxCounter = 0;
             while (!roomCreated) {
+                loopMaxCounter++;
+                console.log(loopMaxCounter);
+                if (loopMaxCounter > 30) break;
                 let nextDirection = Math.floor(game.getRandom(0, 4));
-                rp = this.generateRoomProperties(game, roomMargin, 15, 15);
+                rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
 
                 let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-3,3))];
                 switch (nextDirection) {
@@ -114,17 +123,21 @@ class Level{
 
                 newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
+                console.log(roomCreated);
                 previousDirection = nextDirection;
             }
+            if (!roomCreated) break;
+            numberOfRoomsCreated++;
         }
+        return (numberOfRoomsCreated == this.numberOfRooms);
     }
 
     generateRoomProperties(game, roomMargin,maxWidth,maxHeight){
         return {
             x : 0,
             y : 0,
-            width : Math.floor(game.getRandom(8,maxWidth)),
-            height : Math.floor(game.getRandom(8,maxHeight)),
+            width : Math.floor(game.getRandom(this.minRoomSize,maxWidth)),
+            height : Math.floor(game.getRandom(this.minRoomSize,maxHeight)),
             //floorColor : 0xffcccccc,
            //  wallColor : 0xff999999,
            //floorColor : 0xff559955,
