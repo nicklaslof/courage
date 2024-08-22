@@ -7,6 +7,7 @@ import Courage from "./courage.js";
 import Entity from "./entity.js";
 import Box from "./box.js";
 import Tile from "../tile/tile.js";
+import Spider from "./spider.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
@@ -105,7 +106,7 @@ class Player extends Entity{
         if (otherEntity instanceof Box) return;
         if (otherEntity instanceof Courage) return;
         if (otherEntity instanceof Tile) return;
-        
+        if (otherEntity instanceof Spider) return;
         this.hit(game,1);
     }
 

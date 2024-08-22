@@ -52,6 +52,7 @@ class Bullet extends Entity{
         this.disposed = true;
         if(this.light != null) this.light.disposed = true;
         if (otherEntity instanceof Tile) return;
+        if (this.stopAtLocation != null && !this.stopMovement) return;
         otherEntity.hit(game,1);
     }
 }
