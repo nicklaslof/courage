@@ -83,7 +83,8 @@ class Game{
         this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
 
         // Set the global darkness
-        this.gl.bkg(0.3,0.3,0.35,1.0);
+        let d = this.screen.level.globalDarkness;
+        this.gl.bkg(d.r,d.g,d.b,d.a);
         this.gl.cls();
         this.gl.flip = false;
         this.gl.col = 0xffffffff;

@@ -5,7 +5,7 @@ import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance){
+    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches){
         this.width = width;
         this.height = height;
         this.chapter = chapter;
@@ -16,6 +16,8 @@ class Level{
         this.name = name;
         this.tiles = new Array(this.width*this.height);
         this.tileRoom = new Array(this.width*this.height);
+        this.globalDarkness = globalDarkness;
+        this.torches = torches;
 
         this.entities = [];
 

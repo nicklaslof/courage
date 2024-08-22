@@ -89,7 +89,7 @@ class Room{
         for(let x=startTileX;x<startTileX+width;x++){
             for(let y=startTileY;y<startTileY+height;y++){
                 let currentTile=level.getTile(x,y);
-                if(Math.random()<0.2) switch(currentTile){
+                if(level.torches && Math.random()<0.2) switch(currentTile){
                     case Tiles.wall1:level.addDecoration(new Decoration(level,x*64,y*64,8,24,"t"));break;
                     case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64,y*64-32,8,24,"t"));break;
                     case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+23,y*64,8,24,"t"));break;
