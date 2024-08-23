@@ -28,7 +28,7 @@ class Fire extends Enemy{
         this.light.tick(game,deltaTime);
 
 
-        if (!this.spit && Math.random() < 0.0009){
+        if (!this.spit && Math.random() < 0.001){
             this.spit = true;
             this.spitTimer = 1000;
         }

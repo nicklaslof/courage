@@ -6,13 +6,14 @@ import Bullet from "./bullet.js";
 class Clown extends Enemy{
         
     constructor(x,y,c,speed,size){
-        super(x,y,new Sprite(x,y,0,80,9,14,32,32,c));
+        super(x,y,new Sprite(x,y,0,80,9,14,32,32,0xffffffff));
         this.speed = 20;
+        this.c = 0xffffffff;
 
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("attack", new Sprite(x,y,0,80,9,14,32,32,c),120)
-        .addState("attack", new Sprite(x,y,9,80,9,14,32,32,c),120);
+        this.animation.addState("attack", new Sprite(x,y,0,80,9,14,32,32,0xffffffff),120)
+        .addState("attack", new Sprite(x,y,9,80,9,14,32,32,0xffffffff),120);
         this.animation.setCurrentState("idle");
         this.moveToPlayerRange = 800;
 
