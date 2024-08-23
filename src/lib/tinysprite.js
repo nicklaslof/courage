@@ -54,9 +54,9 @@ export function TinySprite(canvas) {
                 'uniform sampler2D j;',
                 'void main(){',
                 'vec4 c=texture2D(j,g)*h;',
-                'vec2 p = mod(gl_FragCoord.xy, 4.0);',
+                'vec2 p = mod(gl_FragCoord.xy, 3.0);',
                 'float d = (mod(floor(p.x) + floor(p.y) * 2.0, 4.0) * 4.0 + mod(floor(p.x / 2.0) + floor(p.y / 2.0) * 2.0, 4.0)) / 16.0 -0.5;',
-                'gl_FragColor=vec4(c.rgb + vec3(d*0.3), c.a);;',
+                'gl_FragColor=vec4(c.rgb + vec3(d*0.5), c.a);;',
                 '}'
             ].join('\n')
         ),

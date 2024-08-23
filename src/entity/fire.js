@@ -1,0 +1,63 @@
+import Sprite from "../graphic/sprite.js";
+import Animation from "./animation.js";
+import Enemy from "./enemy.js";
+import Bullet from "./bullet.js";
+
+class Fire extends Enemy{
+    constructor(x,y,c,speed,size){
+        super(x,y,new Sprite(x,y,32,64,9,8,size*1.2,size*1.2,0xffffffff));
+        this.speed = speed;
+        size *= 1.2;
+
+        this.animation = new Animation();
+        this.animation.addState("idle",this.sprite,0.1);
+        this.animation.addState("burning", new Sprite(x,y,32,64,9,8,size,size,0xffffffff),240)
+        .addState("burning", new Sprite(x,y,41,64,9,8,size,size,0xffffffff),240);
+        this.animation.setCurrentState("burning");
+        this.moveToPlayerRange = 1024;
+
+        this.spitTimer = 0;
+    }
+
+    tick(game,deltaTime){
+        super.tick(game,deltaTime);
+        this.animation.setCurrentState("burning");
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff0044cc,256,256,10000,true);
+        this.light.x = this.x;
+        this.light.y = this.y;
+        this.light.tick(game,deltaTime);
+
+
+        if (!this.spit && Math.random() < 0.0009){
+            this.spit = true;
+            this.spitTimer = 1000;
+        }
+
+        if (this.spit){
+            this.spitTimer -= deltaTime;
+            this.moveDirection.x = this.moveDirection.y = 0;
+
+            if (this.spitTimer < 500 && !this.hasSpit){
+                this.hasSpit = true;
+                
+                let player = game.screen.level.player;
+                this.calculatePlayerDirectionVector.x = player.x - this.x;
+                this.calculatePlayerDirectionVector.y = player.y - this.y;
+                if (game.length(this.calculatePlayerDirectionVector) < 400 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+                    this.normalize(this.calculatePlayerDirectionVector);
+                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,6000,200, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0088ff,{x:player.x,y:player.y},true,new Sprite(this.x,this.y,32,74,7,5,16,16,0xffffffff)));
+                }
+            }
+
+            if (this.spitTimer <= 0) this.spit = this.hasSpit = false;
+        }
+
+    }
+
+
+    onDeath(game){
+        super.onDeath(game);
+        game.screen.level.removeLight(this.light);
+    }
+}
+export default Fire;

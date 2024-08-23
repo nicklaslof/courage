@@ -6,10 +6,11 @@ import Player from "./player.js";
 import Spider from "./spider.js";
 import Tile from "../tile/tile.js";
 import Clown from "./clown.js";
+import Fire from "./fire.js";
 
 class Bullet extends Entity{
-    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null){
-        super(x,y,new Sprite(x,y,0,64,6,6,16,16,c),1,{minX:-6,minY:-6,maxX:6,maxY:6});
+    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null,flickering=false,customSprite=null){
+        super(x,y,customSprite == null ? new Sprite(x,y,0,64,6,6,16,16,c) : customSprite,1,{minX:-6,minY:-6,maxX:6,maxY:6});
         this.sprite.renderOffsetX = -24;
         this.sprite.renderOffsetY = -24;
         this.ttl = ttl;
@@ -19,11 +20,12 @@ class Bullet extends Entity{
         this.light = null;
         this.stopAtLocation = stopAtLocation;
         this.stopMovement = false;
+        this.flickering = flickering;
     }
 
     tick(game,deltaTime){
         if (this.light == null){
-            this.light = game.screen.level.addLight(this.x,this.y,this.sprite.c,96,96,this.ttl);
+            this.light = game.screen.level.addLight(this.x,this.y,this.sprite.c,96,96,this.ttl,this.flickering);
             this.light.renderOffsetX = -20;
             this.light.renderOffsetY = -24;
         }
@@ -47,7 +49,7 @@ class Bullet extends Entity{
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
-        if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown)) return;
+        if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown || otherEntity instanceof Fire)) return;
         if (otherEntity instanceof Courage) return;
         if (otherEntity instanceof Bullet) return;
         this.disposed = true;
