@@ -17,7 +17,7 @@ class Room{
         console.log("---------------------");*/
     }
 
-    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff){
+    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff,lastRoom){
         this.floorColor = floorColor;
         this.wallColor = wallColor;
         this.x = startTileX;
@@ -33,8 +33,10 @@ class Room{
         // l = lava
         this.roomType = "n";
 
-        if (Math.random()< 0.1) this.roomType = "r";
-        else if (Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
+        if (!lastRoom){
+            if (Math.random()< 0.1) this.roomType = "r";
+            else if (Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
+        }
 
         console.log("Room type: "+this.roomType);
 
@@ -103,6 +105,13 @@ class Room{
                         if (Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
                 }
             }
+        }
+        if (lastRoom){
+            let cx = Math.floor(this.x + this.width/2);
+            let cy = Math.floor(this.y+ this.height/2);
+            level.addTile(cx,cy,Tiles.stairs,this);
+            let l = level.addLight(cx*64,cy*64,0xff00ffff,256,256,10000,false);
+            l.renderOffsetX = 8;
         }
 
         Room.id++;

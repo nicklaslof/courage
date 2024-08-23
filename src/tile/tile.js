@@ -1,4 +1,5 @@
 import Bullet from "../entity/bullet.js";
+import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Tiles from "./tiles.js";
 
@@ -19,8 +20,11 @@ class Tile{
         this.sprite.render(game);
     }
 
-    doesCollideWithEntity(entity, tilePosX, tilePosY){
+    doesCollideWithEntity(game,entity, tilePosX, tilePosY){
         if (entity instanceof Bullet && this == Tiles.lava) return false;
+
+        if (entity instanceof Player && this == Tiles.stairs) game.screen.tryChangeLevel(entity);
+
         // Set our collision checking AABB to the size of the tilecollision and the position in world coordinates.
         
         this.tempAABB.minX = this.AABB.minX + tilePosX*64;

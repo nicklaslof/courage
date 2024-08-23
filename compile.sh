@@ -9,8 +9,8 @@ cd dist
 #terser bundle.js -o i.js --compress --mangle --mangle-props reserved=["g","img","flush","bkg","cls","col","init","generate","createWave"] --timings --toplevel --module
 terser bundle.js -o g.js --compress --mangle --mangle-props --timings --toplevel --module
 rm bundle.js
-#roadroller -OO g.js -o ./o.js
-roadroller -Zab22 -Zdy0 -Zlr1910 -Zmc3 -Zmd105 -Zpr16 -S0,1,2,3,5,6,13,25,42,177,354,453 g.js -o ./o.js
+roadroller -OO g.js -o ./o.js
+#roadroller -Zab22 -Zdy0 -Zlr1910 -Zmc3 -Zmd105 -Zpr16 -S0,1,2,3,5,6,13,25,42,177,354,453 g.js -o ./o.js
 #/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed 's/\x1f//g' o.js > oo.js
 echo "<meta charset="UTF-8"><style>" > index-template.html
 cat ../src/i.css >> index-template.html

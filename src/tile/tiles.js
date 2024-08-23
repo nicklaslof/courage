@@ -12,6 +12,7 @@ class Tiles{
     static floor1 = new Tile(0,0,16,16,0xffffffff);
     static lava = new Tile(3,3,1,1,0xff00a5ff);
     static air = new Tile(0,0,0,0,0xffffffff);
+    static stairs = new Tile(48,0,16,16,0xffffffff);
 }
 
 

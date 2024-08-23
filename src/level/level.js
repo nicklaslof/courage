@@ -51,8 +51,9 @@ class Level{
         let previousRoom = null, previousDirection = null;
         let numberOfRoomsCreated = 0;
         for (let i = 0; i < this.numberOfRooms; i++) {
+            let lastRoom = i == this.numberOfRooms-1;
             this.rooms.push(newRoom);
-            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,);
+            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,lastRoom);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
             // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
             // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
