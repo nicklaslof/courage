@@ -101,8 +101,8 @@ class Room{
                 switch(currentTile){
                     case Tiles.floor1:
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
-                        if(this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
-                        if (Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
+                        if(!lastRoom && this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
+                        if (!lastRoom && Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
                 }
             }
         }
