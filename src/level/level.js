@@ -1,11 +1,12 @@
 import Particle from "../entity/particle.js";
 import Player from "../entity/player.js";
+import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms){
+    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom){
         this.width = width;
         this.height = height;
         this.chapter = chapter;
@@ -21,6 +22,8 @@ class Level{
         this.minRoomSize = minRoomSize;
         this.maxRoomSize = maxRoomSize;
         this.numberOfRooms = numberOfRooms;
+        this.lava = lava;
+        this.battleRoom = battleRoom;
         this.allRoomsCreated = false;
 
         this.entities = [];
@@ -39,6 +42,12 @@ class Level{
         startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
+
+        if (this.floorColor == 0x00000000){
+            this.stars = new Sprite(W/2,H/2,768,768,800,800,W*2,H*2,0xffffffff);
+            this.playerStartX = this.player.x;
+            this.playerStartY = this.player.y;
+        }
     }
 
     generateRooms(game) {
@@ -53,7 +62,7 @@ class Level{
         for (let i = 0; i < this.numberOfRooms; i++) {
             let lastRoom = i == this.numberOfRooms-1;
             this.rooms.push(newRoom);
-            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,lastRoom);
+            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,lastRoom,this.lava,this.battleRoom);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
             // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
             // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
@@ -169,6 +178,12 @@ class Level{
         });
 
         this.decorations.forEach(d => d.tick(game,deltaTime));
+
+        if (this.stars != null){
+            this.stars.tick(game,deltaTime);
+            this.stars.x = W/2 + (this.playerStartX - this.player.x)/5;
+            this.stars.y = H/2 + (this.playerStartY - this.player.y)/5;
+        }
     }
 
     addEntity(entity){
@@ -227,6 +242,10 @@ class Level{
     }
 
     render(game){
+        if (this.floorColor == 0x00000000){
+            this.stars.render(game);
+            
+        }
         // Render tiles around the player
         for(let x = Math.floor((this.player.x -W)/64); x < Math.floor((this.player.x + W)/64); x++){
             for (let y = Math.floor((this.player.y -H)/64); y < Math.floor((this.player.y + H)/64); y++){

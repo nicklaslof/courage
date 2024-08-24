@@ -34,11 +34,13 @@ class UI{
         this.context.fillRect(19,25,courage,10);
 
         // Draw instructions
+        if (level.chapter == 1){
         let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
         this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
         this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
         this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
         this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
+        }
 
         // Draw fear face and heart
         /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);

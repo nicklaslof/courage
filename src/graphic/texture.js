@@ -28,6 +28,19 @@ class Texture{
             ctx.fillText("\u2665",128,60,32);
             ctx.fillText("\uD83D\uDE31",160,60,32);
 
+            // Create stars
+            
+            //ctx.fillRect(768,768,400,400);
+            for (let x = 768; x < 768+800; x++){
+                for (let y = 768; y < 768+800; y++){
+                    if (Math.random() < 0.001){
+                        let c = 128 +  (Math.random()*128);
+                        ctx.fillStyle = "rgba("+c+", "+c+", "+c+", 1)";
+                        ctx.fillRect(x,y,1,1);
+                    } 
+                }
+            }
+
             // Create light circle
             var radgrad = ctx.createRadialGradient(370,470,0,370,470,250);
             radgrad.addColorStop(0, 'rgba(255,255,255,1)');
@@ -35,6 +48,8 @@ class Texture{
             radgrad.addColorStop(1, 'rgba(255,255,255,0)');          
             ctx.fillStyle = radgrad;
             ctx.fillRect(128,200,550,550);
+
+
             
             // Draw the imagedata from the asset texture to it
             ctx.putImageData(imageData,0,0);

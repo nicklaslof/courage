@@ -17,7 +17,7 @@ class Room{
         console.log("---------------------");*/
     }
 
-    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff,lastRoom){
+    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff,lastRoom,lava,battleRoom){
         this.floorColor = floorColor;
         this.wallColor = wallColor;
         this.x = startTileX;
@@ -34,8 +34,8 @@ class Room{
         this.roomType = "n";
 
         if (!lastRoom){
-            if (Math.random()< 0.1) this.roomType = "r";
-            else if (Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
+            if (battleRoom && Math.random()< 0.1) this.roomType = "r";
+            else if (lava && Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
         }
 
         console.log("Room type: "+this.roomType);
