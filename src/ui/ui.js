@@ -3,53 +3,69 @@ class UI{
     constructor(){
         this.canvas = document.getElementById("u");
         this.context = this.canvas.getContext("2d");
+
         this.canvas.width = W;
         this.canvas.height = H;
     }
 
     tick(game,deltaTime){
-        this.instructionX = this.instructionX == null ? game.screen.level.player.x - 94 : this.instructionX;
-        this.instructionY = this.instructionY == null ? game.screen.level.player.y: this.instructionY;
+        if (!game.showIntro){
+            this.instructionX = this.instructionX == null ? game.screen.level.player.x - 94 : this.instructionX;
+            this.instructionY = this.instructionY == null ? game.screen.level.player.y: this.instructionY;
+        }
     }
 
     render(game){
         this.context.clearRect(0,0,W,H);
 
-        // Draw levelname
-        let level = game.screen.level;
-        this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
-        
-        // Draw Fear vs Courage text
-        this.drawTextAt("Fear",20,50,"white",14);
-        this.drawTextAt("Courage",160,50,"white",14);
+        if (game.showIntro){
 
-        // Draw meter bar
-        this.context.fillStyle = '#ffffff';
-        this.context.fillRect(18,24,202,12);
+            this.drawTextAt("Courage",(W/2)-77,40,"white",36);
+            this.drawTextAt("A game for JS13k 2024 by Nicklas Löf",(W/2)-260,100,"white",24);
+            this.drawTextAt("This is Billy",(W/2)-95,234,"white",24);
 
-        // Draw the courage bar
-        let courage = Math.min(200,game.screen.level.player.health*2);
-        let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
-        this.context.fillStyle = color;
-        this.context.fillRect(19,25,courage,10);
+            this.drawTextAt("Help him get the courage",(W/2)-175,500,"white",24);
+            this.drawTextAt("to face his 13 different phobias",(W/2)-236,550,"white",24);
 
-        // Draw instructions
-        if (level.chapter == 1){
-        let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
-        this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
-        this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
-        this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
-        this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
-        }
+            this.drawTextAt("Click to start!",(W/2)-108,705,"white",24);
 
-        // Draw fear face and heart
-        /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
+        }else{
+            // Draw levelname
+            let level = game.screen.level;
+            this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
+            
+            // Draw Fear vs Courage text
+            this.drawTextAt("Fear",20,50,"white",14);
+            this.drawTextAt("Courage",160,50,"white",14);
 
-        this.context.drawImage(game.texture.image,128,38,32,32,182,64,32,32);
-        this.context.globalCompositeOperation = 'source-atop';
-        this.context.fillStyle = '#ff0000';
-        this.context.fillRect(182, 64, 32, 32);
-        this.context.globalCompositeOperation = 'source-over';*/
+            // Draw meter bar
+            this.context.fillStyle = '#ffffff';
+            this.context.fillRect(18,24,202,12);
+
+            // Draw the courage bar
+            let courage = Math.min(200,game.screen.level.player.health*2);
+            let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
+            this.context.fillStyle = color;
+            this.context.fillRect(19,25,courage,10);
+
+            // Draw instructions
+            if (level.chapter == 1){
+            let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
+            this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
+            this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
+            this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
+            this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
+            }
+
+            // Draw fear face and heart
+            /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
+
+            this.context.drawImage(game.texture.image,128,38,32,32,182,64,32,32);
+            this.context.globalCompositeOperation = 'source-atop';
+            this.context.fillStyle = '#ff0000';
+            this.context.fillRect(182, 64, 32, 32);
+            this.context.globalCompositeOperation = 'source-over';*/
+    }
 
 
     }

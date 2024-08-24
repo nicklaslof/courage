@@ -6,6 +6,7 @@ import Input from "./input/input.js";
 import {zzfx} from './lib/z.js'
 import Tiles from "./tile/tiles.js";
 import UI from "./ui/ui.js";
+import IntroScreen from "./screen/introscreen.js";
 
 class Game{
 
@@ -36,7 +37,10 @@ class Game{
         this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
-        this.screen = new Screen(this,W, H);
+        this.showIntro = true;
+        this.screen = new IntroScreen();
+
+
 
         this.cameraCenterX = W/2;
         this.cameraCenterY = H/2;
@@ -61,47 +65,50 @@ class Game{
 
     update(){
         if (this.texture.glTexture.dirty) return;
-
+        
         let currentTime = performance.now();
         let deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
         deltaTime = Math.min(32,deltaTime);
 
         this.input.tick(this);
-        this.screen.tick(this,deltaTime);
         this.ui.tick(this,deltaTime);
+        //if (!this.showIntro){
+            this.screen.tick(this,deltaTime);
 
-        this.gl.bkg(0,0,0,1);
-        this.gl.cls();
 
-        // Set blend mode and render the level
-        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
-        this.screen.render(this);
-        this.gl.flush();
+            this.gl.bkg(0,0,0,1);
+            this.gl.cls();
 
-        // Bind the light buffer
-        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
+            // Set blend mode and render the level
+            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
+            this.screen.render(this);
+            this.gl.flush();
 
-        // Set the global darkness
-        let d = this.screen.level.globalDarkness;
-        this.gl.bkg(d.r,d.g,d.b,d.a);
-        this.gl.cls();
-        this.gl.flip = false;
-        this.gl.col = 0xffffffff;
-        this.gl.g.enable( this.gl.g.BLEND );
-        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA, this.gl.g.ONE);
-        this.screen.renderLight(this);
-        this.gl.flush();
-        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, null);
-        
-        this.gl.col = 0xffffffff;
-        this.gl.g.blendFunc(this.gl.g.DST_COLOR, this.gl.g.ZERO);
-        this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
+            // Bind the light buffer
+            this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
 
-        this.gl.flush();
-        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
-        this.screen.renderUI(this);
-        this.gl.flush();
+            // Set the global darkness
+            let d = this.screen.getGlobalDarkness();
+            this.gl.bkg(d.r,d.g,d.b,d.a);
+            this.gl.cls();
+            this.gl.flip = false;
+            this.gl.col = 0xffffffff;
+            this.gl.g.enable( this.gl.g.BLEND );
+            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA, this.gl.g.ONE);
+            this.screen.renderLight(this);
+            this.gl.flush();
+            this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, null);
+            
+            this.gl.col = 0xffffffff;
+            this.gl.g.blendFunc(this.gl.g.DST_COLOR, this.gl.g.ZERO);
+            this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
+
+            this.gl.flush();
+            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
+            this.screen.renderUI(this);
+            this.gl.flush();
+       // }
 
         this.ui.render(this);
 
@@ -112,6 +119,11 @@ class Game{
             console.log("FPS: "+this.fps);
             this.fpsCounter = this.fps = 0;
         }
+    }
+
+    switchToGame(){
+        this.showIntro = false;
+        this.screen = new Screen(this,W, H);
     }
 
     // Generate a random number between min and max;

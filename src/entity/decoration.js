@@ -37,7 +37,7 @@ class Decoration{
         this.sprite.tick();
     }
     render(game){
-        this.sprite.render(game);
+        if (this.sprite != null) this.sprite.render(game);
     }
 }
 
