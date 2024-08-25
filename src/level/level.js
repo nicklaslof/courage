@@ -36,9 +36,16 @@ class Level{
 
 
         this.allRoomsCreated = this.generateRooms(game);
-        
+        let startRoom = null;
         // Make the player start in the smallest room and remove all enemies from the room;
-        let startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[0];
+        for (let i = 0; i < this.rooms.length;i++){
+            startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[i];
+            if (!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom) break;
+            console.log("finding room "+ i + "   "+(!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom));
+        }
+
+        //if (startRoom == null) this.rooms[0];
+        
         startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);

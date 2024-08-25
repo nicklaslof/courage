@@ -25,6 +25,8 @@ class Room{
         this.width = width;
         this.height = height;
         this.enemies = [];
+        this.lastRoom = lastRoom;
+
 
 
         // Roomtype:
@@ -34,11 +36,14 @@ class Room{
         this.roomType = "n";
 
         if (!lastRoom){
-            if (battleRoom && Math.random()< 0.1) this.roomType = "r";
+            if (battleRoom && Math.random()< 0.1)this.roomType = "r";
             else if (lava && Math.random()< 0.5 && (this.width * this.height > 180)) this.roomType = "l";
         }
 
-        console.log("Room type: "+this.roomType);
+
+        this.lava = this.roomType == "l";
+        this.battleRoom = this.roomType == "r";
+
 
         for (let x = startTileX; x < startTileX+width; x++){
             for (let y = startTileY; y < startTileY+height; y++){

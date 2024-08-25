@@ -11,7 +11,7 @@ class UI{
     tick(game,deltaTime){
         if (!game.showIntro){
             this.instructionX = this.instructionX == null ? game.screen.level.player.x - 94 : this.instructionX;
-            this.instructionY = this.instructionY == null ? game.screen.level.player.y: this.instructionY;
+            this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
         }
     }
 
