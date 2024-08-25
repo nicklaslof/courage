@@ -40,21 +40,21 @@ class UI{
 
                 // Draw levelname
                 let level = game.screen.level;
-                this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
+                this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,36,"white",14);
                 
                 // Draw Fear vs Courage text
-                this.drawTextAt("Fear",20,50,"white",14);
-                this.drawTextAt("Courage",160,50,"white",14);
+                this.drawTextAt("Fear",20,70,"white",14);
+                this.drawTextAt("Courage",160,70,"white",14);
 
                 // Draw meter bar
                 this.context.fillStyle = '#ffffff';
-                this.context.fillRect(18,24,202,12);
+                this.context.fillRect(18,44,202,12);
 
                 // Draw the courage bar
                 let courage = Math.min(200,game.screen.level.player.health*2);
                 let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
                 this.context.fillStyle = color;
-                this.context.fillRect(19,25,courage,10);
+                this.context.fillRect(19,45,courage,10);
 
                 // Draw instructions
                 if (level.chapter == 1){
