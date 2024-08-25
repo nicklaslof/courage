@@ -47,14 +47,7 @@ class UI{
                 this.drawTextAt("Courage",160,70,"white",14);
 
                 // Draw meter bar
-                this.context.fillStyle = '#ffffff';
-                this.context.fillRect(18,44,202,12);
-
-                // Draw the courage bar
-                let courage = Math.min(200,game.screen.level.player.health*2);
-                let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
-                this.context.fillStyle = color;
-                this.context.fillRect(19,45,courage,10);
+                this.drawCourageMeter(game,18,44,1,1,true);
 
                 // Draw instructions
                 if (level.chapter == 1){
@@ -65,6 +58,9 @@ class UI{
                 this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
                 }
 
+                let pos = this.projectWorldToScreen(game,game.screen.level.player.x-10,game.screen.level.player.y-28);
+                this.drawCourageMeter(game,pos.x,pos.y,0.1,0.3,false);
+
                 // Draw fear face and heart
                 /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
 
@@ -74,9 +70,20 @@ class UI{
                 this.context.fillRect(182, 64, 32, 32);
                 this.context.globalCompositeOperation = 'source-over';*/
             }
+        }
     }
+    drawCourageMeter(game,x,y,scaleX,scaleY,border) {
+        
+        if (border){
+            this.context.fillStyle = '#ffffff';
+            this.context.fillRect(x, y, 202*scaleX, 12*scaleY);
+        }
 
-
+        // Draw the courage bar
+        let courage = Math.min(200, game.screen.level.player.health * 2);
+        let color = this.interpolateColor("ff0000", "#00ff00", courage / 2);
+        this.context.fillStyle = color;
+        this.context.fillRect(x+1,y+1 , courage*scaleX, 10*scaleY);
     }
 
     projectWorldToScreen(game, worldX,worldY){
