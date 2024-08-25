@@ -26,7 +26,7 @@ class Courage extends Entity{
             this.moveDirection.x = 0;
             this.moveDirection.y = 0;
             this.moveAgainstPlayer(game);
-            this.speed = game.screen.level.player.speed+5;
+            this.speed = game.screen.level.player.playerSpeed+5;
         }
 
         if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff0000ff,64,64,10000,false);
