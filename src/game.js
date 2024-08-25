@@ -31,6 +31,9 @@ class Game{
         onclick=e=> {if (!this.canvas.hasPointerCapture(0)) this.canvas.requestPointerLock()};
         onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
         onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
 
         this.setupLightBuffer();
 
@@ -215,7 +218,8 @@ class Game{
     }
 
     playBombExplosion(){
-        zzfx(...[2,,69,.01,.21,.73,4,1.3,-6,8,,,,.4,38,.6,.33,.46,.13]); // Explosion 136
+        zzfx(...[.8,,79,,.17,.65,4,1.6,8,-1,,,,.8,,.3,,.31,.22,.07,-2865]); // Explosion 157
+        zzfx(...[2.5,,88,.01,.23,.48,4,2.1,,-5,,,,.6,,.8,.16,.37,.06]); // Explosion 167
     }
 
 }

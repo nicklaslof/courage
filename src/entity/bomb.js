@@ -1,11 +1,12 @@
 import Sprite from "../graphic/sprite.js";
 import Tile from "../tile/tile.js";
+import Animation from "./animation.js";
 import Entity from "./entity.js";
 import Explosion from "./explosion.js";
 
 class Bomb extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity, stopAtLocation){
-        super(x,y,new Sprite(x,y,19,81,8,9,16,16,0xffffffff),1,{minX:0,minY:-8,maxX:0,maxY:8});
+        super(x,y,new Sprite(x,y,19,81,8,9,24,24,0xffffffff),1,{minX:0,minY:-8,maxX:0,maxY:8});
         this.ttl = ttl;
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
@@ -16,6 +17,13 @@ class Bomb extends Entity{
         this.explode = false;
         this.sprite.renderOffsetY=-24;
         this.sprite.renderOffsetX=-24;
+
+        this.animation = new Animation();
+        this.animation.addState("idle",this.sprite,0.1);
+        this.animation.addState("exploding", this.sprite,160)
+        .addState("exploding", new Sprite(x,y,0,32,1,1,1,1,0x00000000),240);
+        
+        this.animation.setCurrentState("idle");
     }
 
     tick(game,deltaTime){
@@ -24,6 +32,10 @@ class Bomb extends Entity{
             this.disposed = true;
             return;
         }
+
+        if (this.stopBomb) this.animation.setCurrentState("exploding");
+        else this.animation.setCurrentState("idle");
+        
         if (this.light == null){
             this.light = game.screen.level.addLight(this.x,this.y,0xff0099ff,300,300,this.ttl,true);
             this.light.renderOffsetX = 7;
@@ -38,7 +50,9 @@ class Bomb extends Entity{
             this.stopVector.x = this.stopAtLocation.x - this.x;
             this.stopVector.y = this.stopAtLocation.y - this.y;
             let distance = game.length(this.stopVector);
-            if (distance < 64) this.stopBomb = true;
+            if (distance < 48) this.stopBomb = true;
+            
+            
         }else{
             this.moveDirection.x = this.moveDirection.y = 0;
         }

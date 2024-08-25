@@ -106,9 +106,6 @@ class Player extends Entity{
 
         if (game.input.bombPressed && this.canShoot){
             let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
-           // aimWorld.x = this.x + aim.x *300;
-           // aimWorld.y = this.y + aim.y *300;
-            //console.log(this.aimX + "  "+this.aimY   + "  "+aimWorld.x +"  "+aimWorld.y + "  player: "+this.x+ " "+this.y);
             game.screen.level.addEntity(new Bomb(this.x+32,this.y+32,2000,800,aim.x,aim.y,this,aimWorld));
             this.canShoot = false;
             this.fireDelay = 128;
