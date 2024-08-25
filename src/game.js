@@ -73,42 +73,41 @@ class Game{
 
         this.input.tick(this);
         this.ui.tick(this,deltaTime);
-        //if (!this.showIntro){
-            this.screen.tick(this,deltaTime);
+
+        this.screen.tick(this,deltaTime);
 
 
-            this.gl.bkg(0,0,0,1);
-            this.gl.cls();
+        this.gl.bkg(0,0,0,1);
+        this.gl.cls();
 
-            // Set blend mode and render the level
-            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
-            this.screen.render(this);
-            this.gl.flush();
+        // Set blend mode and render the level
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
+        this.screen.render(this);
+        this.gl.flush();
 
-            // Bind the light buffer
-            this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
+        // Bind the light buffer
+        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, this.fb);
 
-            // Set the global darkness
-            let d = this.screen.getGlobalDarkness();
-            this.gl.bkg(d.r,d.g,d.b,d.a);
-            this.gl.cls();
-            this.gl.flip = false;
-            this.gl.col = 0xffffffff;
-            this.gl.g.enable( this.gl.g.BLEND );
-            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA, this.gl.g.ONE);
-            this.screen.renderLight(this);
-            this.gl.flush();
-            this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, null);
-            
-            this.gl.col = 0xffffffff;
-            this.gl.g.blendFunc(this.gl.g.DST_COLOR, this.gl.g.ZERO);
-            this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
+        // Set the global darkness
+        let d = this.screen.getGlobalDarkness();
+        this.gl.bkg(d.r,d.g,d.b,d.a);
+        this.gl.cls();
+        this.gl.flip = false;
+        this.gl.col = 0xffffffff;
+        this.gl.g.enable( this.gl.g.BLEND );
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA, this.gl.g.ONE);
+        this.screen.renderLight(this);
+        this.gl.flush();
+        this.gl.g.bindFramebuffer(this.gl.g.FRAMEBUFFER, null);
+        
+        this.gl.col = 0xffffffff;
+        this.gl.g.blendFunc(this.gl.g.DST_COLOR, this.gl.g.ZERO);
+        this.gl.img(this.lightTexture,0,0,W,H,0,0,0,1,1,0,1,1,0);
 
-            this.gl.flush();
-            this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
-            this.screen.renderUI(this);
-            this.gl.flush();
-       // }
+        this.gl.flush();
+        this.gl.g.blendFunc(this.gl.g.SRC_ALPHA,this.gl.g.ONE_MINUS_SRC_ALPHA);
+        this.screen.renderUI(this);
+        this.gl.flush();
 
         this.ui.render(this);
 
@@ -124,6 +123,10 @@ class Game{
     switchToGame(){
         this.showIntro = false;
         this.screen = new Screen(this,W, H);
+    }
+
+    isLevelTransition(){
+        return (this.screen.isLevelTransition());
     }
 
     // Generate a random number between min and max;

@@ -59,6 +59,10 @@ class IntroScreen{
 
     }
 
+    isLevelTransition(){
+        return false;
+    }
+
     getGlobalDarkness(){
         return {r:0.3,g:0.3,b:0.5,a:1.0};
     }

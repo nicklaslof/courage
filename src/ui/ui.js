@@ -30,41 +30,50 @@ class UI{
             this.drawTextAt("Click to start!",(W/2)-108,705,"white",24);
 
         }else{
-            // Draw levelname
-            let level = game.screen.level;
-            this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
-            
-            // Draw Fear vs Courage text
-            this.drawTextAt("Fear",20,50,"white",14);
-            this.drawTextAt("Courage",160,50,"white",14);
 
-            // Draw meter bar
-            this.context.fillStyle = '#ffffff';
-            this.context.fillRect(18,24,202,12);
+            if (game.isLevelTransition()){
+                let level = game.screen.level;
+                this.drawTextAt("Chapter "+ level.chapter + ":",(W/2)-96,(H/2)-150,"white",30);
+                let levelNameLength = level.name.length;
+                this.drawTextAt(level.name,(W/2)-(levelNameLength*9.7),(H/2)-50,"white",30);
+            }else{
 
-            // Draw the courage bar
-            let courage = Math.min(200,game.screen.level.player.health*2);
-            let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
-            this.context.fillStyle = color;
-            this.context.fillRect(19,25,courage,10);
+                // Draw levelname
+                let level = game.screen.level;
+                this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,16,"white",14);
+                
+                // Draw Fear vs Courage text
+                this.drawTextAt("Fear",20,50,"white",14);
+                this.drawTextAt("Courage",160,50,"white",14);
 
-            // Draw instructions
-            if (level.chapter == 1){
-            let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
-            this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
-            this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
-            this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
-            this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
+                // Draw meter bar
+                this.context.fillStyle = '#ffffff';
+                this.context.fillRect(18,24,202,12);
+
+                // Draw the courage bar
+                let courage = Math.min(200,game.screen.level.player.health*2);
+                let color = this.interpolateColor("ff0000", "#00ff00",courage/2);
+                this.context.fillStyle = color;
+                this.context.fillRect(19,25,courage,10);
+
+                // Draw instructions
+                if (level.chapter == 1){
+                let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
+                this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
+                this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
+                this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
+                this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
+                }
+
+                // Draw fear face and heart
+                /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
+
+                this.context.drawImage(game.texture.image,128,38,32,32,182,64,32,32);
+                this.context.globalCompositeOperation = 'source-atop';
+                this.context.fillStyle = '#ff0000';
+                this.context.fillRect(182, 64, 32, 32);
+                this.context.globalCompositeOperation = 'source-over';*/
             }
-
-            // Draw fear face and heart
-            /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
-
-            this.context.drawImage(game.texture.image,128,38,32,32,182,64,32,32);
-            this.context.globalCompositeOperation = 'source-atop';
-            this.context.fillStyle = '#ff0000';
-            this.context.fillRect(182, 64, 32, 32);
-            this.context.globalCompositeOperation = 'source-over';*/
     }
 
 

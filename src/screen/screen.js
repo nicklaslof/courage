@@ -15,7 +15,7 @@ class Screen{
         this.height = height;
 
         this.levels = [];
-        this.currentLevelId = 0;
+        this.currentLevelId = -1;
 
         //this.levels.push(this.tryAndCreateLevel(game,256,256,0,"Testroom",0xffcccccc,0xff999999,[Courage],0.0000009,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,2));
         this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.09,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,true,true));
@@ -65,13 +65,24 @@ class Screen{
             this.level = this.levels[++this.currentLevelId];
         else
             if (player.health >= 100) this.level = this.levels[++this.currentLevelId];
+        
+        this.levelTransitionTime = 4000;
+    }
+
+    isLevelTransition(){
+        return this.levelTransitionTime >0;
     }
 
     tick(game, deltaTime){
+        if (this.isLevelTransition()){
+            this.levelTransitionTime -= deltaTime;
+            return;
+        }
         this.level.tick(game, deltaTime);
     }
 
     render(game){
+        if (this.isLevelTransition()) return;
         this.level.render(game);
 
     }
