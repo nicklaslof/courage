@@ -41,7 +41,7 @@ class Level{
         for (let i = 0; i < this.rooms.length;i++){
             startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[i];
             if (!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom) break;
-            console.log("finding room "+ i + "   "+(!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom));
+           // console.log("finding room "+ i + "   "+(!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom));
         }
 
         //if (startRoom == null) this.rooms[0];
@@ -117,7 +117,7 @@ class Level{
             let loopMaxCounter = 0;
             while (!roomCreated) {
                 loopMaxCounter++;
-                console.log(loopMaxCounter);
+                //(loopMaxCounter);
                 if (loopMaxCounter > 30) break;
                 let nextDirection = Math.floor(game.getRandom(0, 4));
                 rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
@@ -140,7 +140,7 @@ class Level{
 
                 newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
-                console.log(roomCreated);
+                //console.log(roomCreated);
                 previousDirection = nextDirection;
             }
             if (!roomCreated) break;

@@ -14,6 +14,7 @@ class Input{
         this.firePressed = false;
         this.usePressed = false;
         this.hasGamepad = false;
+        this.bombPressed = false;
         
         var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
         var gp = gamepads[0];
@@ -39,6 +40,7 @@ class Input{
             if (game.keys[83] == "keydown") this.axes.y = 1;
             if (game.keys[87] == "keydown") this.axes.y = -1;
             if (game.buttons[0] == "mousedown") this.firePressed = true;
+            if (game.buttons[2] == "mousedown") this.bombPressed = true;
             //if (game.keys[32] == "keydown") this.firePressed = true;
             // usePressedPreviously is to stop the usekey to spam a new click when holding it down
             if (game.keys[69] == "keydown" && !this.usePressedPreviously) this.usePressed = true;

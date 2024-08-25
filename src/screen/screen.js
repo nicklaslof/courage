@@ -55,7 +55,7 @@ class Screen{
             let level = new Level(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom);
             if (level.allRoomsCreated) newLevel = level;
             else console.log("FAILED TO CREATE LEVEL");
-            console.log(newLevel);
+            //console.log(newLevel);
         }
         return newLevel;
     }
@@ -88,6 +88,7 @@ class Screen{
     }
 
     renderLight(game){
+        if (this.isLevelTransition()) return;
         this.level.renderLight(game);
     }
 

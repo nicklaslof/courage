@@ -8,6 +8,8 @@ import Entity from "./entity.js";
 import Box from "./box.js";
 import Tile from "../tile/tile.js";
 import Spider from "./spider.js";
+import Bomb from "./bomb.js";
+import Explosion from "./explosion.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
@@ -89,15 +91,29 @@ class Player extends Entity{
 
         if (this.fireDelay <= 0 && !this.canShoot) this.canShoot = true;
 
+       
+       // 
+       let aim = {x:this.aimX ,y:this.aimY};
+       this.normalize(aim);
         if (game.input.firePressed && this.canShoot){
-            let aim = {x:this.aimX ,y:this.aimY};
-            this.normalize(aim);
+
 
             game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,600,700,aim.x, aim.y,this));
             this.canShoot = false;
             this.fireDelay = 128;
             game.playShoot();
         }
+
+        if (game.input.bombPressed && this.canShoot){
+            let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
+           // aimWorld.x = this.x + aim.x *300;
+           // aimWorld.y = this.y + aim.y *300;
+            //console.log(this.aimX + "  "+this.aimY   + "  "+aimWorld.x +"  "+aimWorld.y + "  player: "+this.x+ " "+this.y);
+            game.screen.level.addEntity(new Bomb(this.x+32,this.y+32,2000,800,aim.x,aim.y,this,aimWorld));
+            this.canShoot = false;
+            this.fireDelay = 128;
+        }
+
         if (this.currentRoom != null && this.previousRoom != this.currentRoom){
             this.roomChange(game);
             this.previousRoom = this.currentRoom;
@@ -117,6 +133,10 @@ class Player extends Entity{
 
     }
 
+    projectScreenToWorld(game, screenX,screenY){
+        return {x: game.screen.level.player.x + screenX, y: game.screen.level.player.y + screenY};
+    }
+
     render(game){
         super.render(game);
     }
@@ -127,6 +147,8 @@ class Player extends Entity{
         if (otherEntity instanceof Courage) return;
         if (otherEntity instanceof Tile) return;
         if (otherEntity instanceof Spider) return;
+        if (otherEntity instanceof Bomb) return;
+        if (otherEntity instanceof Explosion) return;
         this.hit(game,1);
     }
 

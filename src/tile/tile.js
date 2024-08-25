@@ -21,7 +21,7 @@ class Tile{
     }
 
     doesCollideWithEntity(game,entity, tilePosX, tilePosY){
-        if (entity instanceof Bullet && this == Tiles.lava) return false;
+        if (entity.shootingEntity != null && this == Tiles.lava) return false;
 
         if (entity instanceof Player && this == Tiles.stairs) game.screen.tryChangeLevel(entity);
 

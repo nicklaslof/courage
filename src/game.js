@@ -123,6 +123,7 @@ class Game{
     switchToGame(){
         this.showIntro = false;
         this.screen = new Screen(this,W, H);
+        this.setupLightBuffer();
     }
 
     isLevelTransition(){
@@ -211,6 +212,10 @@ class Game{
 
     playFullCourage(){
         zzfx(...[.4,,446,.01,.14,.46,,1.1,1,15,419,.08,.02,.1,,.2,.17,.95,.19,.12]); // Powerup 33
+    }
+
+    playBombExplosion(){
+        zzfx(...[2,,69,.01,.21,.73,4,1.3,-6,8,,,,.4,38,.6,.33,.46,.13]); // Explosion 136
     }
 
 }
