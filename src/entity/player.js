@@ -13,6 +13,7 @@ class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
         this.speed = 360;
+        this.playerSpeed = 360;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.fireDelay = 0;
@@ -39,11 +40,27 @@ class Player extends Entity{
     tick(game,deltaTime){
         this.currentTile = game.screen.level.getTile(Math.floor(this.x/64),Math.floor(this.y/64));
         this.currentRoom = game.screen.level.getTileRoom(Math.floor(this.x/64),Math.floor(this.y/64));
-        this.moveDirection.x = game.input.axes.x;
-        this.moveDirection.y = game.input.axes.y;
 
-        if (this.moveDirection.x != 0 || this.moveDirection.y != 0) this.animation.setCurrentState("walk");
-        else this.animation.setCurrentState("idle");
+        if (game.input.axes.x !=0 || game.input.axes.y !=0){
+            this.moveDirection.x = game.input.axes.x;
+            this.moveDirection.y = game.input.axes.y;
+            this.speed = this.playerSpeed;
+            this.animation.setCurrentState("walk")
+        }else{
+            let deltaSeconds = deltaTime / 1000;
+            let speedReduction = 0.999995;
+            let decay = Math.pow(1 - speedReduction, deltaSeconds);
+            this.speed *= decay;
+
+            this.animation.setCurrentState("idle");
+        }
+
+        if (this.speed < 1){
+            this.moveDirection.x = 0;
+            this.moveDirection.y = 0;
+        }
+
+
         super.tick(game,deltaTime);
 
         // Overwrite player position set in the parent class tick function because player should always be rendered at center of the screen
@@ -62,6 +79,9 @@ class Player extends Entity{
         this.aimSprite.x = game.cameraCenterX+this.aimX;
         this.aimSprite.y = game.cameraCenterY+this.aimY;
         this.aimSprite.tick();
+
+        //if (this.aimX > 0 ) this.horizontalFlip = true;
+        //else this.horizontalFlip = false;
 
         if (this.fireDelay > 0){
             this.fireDelay -= deltaTime;
