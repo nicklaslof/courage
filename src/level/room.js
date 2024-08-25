@@ -35,7 +35,7 @@ class Room{
 
         if (!lastRoom){
             if (battleRoom && Math.random()< 0.1) this.roomType = "r";
-            else if (lava && Math.random()< 0.9 && this.width * this.height > 144) this.roomType = "l";
+            else if (lava && Math.random()< 0.5 && (this.width * this.height > 180)) this.roomType = "l";
         }
 
         console.log("Room type: "+this.roomType);
