@@ -15,7 +15,6 @@ class Pickup extends Entity{
         this.speed = 150;
         this.normalizeMove = false;
         this.moveToPlayerRange = 192;
-
     }
 
     tick(game,deltaTime){

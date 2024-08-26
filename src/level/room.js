@@ -4,6 +4,7 @@ import Decoration from "../entity/decoration.js";
 import Bug from "../entity/bug.js";
 import Box from "../entity/box.js";
 import Spider from "../entity/spider.js";
+import Pickup from "../entity/pickup.js";
 
 class Room{
     static id = 0;
@@ -83,7 +84,7 @@ class Room{
                         let spawnY = (y*64)+game.getRandom(-64,64);
                         if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
                             let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
-                            let e = new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
+                            let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
                             this.enemies.push(e);
                             level.addEntity(e);
                         }

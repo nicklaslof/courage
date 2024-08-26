@@ -63,8 +63,10 @@ class Screen{
     tryChangeLevel(player){
         if (player == null) 
             this.level = this.levels[++this.currentLevelId];
-        else
+        else{
             if (player.health >= 100) this.level = this.levels[++this.currentLevelId];
+            this.level.player.bombs = player.bombs;
+        }
         
         if (player == null || player.health >= 100) this.levelTransitionTime = 100;
     }
