@@ -11,9 +11,7 @@ import Alien from "./alien.js";
 
 class Bullet extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null,flickering=false,customSprite=null){
-        super(x,y,customSprite == null ? new Sprite(x,y,0,64,6,6,16,16,c) : customSprite,1,{minX:-6,minY:-6,maxX:6,maxY:6});
-        this.sprite.renderOffsetX = -24;
-        this.sprite.renderOffsetY = -24;
+        super(x,y,customSprite == null ? new Sprite(x,y,0,64,6,6,16,16,c) : customSprite,1,{minX:-4,minY:-4,maxX:16,maxY:16});
         this.ttl = ttl;
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
@@ -27,8 +25,7 @@ class Bullet extends Entity{
     tick(game,deltaTime){
         if (this.light == null){
             this.light = game.screen.level.addLight(this.x,this.y,this.sprite.c,96,96,this.ttl,this.flickering);
-            this.light.renderOffsetX = -20;
-            this.light.renderOffsetY = -24;
+            this.light.renderOffsetX = 4;
         }
         super.tick(game,deltaTime);
         this.light.x = this.x;

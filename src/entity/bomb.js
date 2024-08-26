@@ -6,7 +6,7 @@ import Explosion from "./explosion.js";
 
 class Bomb extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity, stopAtLocation){
-        super(x,y,new Sprite(x,y,19,81,8,9,24,24,0xffffffff),1,{minX:0,minY:-8,maxX:0,maxY:8});
+        super(x,y,new Sprite(x,y,19,81,8,9,24,24,0xffffffff),1,{minX:0,minY:0,maxX:24,maxY:24});
         this.ttl = ttl;
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
@@ -50,7 +50,7 @@ class Bomb extends Entity{
             this.stopVector.x = this.stopAtLocation.x - this.x;
             this.stopVector.y = this.stopAtLocation.y - this.y;
             let distance = game.length(this.stopVector);
-            if (distance < 48) this.stopBomb = true;
+            if (distance < 32) this.stopBomb = true;
             
             
         }else{

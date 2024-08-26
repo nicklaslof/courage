@@ -66,7 +66,7 @@ class Screen{
         else
             if (player.health >= 100) this.level = this.levels[++this.currentLevelId];
         
-        if (player == null || player.health >= 100) this.levelTransitionTime = 500;
+        if (player == null || player.health >= 100) this.levelTransitionTime = 100;
     }
 
     isLevelTransition(){

@@ -38,16 +38,16 @@ class IntroScreen{
 
         this.animation.tick(game,deltaTime);
         this.sprite = this.animation.currentSprite;
-        this.sprite.x = W/2;
-        this.sprite.y = H/2;
+        this.sprite.x = (W/2)-36;
+        this.sprite.y = (H/2)-32;
 
         this.sprite.tick();
         if (game.input.firePressed) game.switchToGame();
     }
 
     render(game){
-        for (let x = 32; x < W; x+=64){
-            for (let y = 32; y < H+32; y+=64){
+        for (let x = 0; x < W; x+=64){
+            for (let y = 0; y < H+32; y+=64){
                 this.floor.x = x;
                 this.floor.y = y;
                 this.floor.render(game);

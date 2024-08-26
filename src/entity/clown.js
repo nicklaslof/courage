@@ -10,6 +10,8 @@ class Clown extends Enemy{
         this.speed = 20;
         this.c = 0xffffffff;
 
+        this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
+        this.updateAABB();
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
         this.animation.addState("attack", new Sprite(x,y,0,80,9,14,32,32,0xffffffff),120)

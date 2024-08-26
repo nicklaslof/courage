@@ -97,10 +97,10 @@ class Room{
             for(let y=startTileY;y<startTileY+height;y++){
                 let currentTile=level.getTile(x,y);
                 if(level.torches && Math.random()<0.2) switch(currentTile){
-                    case Tiles.wall1:level.addDecoration(new Decoration(level,x*64,y*64,8,24,"t"));break;
-                    case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64,y*64-32,8,24,"t"));break;
-                    case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+23,y*64,8,24,"t"));break;
-                    case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64-22,y*64,8,24,"t"));break;
+                    case Tiles.wall1:level.addDecoration(new Decoration(level,x*64+32,y*64+20,8,24,"t"));break;
+                    case Tiles.wall_bottom:level.addDecoration(new Decoration(level,x*64+32,y*64-16,8,24,"t"));break;
+                    case Tiles.wall_left:level.addDecoration(new Decoration(level,x*64+50,y*64+16,8,24,"t"));break;
+                    case Tiles.wall_right:level.addDecoration(new Decoration(level,x*64+6,y*64+16,8,24,"t"));break;
                 }
 
                 switch(currentTile){

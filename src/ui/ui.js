@@ -33,7 +33,7 @@ class UI{
 
             if (game.isLevelTransition()){
                 let level = game.screen.level;
-                this.drawTextAt("Chapter "+ level.chapter + ":",(W/2)-96,(H/2)-150,"white",30);
+                this.drawTextAt("Chapter "+ level.chapter + "/9:",(W/2)-112,(H/2)-150,"white",30);
                 let levelNameLength = level.name.length;
                 this.drawTextAt(level.name,(W/2)-(levelNameLength*9.7),(H/2)-50,"white",30);
             }else{
@@ -58,7 +58,7 @@ class UI{
                 this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
                 }
 
-                let pos = this.projectWorldToScreen(game,game.screen.level.player.x-10,game.screen.level.player.y-28);
+                let pos = this.projectWorldToScreen(game,game.screen.level.player.x+12,game.screen.level.player.y-8);
                 this.drawCourageMeter(game,pos.x,pos.y,0.1,0.3,false);
 
                 // Draw fear face and heart
@@ -69,6 +69,34 @@ class UI{
                 this.context.fillStyle = '#ff0000';
                 this.context.fillRect(182, 64, 32, 32);
                 this.context.globalCompositeOperation = 'source-over';*/
+
+                //Disable the code below for debug draw of collision world tiles vs entites
+
+                /*let player = game.screen.level.player;
+                for(let x = Math.floor((player.x -W)/64); x < Math.floor((player.x + W)/64); x++){
+                    for (let y = Math.floor((player.y -H)/64); y < Math.floor((player.y + H)/64); y++){
+                        let tile = level.getTile(x,y);
+                        if (tile == null) continue;
+
+                        let AABB = tile.AABB;
+                        let min = this.projectWorldToScreen(game,AABB.minX + x*64,AABB.minY + y*64);
+                        let max = this.projectWorldToScreen(game,AABB.maxX + x*64,AABB.maxY + y*64);
+
+                        this.context.fillStyle="green";
+                        this.context.fillRect(min.x,min.y,(max.x-min.x),(max.y-min.y));
+                        this.context.clearRect(min.x+1,min.y+1,(max.x-min.x)-2,(max.y-min.y)-2);
+                    }
+                }
+
+                level.entities.forEach(e=> {
+                    let AABB = e.AABB;
+                    let min = this.projectWorldToScreen(game,Math.floor(AABB.minX),Math.floor(AABB.minY));
+                    let max = this.projectWorldToScreen(game,Math.floor(AABB.maxX),Math.floor(AABB.maxY));
+
+                     this.context.fillStyle="red";
+                    this.context.fillRect(min.x,min.y,(max.x-min.x),(max.y-min.y));
+                    this.context.clearRect(min.x+1,min.y+1,(max.x-min.x)-2,(max.y-min.y)-2);
+                })*/
             }
         }
     }

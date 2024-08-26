@@ -6,6 +6,10 @@ import Bullet from "./bullet.js";
 class Alien extends Enemy{
     constructor(x,y,c,speed,size){
         super(x,y,new Sprite(x,y,51,64,7,7,32,32,0xffffffff));
+
+        this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
+        this.updateAABB();
+        
         this.animation = new Animation();
         this.animation.addState("blinking", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),1024)
         .addState("blinking", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)

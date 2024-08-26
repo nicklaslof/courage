@@ -13,7 +13,7 @@ import Explosion from "./explosion.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
-        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:16,minY:10,maxX:48,maxY:58});
+        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:13,minY:7,maxX:37,maxY:53});
         this.speed = 360;
         this.playerSpeed = 360;
         this.pixelScale = pixelScale;
@@ -93,7 +93,7 @@ class Player extends Entity{
 
        
        // 
-       let aim = {x:this.aimX ,y:this.aimY};
+       let aim = {x:this.aimX-24 ,y:this.aimY-32};
        this.normalize(aim);
         if (game.input.firePressed && this.canShoot){
 
@@ -106,7 +106,7 @@ class Player extends Entity{
 
         if (game.input.bombPressed && this.canShoot){
             let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
-            game.screen.level.addEntity(new Bomb(this.x+32,this.y+32,2000,800,aim.x,aim.y,this,aimWorld));
+            game.screen.level.addEntity(new Bomb(this.x+24,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
             this.canShoot = false;
             this.fireDelay = 128;
         }
@@ -118,7 +118,7 @@ class Player extends Entity{
 
         if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
 
-        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff115555,512,512,10000,false);
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff225555,512,512,10000,false);
         this.light.renderOffsetX = 20;
         this.light.x = this.x;
         this.light.y = this.y;

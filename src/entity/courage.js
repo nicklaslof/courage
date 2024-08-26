@@ -4,7 +4,7 @@ import Player from "./player.js";
 
 class Courage extends Entity{
     constructor(x,y,moveX){
-        super(x,y,new Sprite(x,y,128,38,32,32,32,32,0xff0000ff),10,{minX:24,minY:24,maxX:48,maxY:48});
+        super(x,y,new Sprite(x,y,128,38,32,32,32,32,0xff0000ff),10,{minX:0,minY:0,maxX:20,maxY:20});
         this.moveDirection.x = moveX;
         this.landY = y+0.01;
         this.counter=0;
@@ -17,7 +17,6 @@ class Courage extends Entity{
     tick(game,deltaTime){
         
         super.tick(game,deltaTime);
-        
         this.counter +=deltaTime;
         let s = -Math.sin(this.counter/50);
         this.moveDirection.y = s*4;
@@ -29,11 +28,14 @@ class Courage extends Entity{
             this.speed = game.screen.level.player.playerSpeed+5;
         }
 
-        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff0000ff,64,64,10000,false);
-        this.light.renderOffsetX = 6;
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff3333ff,64,64,10000,false);
+        this.light.renderOffsetX = 12;
+        this.light.renderOffsetY = 6;
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
+        this.updateAABB();
+       
     }
 
     hit(game,ammount){

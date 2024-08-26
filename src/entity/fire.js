@@ -9,6 +9,9 @@ class Fire extends Enemy{
         this.speed = speed;
         size *= 1.2;
 
+        this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
+        this.updateAABB();
+
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
         this.animation.addState("burning", new Sprite(x,y,32,64,9,8,size,size,0xffffffff),240)
