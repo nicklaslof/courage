@@ -2,7 +2,7 @@ import Sprite from "../graphic/sprite.js";
 import Animation from "./animation.js";
 
 import Bullet from "./bullet.js";
-import Courage from "./courage.js";
+import Pickup from "./pickup.js";
 
 import Entity from "./entity.js";
 import Box from "./box.js";
@@ -18,9 +18,12 @@ class Player extends Entity{
         this.playerSpeed = 360;
         this.pixelScale = pixelScale;
         this.canShoot = true;
+        this.canThrowBomb = true;
         this.fireDelay = 0;
+        this.bombDelay = 0;
         this.aimX = this.aimY = 0;
         this.health = 20;
+        this.bombs = 0;
         this.hitDelay = 240;
         this.courageFullPlayed = false;
         
@@ -91,6 +94,11 @@ class Player extends Entity{
 
         if (this.fireDelay <= 0 && !this.canShoot) this.canShoot = true;
 
+        if (this.bombDelay > 0){
+            this.bombDelay -= deltaTime;
+        }
+
+        if (this.bombDelay <= 0 && !this.canThrowBomb) this.canThrowBomb = true;
        
        // 
        let aim = {x:this.aimX-24 ,y:this.aimY-32};
@@ -104,11 +112,12 @@ class Player extends Entity{
             game.playShoot();
         }
 
-        if (game.input.bombPressed && this.canShoot){
+        if (this.bombs > 0 && game.input.bombPressed && this.canThrowBomb){
             let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
             game.screen.level.addEntity(new Bomb(this.x+24,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
-            this.canShoot = false;
-            this.fireDelay = 128;
+            this.canThrowBomb = false;
+            this.bombDelay = 1000;
+            this.bombs--;
         }
 
         if (this.currentRoom != null && this.previousRoom != this.currentRoom){
@@ -141,7 +150,7 @@ class Player extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity instanceof Bullet && otherEntity.shootingEntity == this ) return;
         if (otherEntity instanceof Box) return;
-        if (otherEntity instanceof Courage) return;
+        if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Tile) return;
         if (otherEntity instanceof Spider) return;
         if (otherEntity instanceof Bomb) return;

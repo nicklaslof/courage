@@ -1,6 +1,6 @@
 import Sprite from "../graphic/sprite.js";
 
-import Courage from "./courage.js";
+import Pickup from "./pickup.js";
 import Entity from "./entity.js";
 import Player from "./player.js";
 import Spider from "./spider.js";
@@ -48,7 +48,7 @@ class Bullet extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown || otherEntity instanceof Fire || otherEntity instanceof Alien)) return;
-        if (otherEntity instanceof Courage) return;
+        if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Bullet) return;
         this.disposed = true;
         if(this.light != null) this.light.disposed = true;

@@ -2,10 +2,14 @@ import Sprite from "../graphic/sprite.js";
 import Entity from "./entity.js";
 import Player from "./player.js";
 
-class Courage extends Entity{
-    constructor(x,y,moveX){
-        super(x,y,new Sprite(x,y,128,38,32,32,32,32,0xff0000ff),10,{minX:0,minY:0,maxX:20,maxY:20});
+class Pickup extends Entity{
+    //Type:
+    // c = courage
+    // b = bomb
+    constructor(x,y,moveX,type="c"){
+        super(x,y,type == "c"?new Sprite(x,y,128,38,32,32,32,32,0xff0000ff):new Sprite(x,y,19,81,8,9,24,24,0xffffffff),10,{minX:0,minY:0,maxX:20,maxY:20});
         this.moveDirection.x = moveX;
+        this.type = type;
         this.landY = y+0.01;
         this.counter=0;
         this.speed = 150;
@@ -43,8 +47,13 @@ class Courage extends Entity{
     }
 
     onCollision(game,otherEntity){
-        if (otherEntity instanceof Player){ otherEntity.health++; game.screen.level.removeEntity(this); game.screen.level.removeLight(this.light); game.playCouragePickup(); return }
+        if (otherEntity instanceof Player){
+            if (this.type == "c") otherEntity.health++;
+            if (this.type == "b") otherEntity.bombs++;
+            game.screen.level.removeEntity(this);
+            game.screen.level.removeLight(this.light);
+            game.playCouragePickup(); return }
     }
 }
 
-export default Courage;
+export default Pickup;

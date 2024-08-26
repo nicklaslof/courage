@@ -10,7 +10,7 @@ class UI{
 
     tick(game,deltaTime){
         if (!game.showIntro){
-            this.instructionX = this.instructionX == null ? game.screen.level.player.x - 94 : this.instructionX;
+            this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
             this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
         }
     }
@@ -48,6 +48,9 @@ class UI{
 
                 // Draw meter bar
                 this.drawCourageMeter(game,18,44,1,1,true);
+
+
+                this.drawTextAt("Bombs: "+game.screen.level.player.bombs,20,96,"white",14);
 
                 // Draw instructions
                 if (level.chapter == 1){
