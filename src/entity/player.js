@@ -80,6 +80,7 @@ class Player extends Entity{
             this.canglide = false;
             this.damageImmune = true;
             this.damageImmuneCounter = 1000;
+            game.playGlide();
         }
         if (this.speed > 980) this.speed = 980;
         if (this.glideSpeed > 10){
