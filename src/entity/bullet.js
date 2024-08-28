@@ -52,7 +52,7 @@ class Bullet extends Entity{
         if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Bullet) return;
         if (otherEntity instanceof Bomb) return;
-        this.disposed = true;
+        if (! otherEntity.damageImmune) this.disposed = true;
         if(this.light != null) this.light.disposed = true;
         if (otherEntity instanceof Tile) return;
         if (this.stopAtLocation != null && !this.stopMovement) return;

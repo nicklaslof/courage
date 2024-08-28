@@ -7,7 +7,7 @@ class Spider extends Bug{
     constructor(x,y,c,speed,size){
         super(x,y,c,speed,size);
         this.sprite = new Sprite(x,y,16,96,16,16,size,size,c);
-        this.speed = speed/2;
+        this.speed = speed/2.5;
 
         this.animation = new Animation();
         this.animation.addState("idle",this.sprite,0.1);
@@ -37,7 +37,7 @@ class Spider extends Bug{
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
                 if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                     this.normalize(this.calculatePlayerDirectionVector);
-                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,4000,250, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
+                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,4000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
                 }
             }
 

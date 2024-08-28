@@ -163,7 +163,7 @@ class Level{
     }
 
     tick(game,deltaTime){
-        this.entities.forEach(e => { e.tick(game,deltaTime)});
+        this.entities.forEach(e => {         e.tick(game,deltaTime)});
         this.lights.forEach(l => {
             l.tick(game, deltaTime);
             if (l.disposed) this.removeLight(l);

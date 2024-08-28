@@ -2,7 +2,7 @@
 class Input{
 
     constructor() {
-        this.usePressedPreviously = false;
+        this.bombPressedPreviously = false;
         this.pointerX = 0;
         this.pointerY = 0;
     }
@@ -12,9 +12,10 @@ class Input{
         this.axes = {x:0,y:0};
         this.pointer = {x:0,y:0};
         this.firePressed = false;
-        this.usePressed = false;
+       // this.usePressed = false;
         this.hasGamepad = false;
         this.bombPressed = false;
+        this.glidePressed = false;
         
         var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
         var gp = gamepads[0];
@@ -32,7 +33,7 @@ class Input{
             if (gp.axes[3] <-0.4) this.pointer.y = gp.axes[3]*3;
             if (gp.buttons[7].pressed) this.firePressed = true;
             // usePressedPreviously is to stop the usekey to spam a new click when holding it down
-            if (gp.buttons[3].pressed && !this.usePressedPreviously) this.usePressed = true;
+           // if (gp.buttons[3].pressed && !this.usePressedPreviously) this.usePressed = true;
             this.usePressedPreviously = gp.buttons[3].pressed;
         }else{
             if (game.keys[68] == "keydown") this.axes.x = 1;
@@ -40,11 +41,13 @@ class Input{
             if (game.keys[83] == "keydown") this.axes.y = 1;
             if (game.keys[87] == "keydown") this.axes.y = -1;
             if (game.buttons[0] == "mousedown") this.firePressed = true;
-            if (game.buttons[2] == "mousedown") this.bombPressed = true;
+            if (game.buttons[2] == "mousedown") this.glidePressed = true;
+            if (game.keys[69] == "keydown" && !this.bombPressedPreviously) this.bombPressed = true;
+
             //if (game.keys[32] == "keydown") this.firePressed = true;
             // usePressedPreviously is to stop the usekey to spam a new click when holding it down
-            if (game.keys[69] == "keydown" && !this.usePressedPreviously) this.usePressed = true;
-            this.usePressedPreviously = game.keys[69] == "keydown";
+            //if (game.keys[69] == "keydown" && !this.usePressedPreviously) this.usePressed = true;
+            this.bombPressedPreviously = game.keys[69] == "keydown";
 
             this.pointer.x = this.pointerX;
             this.pointer.y = this.pointerY;

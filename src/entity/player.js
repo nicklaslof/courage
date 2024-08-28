@@ -14,8 +14,8 @@ import Explosion from "./explosion.js";
 class Player extends Entity{
     constructor(x,y,pixelScale){
         super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:11,minY:5,maxX:35,maxY:51});
-        this.speed = 360;
-        this.playerSpeed = 360;
+        this.speed = 300;
+        this.playerSpeed = 300;
         this.pixelScale = pixelScale;
         this.canShoot = true;
         this.canThrowBomb = true;
@@ -23,9 +23,14 @@ class Player extends Entity{
         this.bombDelay = 0;
         this.aimX = this.aimY = 0;
         this.health = 1000;
-        this.bombs = 0;
+        this.bombs = 100;
         this.hitDelay = 240;
         this.courageFullPlayed = false;
+        this.canglide = true;
+        this.glideCountdown = 0;
+        this.glideSpeed = 0;
+        this.damageImmune = false;
+        this.damageImmuneCounter = 0;
         
 
         this.animation = new Animation();
@@ -46,23 +51,48 @@ class Player extends Entity{
         this.currentTile = game.screen.level.getTile(Math.floor(this.x/64),Math.floor(this.y/64));
         this.currentRoom = game.screen.level.getTileRoom(Math.floor(this.x/64),Math.floor(this.y/64));
 
+        if (this.glideCountdown > 0) this.glideCountdown -= deltaTime;
+        else this.canglide = true;
+
+        if (this.damageImmuneCounter > 0) this.damageImmuneCounter -= deltaTime;
+        else this.damageImmune = false;
+
+        let deltaSeconds = deltaTime / 1000;
+        let speedReduction = 0.999995;
+        let decay = Math.pow(1 - speedReduction, deltaSeconds);
+        this.glideSpeed *= decay;
+
         if (game.input.axes.x !=0 || game.input.axes.y !=0){
             this.moveDirection.x = game.input.axes.x;
             this.moveDirection.y = game.input.axes.y;
-            this.speed = this.playerSpeed;
+            this.speed = this.playerSpeed + this.glideSpeed;
             this.animation.setCurrentState("walk")
         }else{
-            let deltaSeconds = deltaTime / 1000;
-            let speedReduction = 0.999995;
-            let decay = Math.pow(1 - speedReduction, deltaSeconds);
+            this.speed += this.glideSpeed;
             this.speed *= decay;
-
             this.animation.setCurrentState("idle");
         }
 
+        if (game.input.glidePressed && this.canglide && this.glideSpeed < 1){
+            if (this.speed > this.playerSpeed-1) this.glideSpeed = 700;
+            else this.glideSpeed = 35;
+            this.glideCountdown = 1000;
+            this.canglide = false;
+            this.damageImmune = true;
+            this.damageImmuneCounter = 1000;
+        }
+        if (this.speed > 980) this.speed = 980;
+        if (this.glideSpeed > 10){
+            this.animation.setCurrentState("idle");
+            game.screen.level.addParticle(this.x+24,this.y+this.pixelScale,0x99dddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-1,1),y:game.getRandom(-1,1)},game.getRandom(50,120));
+        }
+
+
+        console.log(this.speed);
+
         if (this.speed < 1){
-            this.moveDirection.x = 0;
-            this.moveDirection.y = 0;
+            //this.moveDirection.x = 0;
+            //this.moveDirection.y = 0;
         }
 
 
@@ -169,7 +199,7 @@ class Player extends Entity{
 
     onHit(game){
         //if (entity instanceof Bullet && entity.shootingEntity == this) return;
-        game.playPlayerHit();
+        if (this.glideSpeed < 10) game.playPlayerHit();
     }
 }
 export default Player;

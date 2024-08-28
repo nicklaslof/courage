@@ -58,12 +58,14 @@ class UI{
                 this.drawTextAt("Bombs: "+game.screen.level.player.bombs,20,96,"white",14);
 
                 // Draw instructions
-                if (level.chapter == 1){
+                if (level.chapter < 3){
                 let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
                 this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
-                this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+20,"white",14);
-                this.drawTextAt("Right mouse button to throw",screenCord.x,screenCord.y+40,"white",14);
-                this.drawTextAt("bombs found ",screenCord.x,screenCord.y+60,"white",14);
+                this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+30,"white",14);
+                this.drawTextAt("Right mouse button to glide",screenCord.x,screenCord.y+60,"white",14);
+                this.drawTextAt("to avoid damage and move faster",screenCord.x,screenCord.y+80,"white",14);
+                this.drawTextAt("E to throw bombs found",screenCord.x,screenCord.y+110,"white",14);
+
                 }
 
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x+12,game.screen.level.player.y-8);
