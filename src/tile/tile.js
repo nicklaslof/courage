@@ -23,7 +23,7 @@ class Tile{
     doesCollideWithEntity(game,entity, tilePosX, tilePosY){
         if (entity.shootingEntity != null && this == Tiles.lava) return false;
 
-        if (entity instanceof Player && this == Tiles.stairs) game.screen.tryChangeLevel(entity);
+        if (entity instanceof Player && this == Tiles.stairs) game.screen.tryChangeLevel(game, entity);
 
         // Set our collision checking AABB to the size of the tilecollision and the position in world coordinates.
         

@@ -5,7 +5,7 @@ import Tiles from "../tile/tiles.js";
 
 class IntroScreen{
 
-    constructor(){
+    constructor(switchToGame){
         this.floor = Tiles.floor1.sprite;
         this.u0 = 128/TZ;
         this.u1 = 200/TZ;
@@ -22,6 +22,8 @@ class IntroScreen{
 
         let x = W/2;
         let y = H/2;
+
+        this.switchToGame = switchToGame;
 
         this.pixelScale = 72;
         this.sprite = new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff);
@@ -42,7 +44,7 @@ class IntroScreen{
         this.sprite.y = (H/2)-32;
 
         this.sprite.tick();
-        if (game.input.firePressed) game.switchToGame();
+        if (this.switchToGame) if (game.input.firePressed) game.switchToGame();
     }
 
     render(game){

@@ -7,6 +7,7 @@ import {zzfx} from './lib/z.js'
 import Tiles from "./tile/tiles.js";
 import UI from "./ui/ui.js";
 import IntroScreen from "./screen/introscreen.js";
+import EndScreen from "./screen/endscreen.js";
 
 class Game{
 
@@ -41,7 +42,9 @@ class Game{
         this.lastTime = performance.now();
 
         this.showIntro = true;
-        this.screen = new IntroScreen();
+        this.gameFinished = false;
+        this.screen = new IntroScreen(true);
+        //this.switchToEndScreen();
 
 
 
@@ -68,7 +71,10 @@ class Game{
 
     update(){
         if (this.texture.glTexture.dirty) return;
-        
+        if (this.gameFinished && !(this.screen instanceof EndScreen)){
+            this.screen = new EndScreen(false);
+            this.setupLightBuffer();
+        }
         let currentTime = performance.now();
         let deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
@@ -127,6 +133,10 @@ class Game{
         this.showIntro = false;
         this.screen = new Screen(this,W, H);
         this.setupLightBuffer();
+    }
+
+    switchToEndScreen(){
+        this.gameFinished = true;
     }
 
     isLevelTransition(){

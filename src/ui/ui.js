@@ -9,7 +9,7 @@ class UI{
     }
 
     tick(game,deltaTime){
-        if (!game.showIntro){
+        if (!game.showIntro && !game.gameFinished){
             this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
             this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
         }
@@ -28,6 +28,11 @@ class UI{
             this.drawTextAt("to face his 13 different phobias",(W/2)-236,550,"white",24);
 
             this.drawTextAt("Click to start!",(W/2)-108,705,"white",24);
+        } else if (game.gameFinished){
+
+            this.drawTextAt("You did it!",(W/2)-116,40,"white",36);
+            this.drawTextAt("Billy no longer has his 13 different phobias.",(W/2)-322,100,"white",24);
+            this.drawTextAt("Thanks for playing  / Nicklas",(W/2)-210,500,"white",24);
 
         }else{
 

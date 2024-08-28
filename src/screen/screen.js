@@ -8,6 +8,7 @@ import Ghost from "../entity/ghost.js";
 import Clown from "../entity/clown.js";
 import Fire from "../entity/fire.js";
 import Alien from "../entity/alien.js";
+import Thirteen from "../entity/thirteen.js";
 
 class Screen{
     constructor(game,width, height){
@@ -26,7 +27,8 @@ class Screen{
         this.levels.push(this.tryAndCreateLevel(game,512,512,6,"Fear of confined spaces and rooms",0xffff4444,0xffff4444,[Pickup],0.06,{r:0.3,g:0.3,b:0.3,a:1.0},true,7,8,30,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,7,"Fear of fire",0xff0044cc,0xff0085ff,[Fire],0.09,{r:0.1,g:0.1,b:0.5,a:1.0},false,8,15,9,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,8,"Fear of heights, outer space and aliens",0xff00ff00,0x00000000,[Alien],0.04,{r:0.4,g:0.4,b:0.5,a:1.0},false,20,25,4,false,false));
-        this.tryChangeLevel(null);
+        this.levels.push(this.tryAndCreateLevel(game,256,256,9,"Fear of number 13",0xffc2008a,0xffd62ebe,[Thirteen],0.04,{r:0.4,g:0.4,b:0.5,a:1.0},false,8,16,8,false,false));
+        this.tryChangeLevel(game, null);
         
         
 
@@ -60,7 +62,11 @@ class Screen{
         return newLevel;
     }
 
-    tryChangeLevel(player){
+    tryChangeLevel(game,player){
+        if (this.currentLevelId == 8){
+            game.switchToEndScreen();
+            return;
+        }
         if (player == null) 
             this.level = this.levels[++this.currentLevelId];
         else{

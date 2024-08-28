@@ -13,7 +13,7 @@ import Explosion from "./explosion.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
-        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:13,minY:7,maxX:37,maxY:53});
+        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:11,minY:5,maxX:35,maxY:51});
         this.speed = 360;
         this.playerSpeed = 360;
         this.pixelScale = pixelScale;
@@ -22,7 +22,7 @@ class Player extends Entity{
         this.fireDelay = 0;
         this.bombDelay = 0;
         this.aimX = this.aimY = 0;
-        this.health = 20;
+        this.health = 1000;
         this.bombs = 0;
         this.hitDelay = 240;
         this.courageFullPlayed = false;
