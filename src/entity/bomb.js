@@ -69,6 +69,7 @@ class Bomb extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         if (otherEntity instanceof Tile) this.stopBomb = true;
+        return;
     }
 }
 
