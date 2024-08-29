@@ -31,6 +31,7 @@ class Player extends Entity{
         this.glideSpeed = 0;
         this.damageImmune = false;
         this.damageImmuneCounter = 0;
+        this.walkSoundCounter = 0;
         
 
         this.animation = new Animation();
@@ -56,6 +57,15 @@ class Player extends Entity{
 
         if (this.damageImmuneCounter > 0) this.damageImmuneCounter -= deltaTime;
         else this.damageImmune = false;
+
+        if (this.walkSoundCounter >0) this.walkSoundCounter -= deltaTime;
+        
+
+        if (this.walkSoundCounter <=0 && (game.input.axes.x != 0 || game.input.axes.y != 0) && this.glideSpeed < 1){
+            game.playPlayerRunning();
+            this.walkSoundCounter = 360;
+
+        }
 
         let deltaSeconds = deltaTime / 1000;
         let speedReduction = 0.999995;
