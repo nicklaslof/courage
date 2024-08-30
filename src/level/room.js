@@ -155,7 +155,7 @@ class Room{
 
     onPlayerEnter(game){
         if (this.bossRoom){
-            game.screen.level.boss.onPlayerEnter(game);
+            game.screen.level.boss.onPlayerEnter(game,this);
         }
     }
 

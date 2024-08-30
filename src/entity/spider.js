@@ -24,7 +24,8 @@ class Spider extends Bug{
         if (boss){
             this.health = 30;
             this.hitDelay = 1000;
-            this.bossStage = this.stageSwitchCountdown = 7000;
+            this.bossStage = 0;
+            this.stageSwitchCountdown = 7000;
             this.bossStageCounter = 5000;
         }
     }
