@@ -26,7 +26,7 @@ class Enemy extends Entity{
         }
         game.screen.level.addLight(this.x,this.y,0xff00ffff,48,48,100,false);
         if (Math.random()< 0.4){
-            game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1)));
+            game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1),"c"));
         }
         
     }

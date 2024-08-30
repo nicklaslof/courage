@@ -6,7 +6,7 @@ import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 
 class Level{
-    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom){
+    constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom,bossLevel){
         this.width = width;
         this.height = height;
         this.chapter = chapter;
@@ -24,6 +24,9 @@ class Level{
         this.numberOfRooms = numberOfRooms;
         this.lava = lava;
         this.battleRoom = battleRoom;
+        this.bossLevel = bossLevel;
+        this.boss = null;
+
         this.allRoomsCreated = false;
 
         this.entities = [];
@@ -37,18 +40,25 @@ class Level{
 
         this.allRoomsCreated = this.generateRooms(game);
         let startRoom = null;
-        // Make the player start in the smallest room and remove all enemies from the room;
-        for (let i = 0; i < this.rooms.length;i++){
+
+        if (bossLevel) startRoom = this.rooms[0];
+        else{
+            for (let i = 0; i < this.rooms.length;i++){
             startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[i];
             if (!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom) break;
            // console.log("finding room "+ i + "   "+(!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom));
         }
 
         //if (startRoom == null) this.rooms[0];
+        }
+        // Make the player start in the smallest room and remove all enemies from the room;
+        
         
         startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
+
+        if (bossLevel) this.player.health = 100;
 
         if (this.floorColor == 0x00000000){
             this.stars = new Sprite(W/2,H/2,768,768,800,800,W*2,H*2,0xffffffff);
@@ -69,7 +79,7 @@ class Level{
         for (let i = 0; i < this.numberOfRooms; i++) {
             let lastRoom = i == this.numberOfRooms-1;
             this.rooms.push(newRoom);
-            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,lastRoom,this.lava,this.battleRoom);
+            newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,i == 0, lastRoom,this.lava,this.battleRoom,this.bossLevel&&!lastRoom&&i!=0,this.bossLevel);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
             // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
             // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
@@ -140,7 +150,6 @@ class Level{
 
                 newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
-                //console.log(roomCreated);
                 previousDirection = nextDirection;
             }
             if (!roomCreated) break;
@@ -155,10 +164,6 @@ class Level{
             y : 0,
             width : Math.floor(game.getRandom(this.minRoomSize,maxWidth)),
             height : Math.floor(game.getRandom(this.minRoomSize,maxHeight)),
-            //floorColor : 0xffcccccc,
-           //  wallColor : 0xff999999,
-           //floorColor : 0xff559955,
-           // wallColor : 0xff333333,
         }
     }
 

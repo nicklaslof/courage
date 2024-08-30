@@ -18,7 +18,7 @@ class Room{
         console.log("---------------------");*/
     }
 
-    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff,lastRoom,lava,battleRoom){
+    generateRoom(level, game, startTileX, startTileY, width, height, floorColor=0xffffffff, wallColor=0xffffffff,firstRoom, lastRoom,lava,battleRoom,bossRoom,bossLevel){
         this.floorColor = floorColor;
         this.wallColor = wallColor;
         this.x = startTileX;
@@ -26,9 +26,11 @@ class Room{
         this.width = width;
         this.height = height;
         this.enemies = [];
+        this.firstRoom = firstRoom;
         this.lastRoom = lastRoom;
+        this.bossRoom = bossRoom;
 
-
+        console.log(bossRoom);
 
         // Roomtype:
         // n = normal
@@ -74,24 +76,34 @@ class Room{
                 }
             }
         }
+
         // Spawn enimies
-        for (let x = startTileX; x < startTileX+width; x++){
-            for (let y = startTileY; y < startTileY+height; y++){
-                let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
-                if (r && level.getTile(x,y) == Tiles.floor1){
-                    for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
-                        let spawnX = (x*64)+game.getRandom(-64,64);
-                        let spawnY = (y*64)+game.getRandom(-64,64);
-                        if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
-                            let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
-                            let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
-                            this.enemies.push(e);
-                            level.addEntity(e);
+        if (bossRoom){
+             let mobType = level.mobSpawns[0];
+             let e = new mobType(((startTileX + width/2)*64)-64,((startTileY + height/2)*64)-64,0xffffffff,0,128,true);
+             this.enemies.push(e);
+             level.addEntity(e);
+             level.boss = e;
+        }else if (!bossLevel){
+            for (let x = startTileX; x < startTileX+width; x++){
+                for (let y = startTileY; y < startTileY+height; y++){
+                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
+                    if (r && level.getTile(x,y) == Tiles.floor1){
+                        for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
+                            let spawnX = (x*64)+game.getRandom(-64,64);
+                            let spawnY = (y*64)+game.getRandom(-64,64);
+                            if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
+                                let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
+                                let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
+                                this.enemies.push(e);
+                                level.addEntity(e);
+                            }
                         }
                     }
                 }
             }
         }
+        
 
         //Add decorations
         for(let x=startTileX;x<startTileX+width;x++){
@@ -108,7 +120,7 @@ class Room{
                     case Tiles.floor1:
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
                         if(!lastRoom && this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
-                        if (!lastRoom && Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
+                        if (!lastRoom && !bossRoom && Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
                 }
             }
         }
@@ -142,7 +154,9 @@ class Room{
     }
 
     onPlayerEnter(game){
-        
+        if (this.bossRoom){
+            game.screen.level.boss.onPlayerEnter(game);
+        }
     }
 
     tick(game,deltaTime){

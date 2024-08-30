@@ -22,8 +22,8 @@ class Player extends Entity{
         this.fireDelay = 0;
         this.bombDelay = 0;
         this.aimX = this.aimY = 0;
-        this.health = 1000;
-        this.bombs = 100;
+        this.health = 20;
+        this.bombs = 0;
         this.hitDelay = 240;
         this.courageFullPlayed = false;
         this.canglide = true;
@@ -89,7 +89,7 @@ class Player extends Entity{
             this.glideCountdown = 1000;
             this.canglide = false;
             this.damageImmune = true;
-            this.damageImmuneCounter = 1000;
+            this.damageImmuneCounter = 750;
             game.playGlide();
         }
         if (this.speed > 980) this.speed = 980;
@@ -98,8 +98,6 @@ class Player extends Entity{
             game.screen.level.addParticle(this.x+24,this.y+this.pixelScale,0x99dddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-1,1),y:game.getRandom(-1,1)},game.getRandom(50,120));
         }
 
-
-        console.log(this.speed);
 
         if (this.speed < 1){
             //this.moveDirection.x = 0;
@@ -196,7 +194,7 @@ class Player extends Entity{
         if (otherEntity instanceof Spider) return;
         if (otherEntity instanceof Bomb) return;
         if (otherEntity instanceof Explosion) return;
-        this.hit(game,1);
+        //this.hit(game,1);
     }
 
     roomChange(game){

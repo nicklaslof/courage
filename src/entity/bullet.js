@@ -9,10 +9,11 @@ import Clown from "./clown.js";
 import Fire from "./fire.js";
 import Alien from "./alien.js";
 import Bomb from "./bomb.js";
+import Explosion from "./explosion.js";
 
 class Bullet extends Entity{
-    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null,flickering=false,customSprite=null){
-        super(x,y,customSprite == null ? new Sprite(x,y,0,64,6,6,16,16,c) : customSprite,1,{minX:-4,minY:-4,maxX:16,maxY:16});
+    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null,flickering=false,customSprite=null,collisionBox={minX:-4,minY:-4,maxX:16,maxY:16},damage=1){
+        super(x,y,customSprite == null ? new Sprite(x,y,0,64,6,6,16,16,c) : customSprite,1,collisionBox);
         this.ttl = ttl;
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
@@ -21,12 +22,14 @@ class Bullet extends Entity{
         this.stopAtLocation = stopAtLocation;
         this.stopMovement = false;
         this.flickering = flickering;
+        this.damage = damage;
     }
 
     tick(game,deltaTime){
         if (this.light == null){
             this.light = game.screen.level.addLight(this.x,this.y,this.sprite.c,96,96,this.ttl,this.flickering);
-            this.light.renderOffsetX = 4;
+            this.light.renderOffsetX = 20;
+            this.light.renderOffsetY = 16;
         }
         super.tick(game,deltaTime);
         this.light.x = this.x;
@@ -52,11 +55,12 @@ class Bullet extends Entity{
         if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Bullet) return;
         if (otherEntity instanceof Bomb) return;
+        if (otherEntity instanceof Explosion) return;
         if (! otherEntity.damageImmune) this.disposed = true;
         if(this.light != null) this.light.disposed = true;
         if (otherEntity instanceof Tile) return;
         if (this.stopAtLocation != null && !this.stopMovement) return;
-        otherEntity.hit(game,1);
+        if (!otherEntity.damageImmune) otherEntity.hit(game,this.damage);
     }
 }
 
