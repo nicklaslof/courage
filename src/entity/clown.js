@@ -54,35 +54,39 @@ class Clown extends Enemy{
             this.throwCountdown -= deltaTime;
 
             if (this.stageSwitchCountdown < 1){
-                if (this.bossStage == 1){
+               // if (this.bossStage == 1){
                     if (this.throwCountdown < 1){
                         game.screen.level.addEntity(new Bullet(
                         this.x + 48, this.y + 48, 5000, 400, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y, this, 0xffffffff, null, null,new Sprite(0, 0, 0, 64, 6, 6, 32, 32, 0xff0000ff), { minX: 0, minY: 0, maxX: 32, maxY: 32 }, 10
                         ));
-                        this.throwCountdown = 300;
+                        this.throwCountdown = 300/this.bossStage;
                     }
 
                     if (this.health == 20 && !this.firstWaveSpawned){
                         this.spawnBossAdds(game,2,2);
                         this.firstWaveSpawned = true;
+                        this.bossStage++;
                     }
                     if (this.health == 15 && !this.secondWaveSpawned){
                         this.spawnBossAdds(game,3,3);
                         this.secondWaveSpawned = true;
+                        this.bossStage++;
                     }
                     if (this.health == 10 && !this.thirdWaveSpawned){
                         this.spawnBossAdds(game,4,3);
                         this.thirdWaveSpawned = true;
+                        this.bossStage++;
                     }
                     if (this.health == 5 && !this.fourthWaveSpawned){
                         this.spawnBossAdds(game,5,3);
                         this.fourthWaveSpawned = true;
+                        this.bossStage++;
                     }
                     if (this.health == 1 && !this.fifthWaveSpawned){
                         this.spawnBossAdds(game,10,4);
                         this.fifthWaveSpawned = true;
                     }
-                }
+               // }
             }      
         } else {
             if (!this.throw && Math.random() < 0.2){
