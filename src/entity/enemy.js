@@ -28,6 +28,12 @@ class Enemy extends Entity{
         if (Math.random()< 0.4){
             game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1),"c"));
         }
+
+        if (this.boss){
+            for (let i = 0; i < 100;i++){
+                game.screen.level.addEntity(new Pickup(this.x+32+game.getRandom(-128,128),this.y+32+game.getRandom(-128,128),game.getRandom(-1,1),Math.random()<0.05?"b":"c"));
+            }
+        }
         
     }
 
@@ -38,6 +44,7 @@ class Enemy extends Entity{
                 game.screen.level.addParticle(this.x,this.y+this.pixelScale,0x990000ff,game.getRandom(1,4),game.getRandom(1,4),600,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},100);
             }
         }
+        if(this.boss) game.playBossHit();
     }
 
     render(game){

@@ -91,19 +91,6 @@ class Spider extends Bug{
     onPlayerEnter(game){
         if (this.boss) this.bossStage = 1;
     }
-
-    onHit(game){
-        super.onHit(game);
-        if(this.boss) game.playBossHit();
-        console.log(this.hitDelayCounter);
-    }
-
-    onDeath(game){
-        super.onDeath(game);
-        for (let i = 0; i < 100;i++){
-            game.screen.level.addEntity(new Pickup(this.x+32+game.getRandom(-128,128),this.y+32+game.getRandom(-128,128),game.getRandom(-1,1),Math.random()<0.05?"b":"c"));
-        }
-    }
 }
 
 export default Spider;
