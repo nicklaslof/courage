@@ -32,6 +32,7 @@ class Player extends Entity{
         this.damageImmune = false;
         this.damageImmuneCounter = 0;
         this.walkSoundCounter = 0;
+        this.bombMessageTimeout = 0;
         
 
         this.animation = new Animation();
@@ -59,6 +60,8 @@ class Player extends Entity{
         else this.damageImmune = false;
 
         if (this.walkSoundCounter >0) this.walkSoundCounter -= deltaTime;
+
+        if (this.bombMessageTimeout >0) this.bombMessageTimeout -= deltaTime;
         
 
         if (this.walkSoundCounter <=0 && (game.input.axes.x != 0 || game.input.axes.y != 0) && this.glideSpeed < 1){
@@ -171,15 +174,28 @@ class Player extends Entity{
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
-        if (this.health == 100 && !this.courageFullPlayed){
+        if (!game.screen.level.bossLevel && this.health == 100 && !this.courageFullPlayed){
             this.courageFullPlayed = true;
             game.playFullCourage();
+            game.setPlayerSays("I have the courage to leave this place now!",5000);
+        }
+        if (this.health < 100 && this.courageFullPlayed){
+            game.setPlayerSays("I lost my courage, I can't leave now!",5000);
+            this.courageFullPlayed = false;
         }
 
     }
 
     projectScreenToWorld(game, screenX,screenY){
         return {x: game.screen.level.player.x + screenX, y: game.screen.level.player.y + screenY};
+    }
+
+    bombPickup(game){
+        this.bombs++;
+        if (this.bombMessageTimeout <= 0){
+            this.bombMessageTimeout = 120000;
+            game.setPlayerSays("I found a bomb, you can help me throw them pressing E",8000);
+        }
     }
 
     render(game){

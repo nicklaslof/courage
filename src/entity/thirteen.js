@@ -28,8 +28,8 @@ class Thirteen extends Enemy{
                     e.timer += deltaTime/100;
                     let s = Math.sin(e.timer);
                     let c = Math.cos(e.timer);
-                    e.x += s/3;
-                    e.y += c/3;
+                    e.x += s/4;
+                    e.y += c/4;
                 }
                 game.screen.level.addEntity(b);
             }

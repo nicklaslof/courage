@@ -36,6 +36,12 @@ class UI{
 
         }else{
 
+            if (game.playerSays != null){
+                let l = game.playerSays.length;
+                let pos = this.projectWorldToScreen(game,game.screen.level.player.x-(l*3.5),game.screen.level.player.y-12);
+                this.drawTextAt(game.playerSays,pos.x,pos.y,"white",14);
+                
+            }
             if (game.isLevelTransition()){
                 let level = game.screen.level;
                 this.drawTextAt("Chapter "+ level.chapter + "/9:",(W/2)-112,(H/2)-150,"white",30);

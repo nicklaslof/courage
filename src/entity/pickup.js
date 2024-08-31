@@ -48,7 +48,7 @@ class Pickup extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity instanceof Player){
             if (this.type == "c") otherEntity.health++;
-            if (this.type == "b") otherEntity.bombs++;
+            if (this.type == "b") otherEntity.bombPickup(game);
             game.screen.level.removeEntity(this);
             game.screen.level.removeLight(this.light);
             game.playCouragePickup(); return }

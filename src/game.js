@@ -51,6 +51,8 @@ class Game{
         this.cameraCenterX = W/2;
         this.cameraCenterY = H/2;
 
+        this.clearPlayerTextCountdown = 0;
+
     }
 
     setupLightBuffer(){
@@ -118,6 +120,9 @@ class Game{
         this.screen.renderUI(this);
         this.gl.flush();
 
+        if (this.clearPlayerTextCountdown >0 ) this.clearPlayerTextCountdown -= deltaTime;
+        else this.playerSays = null;
+
         this.ui.render(this);
 
         this.fpsCounter += deltaTime;
@@ -127,6 +132,11 @@ class Game{
             console.log("FPS: "+this.fps);
             this.fpsCounter = this.fps = 0;
         }
+    }
+
+    setPlayerSays(text,clear){
+        this.playerSays = text;
+        this.clearPlayerTextCountdown = clear;
     }
 
     switchToGame(){
