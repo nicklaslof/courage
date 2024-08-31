@@ -30,7 +30,6 @@ class Room{
         this.lastRoom = lastRoom;
         this.bossRoom = bossRoom;
 
-        console.log(bossRoom);
 
         // Roomtype:
         // n = normal

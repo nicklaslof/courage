@@ -214,7 +214,6 @@ class Player extends Entity{
     }
 
     roomChange(game){
-        console.log("Room changed:" + this.currentRoom.roomId);
         if (this.currentRoom != null) this.currentRoom.onPlayerEnter(game);
     }
 
