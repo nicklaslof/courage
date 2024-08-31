@@ -1,9 +1,11 @@
+
 import Particle from "../entity/particle.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
+import Enemy from "../entity/enemy.js";
 
 class Level{
     constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom,bossLevel){
@@ -196,6 +198,7 @@ class Level{
             this.stars.x = W/2 + (this.playerStartX - this.player.x)/5;
             this.stars.y = H/2 + (this.playerStartY - this.player.y)/5;
         }
+        console.log(this.getRemainingEnemies());
     }
 
     addEntity(entity){
@@ -251,6 +254,10 @@ class Level{
                 list.splice(i, 1);
             }
         }
+    }
+
+    getRemainingEnemies(){
+        return this.entities.filter(e => e instanceof Enemy).length;
     }
 
     render(game){

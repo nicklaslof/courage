@@ -17,7 +17,7 @@ class Screen{
         this.height = height;
 
         this.levels = [];
-        this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.09,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,true,true));
+        this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.009,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,false,false));
         this.levels.push(this.tryAndCreateLevel(game,256,256,2,"Fear of spiders",0xff333333,0xff559955, [Spider],0.08,{r:0.3,g:0.3,b:0.35,a:1.0},true,8,15,10,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,2,"Spider mom",0xff333333,0xff559955, [Spider],0.08,{r:0.3,g:0.3,b:0.35,a:1.0},true,13,15,3,false,false,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,3,"Fear of being alone",0xff666666,0xff666666, [Pickup],0.06,{r:0.3,g:0.3,b:0.35,a:1.0},true,8,15,9,true,true));
@@ -48,20 +48,29 @@ class Screen{
             localStorage.setItem(localStorageLevel,0);
             return;
         }
+
+        let remainingEnemies = game.screen.level!=null ? game.screen.level.getRemainingEnemies():1;
+        if (player != null && player.health < 100 && remainingEnemies > 0) game.setPlayerSays("I can't leave yet. I need more courage.",4000);
         if (player == null){
             this.level = this.levels[levelId];
             this.currentLevelId = levelId;
+            this.levelTransitionTime = 300;
         }else{
-            if (player.health >= 100){
+            if (player.health >= 100 || (player.health < 100 && remainingEnemies == 0)){
                 this.level = this.levels[++this.currentLevelId];
                 localStorage.setItem(localStorageLevel,this.currentLevelId);
                 this.level.player.bombs = player.bombs;
+                this.levelTransitionTime = 300;
+                if (player.health < 100 && remainingEnemies == 0){
+                    this.level.player.health = 5;
+                    game.setPlayerSays("I left previous chapter without full courage so I'm extra scared.",8000);
+                }
             }
 
         }
         
-        if (player == null || player.health >= 100) this.levelTransitionTime = 300;
-        if (player != null && player.health < 100) game.setPlayerSays("I can't leave yet. I need more courage.",4000);
+        //if (player == null || player.health >= 100 || (player.health < 100 && game.screen.level.getRemainingEnemies() == 0)) 
+        
     }
 
     isLevelTransition(){
