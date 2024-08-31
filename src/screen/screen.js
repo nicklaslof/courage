@@ -16,7 +16,7 @@ class Screen{
         this.height = height;
 
         this.levels = [];
-        this.currentLevelId = 5;
+        this.currentLevelId = 9;
 
         //this.levels.push(this.tryAndCreateLevel(game,256,256,0,"Testroom",0xffcccccc,0xff999999,[Courage],0.0000009,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,2));
         this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.09,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,true,true));
@@ -29,7 +29,7 @@ class Screen{
         this.levels.push(this.tryAndCreateLevel(game,512,512,6,"Fear of confined spaces and rooms",0xffff4444,0xffff4444,[Pickup],0.06,{r:0.3,g:0.3,b:0.3,a:1.0},true,7,8,30,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,7,"Fear of fire",0xff0044cc,0xff0085ff,[Fire],0.09,{r:0.1,g:0.1,b:0.5,a:1.0},false,8,15,9,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,8,"Fear of heights, outer space and aliens",0xff00ff00,0x00000000,[Alien],0.04,{r:0.4,g:0.4,b:0.5,a:1.0},false,20,25,4,false,false));
-        this.levels.push(this.tryAndCreateLevel(game,256,256,9,"Fear of number 13",0xffc2008a,0xffd62ebe,[Thirteen],0.04,{r:0.4,g:0.4,b:0.5,a:1.0},false,8,16,8,false,false));
+        this.levels.push(this.tryAndCreateLevel(game,256,256,9,"Fear of number 13",0xff222222,0xff555555,[Thirteen],0.09,{r:0.4,g:0.4,b:0.5,a:1.0},true,8,16,8,false,true));
         this.tryChangeLevel(game, null);
         
     }
@@ -46,7 +46,7 @@ class Screen{
     }
 
     tryChangeLevel(game,player){
-        if (this.currentLevelId == 8){
+        if (this.currentLevelId == this.levels.length-1 && player.health >= 100){
             game.switchToEndScreen();
             return;
         }

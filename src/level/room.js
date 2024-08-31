@@ -85,8 +85,8 @@ class Room{
              level.addEntity(e);
              level.boss = e;
         }else if (!bossLevel){
-            for (let x = startTileX; x < startTileX+width; x++){
-                for (let y = startTileY; y < startTileY+height; y++){
+            for (let x = startTileX+2; x < startTileX+width-2; x++){
+                for (let y = startTileY+2; y < startTileY+height-2; y++){
                     let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
                     if (r && level.getTile(x,y) == Tiles.floor1){
                         for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){

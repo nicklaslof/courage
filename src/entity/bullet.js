@@ -10,6 +10,7 @@ import Fire from "./fire.js";
 import Alien from "./alien.js";
 import Bomb from "./bomb.js";
 import Explosion from "./explosion.js";
+import Thirteen from "./thirteen.js";
 
 class Bullet extends Entity{
     constructor(x,y,ttl,speed,directionX, directionY, shootingEntity,c=0xffffffff,stopAtLocation=null,flickering=false,customSprite=null,collisionBox={minX:-4,minY:-4,maxX:16,maxY:16},damage=1){
@@ -23,6 +24,7 @@ class Bullet extends Entity{
         this.stopMovement = false;
         this.flickering = flickering;
         this.damage = damage;
+
     }
 
     tick(game,deltaTime){
@@ -47,11 +49,13 @@ class Bullet extends Entity{
         }
 
         if (this.stopMovement) this.moveDirection.x = this.moveDirection.y = 0;
+
+        this.horizontalFlip = true;
     }
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
-        if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown || otherEntity instanceof Fire || otherEntity instanceof Alien)) return;
+        if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown || otherEntity instanceof Fire || otherEntity instanceof Alien || otherEntity instanceof Thirteen)) return;
         if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Bullet) return;
         if (otherEntity instanceof Bomb) return;
