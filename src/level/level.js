@@ -63,10 +63,10 @@ class Level{
 
         if (bossLevel) this.player.health = 100;
 
-        if (this.floorColor == 0x00000000){
-            this.stars = new Sprite(W/2,H/2,768,768,800,800,W*2,H*2,0xffffffff);
-            this.playerStartX = this.player.x;
-            this.playerStartY = this.player.y;
+        if (this.floorColor == 0x22ffffff){
+            this.stars = new Sprite(W/2,H/2,768,768,1600,1600,W*6,H*6,0xffffffff);
+            this.playerStartX = this.player.x-4000;
+            this.playerStartY = this.player.y-4000;
         }
     }
 
@@ -263,7 +263,7 @@ class Level{
     }
 
     render(game){
-        if (this.floorColor == 0x00000000){
+        if (this.floorColor == 0x22ffffff){
             this.stars.render(game);
             
         }

@@ -26,7 +26,7 @@ class Screen{
         this.levels.push(this.tryAndCreateLevel(game,256,256,5,"The clown",0xffcc99ff,0xff9999ff, [Clown],0.3,{r:0.3,g:0.3,b:0.3,a:1.0},true,13,15,3,false,false,true));
         this.levels.push(this.tryAndCreateLevel(game,512,512,6,"Fear of confined spaces and rooms",0xffff4444,0xffff4444,[Pickup],0.3,{r:0.3,g:0.3,b:0.3,a:1.0},true,7,8,30,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,7,"Fear of fire",0xff0044cc,0xff0085ff,[Fire],0.3,{r:0.1,g:0.1,b:0.5,a:1.0},false,8,15,9,true,true));
-        this.levels.push(this.tryAndCreateLevel(game,256,256,8,"Fear of heights, outer space and aliens",0xff00ff00,0x00000000,[Alien],0.3,{r:0.4,g:0.4,b:0.5,a:1.0},false,20,25,4,false,false));
+        this.levels.push(this.tryAndCreateLevel(game,256,256,8,"Fear of heights, outer space and aliens",0xff00ff00,0x22ffffff,[Alien],0.3,{r:0.4,g:0.4,b:0.5,a:1.0},false,20,25,4,false,false));
         this.levels.push(this.tryAndCreateLevel(game,256,256,9,"Fear of number 13",0xff222222,0xff555555,[Thirteen],0.3,{r:0.4,g:0.4,b:0.5,a:1.0},true,8,16,8,false,true));
         this.tryChangeLevel(game, null,localStorage.getItem(localStorageLevel));
         

@@ -31,8 +31,8 @@ class Texture{
             // Create stars
             
             //ctx.fillRect(768,768,400,400);
-            for (let x = 768; x < 768+800; x++){
-                for (let y = 768; y < 768+800; y++){
+            for (let x = 768; x < 768+1600; x++){
+                for (let y = 768; y < 768+1600; y++){
                     if (Math.random() < 0.001){
                         let c = 128 +  (Math.random()*128);
                         ctx.fillStyle = "rgba("+c+", "+c+", "+c+", 1)";

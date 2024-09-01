@@ -29,7 +29,7 @@ class Game{
         this.buttons = [];
         onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
         this.input = new Input();
-        onclick=e=> {if (!this.canvas.hasPointerCapture(0)) this.canvas.requestPointerLock()};
+        onclick=e=> this.canvas.requestPointerLock();
         onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
         onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
         document.addEventListener('contextmenu', event => {

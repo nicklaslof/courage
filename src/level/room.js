@@ -79,6 +79,7 @@ class Room{
         let exitLocation = {x:0,y:0};
         
         //Add decorations
+        if (floorColor != 0x22ffffff){
         for(let x=startTileX;x<startTileX+width;x++){
             for(let y=startTileY;y<startTileY+height;y++){
                 let currentTile=level.getTile(x,y);
@@ -97,6 +98,7 @@ class Room{
                 }
             }
         }
+    }
         if (lastRoom){
             let cx = Math.floor(this.x + this.width/2);
             let cy = Math.floor(this.y+ this.height/2);
