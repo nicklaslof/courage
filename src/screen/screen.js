@@ -54,7 +54,7 @@ class Screen{
         if (player == null){
             this.level = this.levels[levelId];
             this.currentLevelId = levelId;
-            this.levelTransitionTime = 40;
+            this.levelTransitionTime = 4000;
         }else{
             if (player.health >= 100 || (player.health < 100 && remainingEnemies == 0)){
                 this.level = this.levels[++this.currentLevelId];
@@ -63,7 +63,7 @@ class Screen{
                 this.levelTransitionTime = 4000;
                 if (player.health < 100 && remainingEnemies == 0){
                     this.level.player.health = 5;
-                    game.setPlayerSays("I left previous chapter without full courage so I'm extra scared.",8000);
+                    game.setPlayerSays("I left previous chapter without full courage so I'm extra scared.",10000);
                 }
             }
 

@@ -10,7 +10,6 @@ class UI{
 
     tick(game,deltaTime){
         if (!game.showIntro && !game.gameFinished && !game.gameOver){
-            if (game.screen.level == null) return;
             this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
             this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
         }
@@ -41,8 +40,7 @@ class UI{
             
 
         }else{
-            if (game.screen.level == null) return;
-            if (game.playerSays != null){
+            if (game.playerSays != null && !game.isLevelTransition()){
                 let l = game.playerSays.length;
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x-(l*3.5),game.screen.level.player.y-12);
                 this.drawTextAt(game.playerSays,pos.x,pos.y,"white",14);
@@ -52,7 +50,7 @@ class UI{
                 let level = game.screen.level;
                 this.drawTextAt("Chapter "+ level.chapter + "/9:",(W/2)-112,(H/2)-150,"white",30);
                 let levelNameLength = level.name.length;
-                this.drawTextAt(level.name,(W/2)-(levelNameLength*9.7),(H/2)-50,"white",30);
+                this.drawTextAt(level.name,(W/2)-(levelNameLength*9.4),(H/2)-50,"white",30);
             }else{
 
                 // Draw levelname

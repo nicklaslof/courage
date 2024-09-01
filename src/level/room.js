@@ -126,7 +126,6 @@ class Room{
                             let spawnY = (y*64);//+game.getRandom(-64,64);
                             if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1 && exitLocation.x !=Math.round(spawnX/64) && exitLocation.y !=Math.round(spawnY/64)){
                                let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
-                               console.log(mobType);
                                let e = mobType.name == Pickup.name ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
                                this.enemies.push(e);
                                level.addEntity(e);
