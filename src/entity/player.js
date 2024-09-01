@@ -87,14 +87,16 @@ class Player extends Entity{
             this.animation.setCurrentState("idle");
         }
 
-        if (game.input.glidePressed && this.canglide && this.glideSpeed < 1){
-            if (this.speed > this.playerSpeed-1) this.glideSpeed = 700;
-            else this.glideSpeed = 35;
-            this.glideCountdown = 1000;
-            this.canglide = false;
-            this.damageImmune = true;
-            this.damageImmuneCounter = 750;
-            game.playGlide();
+        if (game.input.getGlide() && this.canglide && this.glideSpeed < 1){
+            if (this.speed > this.playerSpeed-1){
+                this.glideSpeed = 700;
+                this.glideCountdown = 1000;
+                this.canglide = false;
+                this.damageImmune = true;
+                this.damageImmuneCounter = 750;
+                game.playGlide();  
+            }
+          
         }
         if (this.speed > 980) this.speed = 980;
         if (this.glideSpeed > 10){
