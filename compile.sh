@@ -7,7 +7,7 @@ cp t-tinified.png ../dist/t.png
 cd ..
 cd dist
 #terser bundle.js -o i.js --compress --mangle --mangle-props reserved=["g","img","flush","bkg","cls","col","init","generate","createWave"] --timings --toplevel --module
-terser bundle.js -o g.js --compress --mangle --mangle-props reserved=["Pickup"] --timings --toplevel --module
+terser bundle.js -o g.js --compress --mangle --mangle-props --timings --toplevel --module
 rm bundle.js
 #roadroller -OO g.js -o ./o.js
 roadroller -Zab35 -Zlr2090 -Zmc3 -Zmd117 -S0,1,2,3,5,6,13,25,42,113,212,451 g.js -o ./o.js
