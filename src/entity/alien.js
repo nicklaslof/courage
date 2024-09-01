@@ -52,7 +52,7 @@ class Alien extends Enemy{
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
                 this.normalize(this.calculatePlayerDirectionVector);
 
-                game.screen.level.addEntity(new Bullet(this.x+16,this.y+16,1000,200,this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00));
+                game.screen.level.addEntity(new Bullet(this.x+16,this.y+16,1200,200,this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00));
 
                 this.spitDelay = 300;
             }

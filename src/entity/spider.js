@@ -62,13 +62,13 @@ class Spider extends Bug{
             }
         }
         else{
-            if (this.shootCountdown > 0) this.shootCountdown--;
-            if (this.shootTimer > 0) this.shootTimer--;
+            if (this.shootCountdown > 0) this.shootCountdown -= deltaTime;
+            if (this.shootTimer > 0) this.shootTimer -= deltaTime;
             else{
                 this.spit = Math.random()<0.1;
                 this.shootCounter = 0;
                 this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
-
+                console.log(this.shootTimer);
             }
 
             if (this.spit && this.shootCountdown < 1){

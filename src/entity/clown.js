@@ -24,6 +24,7 @@ class Clown extends Enemy{
 
         this.throwCounter = 0;
         this.throwCountdown = 0;
+        this.shootTimer = 0;
         this.throwLocation = {x:0,y:0};
         this.throw = false;
 
@@ -96,8 +97,10 @@ class Clown extends Enemy{
                     }
                 }      
         } else {
-            if (!this.throw && Math.random() < 0.2){
-                this.throw = true;
+            if (this.shootTimer > 0) this.shootTimer -= deltaTime;
+            else{
+                this.throw = Math.random()<0.8;
+                this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
             }
 
             if (this.throw){
@@ -127,8 +130,6 @@ class Clown extends Enemy{
                         this.throwLocation.y = 0;
                         this.animation.setCurrentState("idle");
                     }
-
-                //if (this.throwTimer <= 0) this.throw = this.hasThrown = false;
             }
         }
     }
