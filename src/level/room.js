@@ -117,9 +117,9 @@ class Room{
         }else if (!bossLevel){
             for (let x = startTileX+2; x < startTileX+width-2; x++){
                 for (let y = startTileY+2; y < startTileY+height-2; y++){
-                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
+                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.7;
                     if (r && level.getTile(x,y) == Tiles.floor1){
-                        for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
+                        //for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
                             let spawnX = (x*64);//+game.getRandom(-64,64);
                             let spawnY = (y*64);//+game.getRandom(-64,64);
                             if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1 && exitLocation.x !=Math.round(spawnX/64) && exitLocation.y !=Math.round(spawnY/64)){
@@ -128,7 +128,7 @@ class Room{
                                this.enemies.push(e);
                                level.addEntity(e);
                             }
-                        }
+                       // }
                     }
                 }
             }

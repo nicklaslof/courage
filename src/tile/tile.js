@@ -25,7 +25,7 @@ class Tile{
 
         if (entity instanceof Player && this == Tiles.stairs && (game.screen.level.boss == null || game.screen.level.boss.health < 1) ) game.screen.tryChangeLevel(game, entity);
 
-        if (entity instanceof Player && this == Tiles.stairs && game.screen.level.boss != null && game.screen.level.boss.health > 0) game.setPlayerSays("I can't leave yet. "+game.screen.level.name+" is still alive!",3000);
+        if (entity instanceof Player && this == Tiles.stairs && game.screen.level.started && game.screen.level.boss != null && game.screen.level.boss.health > 0) game.setPlayerSays("I can't leave yet. "+game.screen.level.name+" is still alive!",3000);
 
         // Set our collision checking AABB to the size of the tilecollision and the position in world coordinates.
         

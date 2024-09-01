@@ -30,6 +30,7 @@ class Level{
         this.boss = null;
 
         this.allRoomsCreated = false;
+        this.started = false;
 
         this.entities = [];
 
@@ -170,6 +171,7 @@ class Level{
     }
 
     tick(game,deltaTime){
+        this.started = true;
         this.entities.forEach(e => {         e.tick(game,deltaTime)});
         this.lights.forEach(l => {
             l.tick(game, deltaTime);
