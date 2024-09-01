@@ -16,10 +16,10 @@ class Spider extends Bug{
         .addState("walk", new Sprite(x,y,32,96,16,16,size,size,c),240);
         this.animation.setCurrentState("idle");
 
-        this.spitTimer = 0;
+        this.shootTimer = 0;
         this.boss = boss;
 
-        this.shootCounter = this.shootAngle = this.bulletCounter = 0;
+        this.shootCounter = this.shootCountdown = this.shootAngle = this.bulletCounter = 0;
 
         if (boss){
             this.health = 30;
@@ -62,28 +62,29 @@ class Spider extends Bug{
             }
         }
         else{
-            if (!this.spit && Math.random() < 0.001){
-                this.spit = true;
-                this.spitTimer = 1000;
+            if (this.shootCountdown > 0) this.shootCountdown--;
+            if (this.shootTimer > 0) this.shootTimer--;
+            else{
+                this.spit = Math.random()<0.1;
+                this.shootCounter = 0;
+                this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
+
             }
 
-            if (this.spit){
-                this.spitTimer -= deltaTime;
-                this.moveDirection.x = this.moveDirection.y = 0;
-
-                if (this.spitTimer < 500 && !this.hasSpit){
-                    this.hasSpit = true;
-                    
-                    let player = game.screen.level.player;
-                    this.calculatePlayerDirectionVector.x = player.x - this.x;
-                    this.calculatePlayerDirectionVector.y = player.y - this.y;
-                    if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
-                        this.normalize(this.calculatePlayerDirectionVector);
-                        game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,5000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
-                    }
+            if (this.spit && this.shootCountdown < 1){
+                this.shootCounter++;
+                let player = game.screen.level.player;
+                this.calculatePlayerDirectionVector.x = player.x - this.x;
+                this.calculatePlayerDirectionVector.y = player.y - this.y;
+                if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+                    this.normalize(this.calculatePlayerDirectionVector);
+                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,5000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
                 }
+                this.shootCountdown = 100;
+            }
 
-                if (this.spitTimer <= 0) this.spit = this.hasSpit = false;
+            if (this.shootCounter > 3){
+                this.spit = false;
             }
         }
     }
