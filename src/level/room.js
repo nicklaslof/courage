@@ -103,7 +103,7 @@ class Room{
             let cx = Math.floor(this.x + this.width/2);
             let cy = Math.floor(this.y+ this.height/2);
             level.addTile(cx,cy,Tiles.stairs,this);
-            let l = level.addLight(cx*64,cy*64,0xff00ffff,256,256,10000,false);
+            let l = level.addLight((cx*64)+32,(cy*64)+32,0xff00ffff,256,256,10000,false);
             exitLocation.x = cx;
             exitLocation.y = cy;
             l.renderOffsetX = 8;
