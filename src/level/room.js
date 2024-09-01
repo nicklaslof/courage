@@ -120,8 +120,8 @@ class Room{
                     let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
                     if (r && level.getTile(x,y) == Tiles.floor1){
                         for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
-                            let spawnX = (x*64)+game.getRandom(-64,64);
-                            let spawnY = (y*64)+game.getRandom(-64,64);
+                            let spawnX = (x*64);//+game.getRandom(-64,64);
+                            let spawnY = (y*64);//+game.getRandom(-64,64);
                             if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1 && exitLocation.x !=Math.round(spawnX/64) && exitLocation.y !=Math.round(spawnY/64)){
                                let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
                                let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
