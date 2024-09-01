@@ -76,34 +76,8 @@ class Room{
             }
         }
 
-        // Spawn enimies
-        if (bossRoom){
-             let mobType = level.mobSpawns[0];
-             let e = new mobType(((startTileX + width/2)*64)-64,((startTileY + height/2)*64)-64,0xffffffff,0,128,true);
-             this.enemies.push(e);
-             level.addEntity(e);
-             level.boss = e;
-        }else if (!bossLevel){
-            for (let x = startTileX+2; x < startTileX+width-2; x++){
-                for (let y = startTileY+2; y < startTileY+height-2; y++){
-                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
-                    if (r && level.getTile(x,y) == Tiles.floor1){
-                        for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
-                            let spawnX = (x*64)+game.getRandom(-64,64);
-                            let spawnY = (y*64)+game.getRandom(-64,64);
-                            if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1){
-                                let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
-                                let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
-                                this.enemies.push(e);
-                                level.addEntity(e);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        let exitLocation = {x:0,y:0};
         
-
         //Add decorations
         for(let x=startTileX;x<startTileX+width;x++){
             for(let y=startTileY;y<startTileY+height;y++){
@@ -128,7 +102,36 @@ class Room{
             let cy = Math.floor(this.y+ this.height/2);
             level.addTile(cx,cy,Tiles.stairs,this);
             let l = level.addLight(cx*64,cy*64,0xff00ffff,256,256,10000,false);
+            exitLocation.x = cx;
+            exitLocation.y = cy;
             l.renderOffsetX = 8;
+        }
+
+         // Spawn enimies
+        if (bossRoom){
+            let mobType = level.mobSpawns[0];
+            let e = new mobType(((startTileX + width/2)*64)-64,((startTileY + height/2)*64)-64,0xffffffff,0,128,true);
+            this.enemies.push(e);
+            level.addEntity(e);
+            level.boss = e;
+        }else if (!bossLevel){
+            for (let x = startTileX+2; x < startTileX+width-2; x++){
+                for (let y = startTileY+2; y < startTileY+height-2; y++){
+                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.2;
+                    if (r && level.getTile(x,y) == Tiles.floor1){
+                        for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
+                            let spawnX = (x*64)+game.getRandom(-64,64);
+                            let spawnY = (y*64)+game.getRandom(-64,64);
+                            if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1 && exitLocation.x !=Math.round(spawnX/64) && exitLocation.y !=Math.round(spawnY/64)){
+                               let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
+                               let e = mobType.name == "Pickup" ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
+                               this.enemies.push(e);
+                               level.addEntity(e);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         Room.id++;

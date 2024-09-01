@@ -24,7 +24,7 @@ class Explosion extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         if (otherEntity instanceof Enemy || otherEntity instanceof Box){
-            otherEntity.hit(game,100);
+            otherEntity.hit(game,5);
         }
     }
 }

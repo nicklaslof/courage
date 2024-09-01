@@ -10,6 +10,7 @@ class UI{
 
     tick(game,deltaTime){
         if (!game.showIntro && !game.gameFinished && !game.gameOver){
+            if (game.screen.level == null) return;
             this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
             this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
         }
@@ -40,7 +41,7 @@ class UI{
             
 
         }else{
-
+            if (game.screen.level == null) return;
             if (game.playerSays != null){
                 let l = game.playerSays.length;
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x-(l*3.5),game.screen.level.player.y-12);
