@@ -10,7 +10,7 @@ class Clown extends Enemy{
         super(x,y,new Sprite(x,y,0,80,9,14,Math.max(28,size),Math.max(28,size),0xffffffff));
         this.speed = 20;
         this.c = 0xffffffff;
-        this.health = 2;
+        this.health = 3;
         size = Math.max(28,size);
 
         this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};

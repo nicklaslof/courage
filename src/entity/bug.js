@@ -31,11 +31,6 @@ class Bug extends Enemy{
     onEntityStopMovement(game,deltaTime){
         this.animation.setCurrentState("idle");
     }
-
-    onDeath(game){
-        super.onDeath(game);
-        game.playBugKilled();
-    }
 }
 
 export default Bug;
