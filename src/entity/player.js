@@ -10,6 +10,7 @@ import Tile from "../tile/tile.js";
 import Spider from "./spider.js";
 import Bomb from "./bomb.js";
 import Explosion from "./explosion.js";
+import Enemy from "./enemy.js";
 
 class Player extends Entity{
     constructor(x,y,pixelScale){
@@ -210,6 +211,7 @@ class Player extends Entity{
         if (otherEntity instanceof Spider) return;
         if (otherEntity instanceof Bomb) return;
         if (otherEntity instanceof Explosion) return;
+        if (otherEntity instanceof Enemy) this.hit(game,1);
         //this.hit(game,1);
     }
 

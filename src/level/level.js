@@ -198,7 +198,7 @@ class Level{
             this.stars.x = W/2 + (this.playerStartX - this.player.x)/5;
             this.stars.y = H/2 + (this.playerStartY - this.player.y)/5;
         }
-        console.log(this.getRemainingEnemies());
+        if (this.player.health < 1) game.switchToGameOver();
     }
 
     addEntity(entity){

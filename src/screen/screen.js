@@ -17,7 +17,7 @@ class Screen{
         this.height = height;
 
         this.levels = [];
-        this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.009,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,false,false));
+        this.levels.push(this.tryAndCreateLevel(game,256,256,1,"Fear of insects",0xffcccccc,0xff999999,[Bug],0.09,{r:0.2,g:0.2,b:0.5,a:1.0},true,8,20,6,false,false));
         this.levels.push(this.tryAndCreateLevel(game,256,256,2,"Fear of spiders",0xff333333,0xff559955, [Spider],0.08,{r:0.3,g:0.3,b:0.35,a:1.0},true,8,15,10,true,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,2,"Spider mom",0xff333333,0xff559955, [Spider],0.08,{r:0.3,g:0.3,b:0.35,a:1.0},true,13,15,3,false,false,true));
         this.levels.push(this.tryAndCreateLevel(game,256,256,3,"Fear of being alone",0xff666666,0xff666666, [Pickup],0.06,{r:0.3,g:0.3,b:0.35,a:1.0},true,8,15,9,true,true));

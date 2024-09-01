@@ -42,7 +42,7 @@ class Game{
         this.lastTime = performance.now();
 
         this.showIntro = true;
-        this.gameFinished = false;
+        this.gameFinished = this.gameOver = false;
         this.screen = new IntroScreen(true);
         //this.switchToEndScreen();
 
@@ -73,8 +73,8 @@ class Game{
 
     update(){
         if (this.texture.glTexture.dirty) return;
-        if (this.gameFinished && !(this.screen instanceof EndScreen)){
-            this.screen = new EndScreen(false);
+        if (this.gameFinished || this.gameOver && !(this.screen instanceof EndScreen)){
+            this.screen = new EndScreen(this.gameOver);
             this.setupLightBuffer();
         }
         let currentTime = performance.now();
@@ -141,12 +141,17 @@ class Game{
 
     switchToGame(){
         this.showIntro = false;
+        this.gameOver = false;
         this.screen = new Screen(this,W, H);
         this.setupLightBuffer();
     }
 
     switchToEndScreen(){
         this.gameFinished = true;
+    }
+
+    switchToGameOver(){
+        this.gameOver = true;
     }
 
     isLevelTransition(){
