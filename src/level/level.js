@@ -6,6 +6,7 @@ import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
 import Room from "./room.js";
 import Enemy from "../entity/enemy.js";
+import Decoration from "../entity/decoration.js";
 
 class Level{
     constructor(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom,bossLevel){
@@ -171,7 +172,9 @@ class Level{
     }
 
     tick(game,deltaTime){
+        //if (!this.started)this.addDecoration(new Decoration(this,this.player.x,this.player.y,8,24,"t"));
         this.started = true;
+        
         this.entities.forEach(e => {         e.tick(game,deltaTime)});
         this.lights.forEach(l => {
             l.tick(game, deltaTime);

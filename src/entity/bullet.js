@@ -30,8 +30,8 @@ class Bullet extends Entity{
     tick(game,deltaTime){
         if (this.light == null){
             this.light = game.screen.level.addLight(this.x,this.y,this.sprite.c,96,96,this.ttl,this.flickering);
-            this.light.renderOffsetX = 20;
-            this.light.renderOffsetY = 16;
+            this.light.renderOffsetX = -34;
+            this.light.renderOffsetY = -48;
         }
         super.tick(game,deltaTime);
         this.light.x = this.x;

@@ -10,7 +10,8 @@ class Pickup extends Entity{
         super(x,y,type == "c"?new Sprite(x,y,128,38,32,32,32,32,0xff0000ff):new Sprite(x,y,19,81,8,9,24,24,0xffffffff),10,{minX:0,minY:0,maxX:20,maxY:20});
         this.moveDirection.x = moveX;
         this.type = type;
-
+        this.sprite.renderOffsetX = -16;
+        this.sprite.renderOffsetY = 0;
         this.landY = y+0.01;
         this.counter=0;
         this.speed = 150;
@@ -32,9 +33,15 @@ class Pickup extends Entity{
             this.speed = game.screen.level.player.playerSpeed+5;
         }
 
-        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff3333ff,64,64,10000,false);
-        this.light.renderOffsetX = 12;
-        this.light.renderOffsetY = 6;
+        if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff4444ff,64,64,10000,false);
+        if (this.moveDirection.x == 0 && this.moveDirection.y == 0){
+            this.light.renderOffsetX = -24;
+            this.light.renderOffsetY = -32;
+        }else{
+            this.light.renderOffsetX = -32;
+            this.light.renderOffsetY = -32;
+        }
+
         this.light.x = this.x;
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
