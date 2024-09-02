@@ -174,8 +174,9 @@ class Level{
     tick(game,deltaTime){
         //if (!this.started)this.addDecoration(new Decoration(this,this.player.x,this.player.y,8,24,"t"));
         this.started = true;
+        this.player.tick(game,deltaTime);
         
-        this.entities.forEach(e => {         e.tick(game,deltaTime)});
+        this.entities.forEach(e => {if (!(e instanceof Player)) e.tick(game,deltaTime)});
         this.lights.forEach(l => {
             l.tick(game, deltaTime);
             if (l.disposed) this.removeLight(l);
@@ -197,6 +198,8 @@ class Level{
         });
 
         this.decorations.forEach(d => d.tick(game,deltaTime));
+
+
 
         if (this.stars != null){
             this.stars.tick(game,deltaTime);
