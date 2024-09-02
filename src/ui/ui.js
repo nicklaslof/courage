@@ -32,7 +32,7 @@ class UI{
 
             this.drawTextAt("You did it!",(W/2)-116,40,"white",36);
             this.drawTextAt("Billy no longer has his 13 different phobias.",(W/2)-322,100,"white",24);
-            this.drawTextAt("Thanks for playing  / Nicklas",(W/2)-210,500,"white",24);
+            this.drawTextAt("Thanks for playing  / Nicklas",(W/2)-210,705,"white",24);
 
         }else if (game.gameOver){
             this.drawTextAt("Game over!",(W/2)-106,40,"white",36);

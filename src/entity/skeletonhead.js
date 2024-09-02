@@ -12,7 +12,6 @@ class SkeletonHead extends Entity{
 
     onCollision(game,otherEntity){
         if (otherEntity instanceof Player){
-            console.log(otherEntity);
             this.moveDirection.x = otherEntity.moveDirection.x;
             this.moveDirection.y = otherEntity.moveDirection.y;
             this.speed = 500;
@@ -35,6 +34,7 @@ class SkeletonHead extends Entity{
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0xffdddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }
         if (Math.random() < 0.1) game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1),"b"));
+        game.playEnemyKilled();
     }
 }
 export default SkeletonHead;

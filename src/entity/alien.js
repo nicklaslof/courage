@@ -19,6 +19,7 @@ class Alien extends Enemy{
         this.animation.setCurrentState("blinking");
         this.moveAwayRange = 0;
         this.spitDelay = 0;
+        this.shootTimer = 0;
     }
 
     tick(game,deltaTime){
@@ -35,12 +36,16 @@ class Alien extends Enemy{
         }
         this.animation.setCurrentState("blinking");
 
-        if (game.length(this.calculatePlayerDirectionVector) < this.moveAwayRange+40){
-            if (!this.spitOnPlayer && Math.random() < 0.0009){
-                this.spitOnPlayer = true;
-                this.spitOnPlayerCountdown = game.getRandom(1000,1500);
+        if (this.shootTimer > 0) this.shootTimer -= deltaTime;
+        else{
+            if (game.length(this.calculatePlayerDirectionVector) < this.moveAwayRange+40){
+                if (!this.spitOnPlayer && Math.random() < 0.005){
+                    this.spitOnPlayer = true;
+                    this.spitOnPlayerCountdown = game.getRandom(1000,1500);
+                    this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
+                }
             }
-         }
+        }
         
         if (this.spitOnPlayer){
             this.spitDelay -= deltaTime;
@@ -54,7 +59,7 @@ class Alien extends Enemy{
 
                 game.screen.level.addEntity(new Bullet(this.x+16,this.y+16,1200,200,this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00));
 
-                this.spitDelay = 300;
+                this.spitDelay = 400;
             }
         }
         if (this.spitOnPlayerCountdown <= 0) this.spitOnPlayer = false;
