@@ -24,7 +24,7 @@ class Box extends Entity{
             let size = game.getRandom(12,15)
             game.screen.level.addParticle(this.x,this.y,0xff5777ad,size,size,1200,{x:game.getRandom(-0.2,0.2),y:game.getRandom(-0.2,-0.1)},100);
         }
-        if (!this.treasureBox && Math.random()<0.4) game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1),Math.random()<0.8?"c":"b"));
+        if (!this.treasureBox && Math.random()<0.4) game.screen.level.addEntity(new Pickup(this.x,this.y,game.getRandom(-1,1),Math.random()<0.9?"c":"b"));
     }
 }
 export default Box;
