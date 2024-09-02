@@ -210,11 +210,9 @@ class Player extends Entity{
         if (otherEntity instanceof Box) return;
         if (otherEntity instanceof Pickup) return;
         if (otherEntity instanceof Tile) return;
-        if (otherEntity instanceof Spider) return;
         if (otherEntity instanceof Bomb) return;
         if (otherEntity instanceof Explosion) return;
         if (otherEntity instanceof Enemy) this.hit(game,1);
-        //this.hit(game,1);
     }
 
     roomChange(game){

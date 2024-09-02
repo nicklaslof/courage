@@ -6,7 +6,6 @@ class Enemy extends Entity{
     constructor(x,y,sprite){
         super(x,y,sprite,3,{minX:16,minY:10,maxX:48,maxY:58});
 
-
         this.speed = 128;
         this.health = 1;
         
@@ -18,7 +17,6 @@ class Enemy extends Entity{
         this.moveAgainstPlayer(game);
     }
 
-    
 
     onDeath(game){
         for (let i = 0; i < 32;i++){

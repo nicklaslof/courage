@@ -19,6 +19,8 @@ class Spider extends Bug{
         this.shootTimer = 0;
         this.boss = boss;
 
+        this.playerLocation = {x:0,y:0};
+
         this.shootCounter = this.shootCountdown = this.shootAngle = this.bulletCounter = 0;
 
         if (boss){
@@ -62,30 +64,29 @@ class Spider extends Bug{
             }
         }
         else{
+            let player = game.screen.level.player;
             if (this.shootCountdown > 0) this.shootCountdown -= deltaTime;
             if (this.shootTimer > 0) this.shootTimer -= deltaTime;
             else{
-                this.spit = Math.random()<0.1;
-                this.shootCounter = 0;
+                this.spit = Math.random()<0.2;
                 this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
-                console.log(this.shootTimer);
+
+                this.playerLocation.x = player.x;
+                this.playerLocation.y = player.y;
             }
 
             if (this.spit && this.shootCountdown < 1){
-                this.shootCounter++;
-                let player = game.screen.level.player;
-                this.calculatePlayerDirectionVector.x = player.x - this.x;
-                this.calculatePlayerDirectionVector.y = player.y - this.y;
+               
+                this.calculatePlayerDirectionVector.x = this.playerLocation.x - this.x;
+                this.calculatePlayerDirectionVector.y = this.playerLocation.y - this.y;
                 if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                     this.normalize(this.calculatePlayerDirectionVector);
                     game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,5000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
                 }
                 this.shootCountdown = 100;
-            }
-
-            if (this.shootCounter > 3){
                 this.spit = false;
             }
+
         }
     }
 
