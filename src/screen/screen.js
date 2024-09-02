@@ -43,13 +43,14 @@ class Screen{
 
     tryChangeLevel(game,player,levelId){
         if (levelId == null) levelId = 0;
-        if (this.currentLevelId == this.levels.length-1 && player.health >= 100){
+        let remainingEnemies = game.screen.level!=null ? game.screen.level.getRemainingEnemies():1;
+        if (this.currentLevelId == this.levels.length-1 && (player.health >= 100 || (player.health < 100 && remainingEnemies == 0))){
             game.switchToEndScreen();
             localStorage.setItem(localStorageLevel,0);
             return;
         }
 
-        let remainingEnemies = game.screen.level!=null ? game.screen.level.getRemainingEnemies():1;
+
         if (player != null && player.health < 100 && remainingEnemies > 0) game.setPlayerSays("I can't leave yet. I need more courage.",4000);
         if (player == null){
             this.level = this.levels[levelId];

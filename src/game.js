@@ -73,7 +73,7 @@ class Game{
 
     update(){
         if (this.texture.glTexture.dirty) return;
-        if (this.gameFinished || this.gameOver && !(this.screen instanceof EndScreen)){
+        if ((this.gameFinished || this.gameOver) && !(this.screen instanceof EndScreen)) {
             this.screen = new EndScreen(this.gameOver);
             this.setupLightBuffer();
         }

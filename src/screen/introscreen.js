@@ -37,7 +37,6 @@ class IntroScreen{
 
     tick(game, deltaTime){
         this.floor.tick(game,deltaTime);
-
         this.animation.tick(game,deltaTime);
         this.sprite = this.animation.currentSprite;
         this.sprite.x = (W/2)-36;

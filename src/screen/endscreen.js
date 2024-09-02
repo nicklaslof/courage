@@ -1,7 +1,7 @@
 import IntroScreen from "./introscreen.js";
 
 class EndScreen extends IntroScreen{
-    constructor(clickToRestart){
+    constructor(){
         super(false);
         this.clickToRestart = true;
         this.clickCounter = 2000;
