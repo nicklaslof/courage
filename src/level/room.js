@@ -5,6 +5,7 @@ import Bug from "../entity/bug.js";
 import Box from "../entity/box.js";
 import Spider from "../entity/spider.js";
 import Pickup from "../entity/pickup.js";
+import SkeletonHead from "../entity/skeletonhead.js";
 
 class Room{
     static id = 0;
@@ -95,6 +96,12 @@ class Room{
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
                         if(!lastRoom && this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
                         if (!lastRoom && !bossRoom && Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
+                        if (Math.random()< 0.05){
+                            for (let i = 0; i < game.getRandom(1,3);i++){
+                                level.addEntity(new SkeletonHead((x*64)+game.getRandom(0,48),(y*64)+game.getRandom(0,48),game.getRandom(16,20),game.getRandom(16,20)));
+                            }
+                            
+                        }
                 }
             }
         }

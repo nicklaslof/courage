@@ -2,6 +2,7 @@ import Sprite from "../graphic/sprite.js";
 import Box from "./box.js";
 import Enemy from "./enemy.js";
 import Entity from "./entity.js";
+import SkeletonHead from "./skeletonhead.js";
 
 class Explosion extends Entity{
     constructor(x,y,shootingEntity){
@@ -23,7 +24,7 @@ class Explosion extends Entity{
 
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
-        if (otherEntity instanceof Enemy || otherEntity instanceof Box){
+        if (otherEntity instanceof Enemy || otherEntity instanceof Box|| otherEntity instanceof SkeletonHead){
             otherEntity.hit(game,2);
         }
     }
