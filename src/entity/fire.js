@@ -19,7 +19,7 @@ class Fire extends Enemy{
         this.animation.setCurrentState("burning");
         this.moveToPlayerRange = 1024;
 
-        this.spitTimer = 0;
+        this.spitTimer = this.shootTimer = 0;
     }
 
     tick(game,deltaTime){
@@ -30,10 +30,13 @@ class Fire extends Enemy{
         this.light.y = this.y;
         this.light.tick(game,deltaTime);
 
-
-        if (!this.spit && Math.random() < 0.001){
-            this.spit = true;
-            this.spitTimer = 1000;
+        if (this.shootTimer > 0) this.shootTimer -= deltaTime;
+        else {
+            if (!this.spit && Math.random() < 0.2){
+                this.spit = true;
+                this.spitTimer = 1000;
+                this.shootTimer = 500; //Check random every 500ms, otherwise timing issue where higher ticks/fps will get more bullets since it checks the random function more often.
+            }
         }
 
         if (this.spit){
@@ -47,6 +50,7 @@ class Fire extends Enemy{
                 this.calculatePlayerDirectionVector.x = player.x - this.x;
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
                 if (game.length(this.calculatePlayerDirectionVector) < 400 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
+                    console.log("spit");
                     this.normalize(this.calculatePlayerDirectionVector);
                     game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,6000,200, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0088ff,{x:player.x,y:player.y},true,new Sprite(this.x,this.y,32,74,7,5,16,16,0xffffffff)));
                 }
