@@ -9,7 +9,7 @@ cd dist
 #terser bundle.js -o i.js --compress --mangle --mangle-props reserved=["g","img","flush","bkg","cls","col","init","generate","createWave"] --timings --toplevel --module
 terser bundle.js -o g.js --compress --mangle --mangle-props --timings --toplevel --module
 rm bundle.js
-#roadroller -O2 g.js -o ./o.js
+#roadroller -OO g.js -o ./o.js
 
 roadroller -Zab35 -Zlr2090 -Zmc3 -Zmd117 -S0,1,2,3,5,6,13,25,42,113,212,451 g.js -o ./o.js
 #roadroller -Zab35 -Zdy1 -Zlr2600 -Zmc3 -Zmd137 -Zpr16 -S0,1,2,3,5,7,14,19,25,102,213,417 g.js -o ./o.js

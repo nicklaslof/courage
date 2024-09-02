@@ -113,8 +113,7 @@ class Room{
             let l = level.addLight((cx*64)+32,(cy*64)+32,0xff00ffff,256,256,10000,false);
             exitLocation.x = cx;
             exitLocation.y = cy;
-            l.renderOffsetX = -116;
-            l.renderOffsetY = -132;
+            l.renderOffsetX = 8;
         }
 
          // Spawn enimies
