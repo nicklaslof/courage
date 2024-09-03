@@ -12,10 +12,7 @@ rm bundle.js
 #roadroller -OO g.js -o ./o.js
 
 roadroller -Zab22 -Zlr2137 -Zmc3 -Zmd117 -Zpr16 -S0,1,2,3,5,7,14,25,85,225,298,453 g.js -o ./o.js
-#roadroller -Zab34 -Zdy0 -Zlr2411 -Zmc3 -Zmd85 -Zpr16 -S0,1,2,3,5,7,14,25,50,101,330,417 g.js -o ./o.js
 
-#roadroller -Zab35 -Zlr2090 -Zmc3 -Zmd117 -S0,1,2,3,5,6,13,25,42,113,212,451 g.js -o ./o.js
-#roadroller -Zab35 -Zdy1 -Zlr2600 -Zmc3 -Zmd137 -Zpr16 -S0,1,2,3,5,7,14,19,25,102,213,417 g.js -o ./o.js
 #/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed 's/\x1f//g' o.js > oo.js
 echo "<meta charset="UTF-8"><style>" > index-template.html
 cat ../src/i.css >> index-template.html
