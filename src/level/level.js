@@ -66,11 +66,12 @@ class Level{
     }
 
     generateRooms(game) {
-        let rp = this.generateRoomProperties(game, this.maxRoomSize, this.maxRoomSize);
+        let roomMargin = 0;
+        let rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
         rp.x = this.width / 2;
         rp.y = this.height / 2;
 
-        let newRoom = new Room(rp.x, rp.y, rp.width, rp.height);
+        let newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
         let previousRoom = null, previousDirection = null;
         let numberOfRoomsCreated = 0;
         for (let i = 0; i < this.numberOfRooms; i++) {
@@ -135,25 +136,25 @@ class Level{
                 loopMaxCounter++;
                 if (loopMaxCounter > 30) break;
                 let nextDirection = Math.floor(game.getRandom(0, 4));
-                rp = this.generateRoomProperties(game, this.maxRoomSize, this.maxRoomSize);
+                rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
 
                 let [roomDistance, roomLocationVariation] = [Math.floor(game.getRandom(1, 3)), Math.floor(game.getRandom(-3,3))];
                 switch (nextDirection) {
                     case 0: // west
-                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y - roomDistance - rp.height];
+                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y - roomMargin - roomDistance - rp.height];
                         break;
                     case 1: // east
-                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y + previousRoom.height + roomDistance];
+                        [rp.x, rp.y] = [previousRoom.x + roomLocationVariation, previousRoom.y + roomMargin + previousRoom.height + roomDistance];
                         break;
                     case 2: // north
-                        [rp.x, rp.y] = [previousRoom.x + previousRoom.width + roomDistance, previousRoom.y - roomLocationVariation];
+                        [rp.x, rp.y] = [previousRoom.x + roomMargin + previousRoom.width + roomDistance, previousRoom.y - roomLocationVariation];
                         break;
                     case 3: // south
-                        [rp.x, rp.y] = [previousRoom.x - roomDistance - rp.width, previousRoom.y - roomLocationVariation];
+                        [rp.x, rp.y] = [previousRoom.x - roomMargin - roomDistance - rp.width, previousRoom.y - roomLocationVariation];
                         break;
                 }
 
-                newRoom = new Room(rp.x, rp.y, rp.width, rp.height);
+                newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
                 // Do an AABB intersect test for each room so the new room doesn't overlap. If it fails after 30 tries the level will be marked incomplete and a new one will be created.
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
                 previousDirection = nextDirection;
@@ -164,7 +165,7 @@ class Level{
         return (numberOfRoomsCreated == this.numberOfRooms);
     }
 
-    generateRoomProperties(game,maxWidth,maxHeight){
+    generateRoomProperties(game, roomMargin,maxWidth,maxHeight){
         return {
             x : 0,
             y : 0,

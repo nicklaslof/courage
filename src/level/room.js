@@ -9,8 +9,8 @@ import SkeletonHead from "../entity/skeletonhead.js";
 
 class Room{
     static id = 0;
-    constructor(startTileX, startTileY, width, height){
-        this.AABB = {minX:startTileX,minY:startTileY,maxX:startTileX+width,maxY:startTileY+height};
+    constructor(roomMargin, startTileX, startTileY, width, height){
+        this.AABB = {minX:startTileX-roomMargin,minY:startTileY-roomMargin,maxX:startTileX+width+roomMargin,maxY:startTileY+height+roomMargin};
         //Debug
         /*console.log("Room size: "+width +" x "+ height);
         console.log("startTileX "+startTileX+ " startTileY "+startTileY);
