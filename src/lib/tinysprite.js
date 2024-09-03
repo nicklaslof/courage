@@ -82,15 +82,9 @@ export function TinySprite(canvas) {
     gl.useProgram(shader);
     gl.bindBuffer(34963, IBO);
     var indexB = 0;
-    for (var indexA = indexB = 0; 
-        indexA < MAX_BATCH * VERTICES_PER_QUAD; 
-        indexA += VERTICES_PER_QUAD, indexB += 4)
-        vIndexData[indexA + 0] = indexB,
-        vIndexData[indexA + 1] = indexB + 1,
-        vIndexData[indexA + 2] = indexB + 2,
-        vIndexData[indexA + 3] = indexB + 0,
-        vIndexData[indexA + 4] = indexB + 3,
-        vIndexData[indexA + 5] = indexB + 1;
+    for (var i = 0, j = 0; i < MAX_BATCH * VERTICES_PER_QUAD; i += 6, j += 4) {
+        vIndexData.set([j, j + 1, j + 2, j, j + 3, j + 1], i);
+    }
 
     gl.bufferSubData(34963, 0, vIndexData);
     gl.bindBuffer(34962, VBO);
@@ -238,24 +232,23 @@ export function TinySprite(canvas) {
     return renderer;
 }
 function CompileShader(gl, source, type) {
-    var shader = gl.createShader(type);
+    const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     return shader;
 }
 
 function CreateShaderProgram(gl, vsSource, fsSource) {
-    var program = gl.createProgram(),
-        vShader = CompileShader(gl, vsSource, 35633),
-        fShader = CompileShader(gl, fsSource, 35632);
-    gl.attachShader(program, vShader);
-    gl.attachShader(program, fShader);
+    const program = gl.createProgram();
+    [35633, 35632].forEach((type, i) => 
+        gl.attachShader(program, CompileShader(gl, [vsSource, fsSource][i], type))
+    );
     gl.linkProgram(program);
     return program;
 }
 
 function CreateBuffer(gl, bufferType, size, usage) {
-    var buffer = gl.createBuffer();
+    const buffer = gl.createBuffer();
     gl.bindBuffer(bufferType, buffer);
     gl.bufferData(bufferType, size, usage);
     return buffer;

@@ -169,10 +169,6 @@ class Room{
             game.screen.level.boss.onPlayerEnter(game,this);
         }
     }
-
-    tick(game,deltaTime){
-        
-    }
 }
 
 export default Room;

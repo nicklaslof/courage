@@ -170,7 +170,7 @@ class Player extends Entity{
             this.previousRoom = this.currentRoom;
         }
 
-        if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
+        //if (this.currentRoom != null) this.currentRoom.tick(game,deltaTime);
 
         if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff447777,512,512,10000,false);
         this.light.renderOffsetX = 20;
@@ -197,7 +197,7 @@ class Player extends Entity{
         this.bombs++;
         if (this.bombMessageTimeout <= 0){
             this.bombMessageTimeout = 120000;
-            game.setPlayerSays("I found a bomb, you can help me throw them pressing E",8000);
+            game.setPlayerSays("I found a bomb, throw them by pressing E",8000);
         }
     }
 

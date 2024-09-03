@@ -20,9 +20,8 @@ class Light{
         this.flickerCounter = Math.random()*1000;
     }
     tick(game, deltaTime){
-        if (this.ttl < 10000){
-            this.ttl -= deltaTime;
-        }
+        if (this.ttl < 10000) this.ttl -= deltaTime;
+
 
         if (this.ttl <= 0) this.disposed = true;
         

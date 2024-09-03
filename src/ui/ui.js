@@ -8,13 +8,6 @@ class UI{
         this.canvas.height = H;
     }
 
-    tick(game,deltaTime){
-        if (!game.showIntro && !game.gameFinished && !game.gameOver){
-            this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
-            this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;
-        }
-    }
-
     render(game){
         this.context.clearRect(0,0,W,H);
 
@@ -52,7 +45,7 @@ class UI{
                 let levelNameLength = level.name.length;
                 this.drawTextAt(level.name,(W/2)-(levelNameLength*9.4),(H/2)-50,"white",30);
             }else{
-
+                this.drawMiniMap(game);
                 // Draw levelname
                 let level = game.screen.level;
                 this.drawTextAt("Chapter "+ level.chapter + ": "+level.name,20,36,"white",14);
@@ -68,14 +61,15 @@ class UI{
                 this.drawTextAt("Bombs: "+game.screen.level.player.bombs,20,96,"white",14);
 
                 // Draw instructions
-                if (level.chapter < 3){
-                let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
-                this.drawTextAt("WASD to move",screenCord.x,screenCord.y,"white",14);
-                this.drawTextAt("Left mouse button to shoot",screenCord.x,screenCord.y+30,"white",14);
-                this.drawTextAt("Right mouse button to glide",screenCord.x,screenCord.y+60,"white",14);
-                this.drawTextAt("to avoid damage and move faster",screenCord.x,screenCord.y+80,"white",14);
-                this.drawTextAt("E to throw bombs found",screenCord.x,screenCord.y+110,"white",14);
-
+                if (level.chapter < 2){
+                    this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
+                    this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;   
+                    let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
+                    this.drawTextAt("WASD: move",screenCord.x,screenCord.y,"white",14);
+                    this.drawTextAt("LMB: shoot",screenCord.x,screenCord.y+30,"white",14);
+                    this.drawTextAt("RMB: glide to avoid damage",screenCord.x,screenCord.y+60,"white",14);
+                    //this.drawTextAt("damage and move faster",screenCord.x,screenCord.y+80,"white",14);
+                    this.drawTextAt("E: throw bombs",screenCord.x,screenCord.y+90,"white",14);
                 }
 
 
@@ -125,6 +119,20 @@ class UI{
                 })*/
             }
         }
+    }
+
+    drawMiniMap(game){
+        let x = 2048;
+        let y = 2048;
+        game.screen.level.rooms.forEach(r => {
+            if (r.x < x) x = r.x;
+            if (r.y < y) y = r.y;
+        })
+
+        game.screen.level.rooms.forEach(r => {
+            this.context.fillStyle = r.lastRoom?"rgb(0 255 0 / 20%)": r == game.screen.level.player.currentRoom ? "blue" : "rgb(255 255 255 / 20%)";
+            this.context.fillRect(20+r.x-x,120+r.y-y,r.width,r.height);
+        })
     }
     drawCourageMeter(game,x,y,scaleX,scaleY,border,health) {
         

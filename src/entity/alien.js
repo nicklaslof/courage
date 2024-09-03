@@ -17,9 +17,7 @@ class Alien extends Enemy{
         .addState("blinking", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
         .addState("blinking", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),240);
         this.animation.setCurrentState("blinking");
-        this.moveAwayRange = 0;
-        this.spitDelay = 0;
-        this.shootTimer = 0;
+        this.moveAwayRange = this.spitDelay = this.shootTimer = 0;
     }
 
     tick(game,deltaTime){

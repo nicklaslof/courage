@@ -26,7 +26,7 @@ class Texture{
             ctx.font = "normal 32px monospace";
             ctx.fillStyle = "white";
             ctx.fillText("\u2665",128,60,32);
-            ctx.fillText("\uD83D\uDE31",160,60,32);
+            //ctx.fillText("\uD83D\uDE31",160,60,32);
 
             // Create stars
             
@@ -44,13 +44,10 @@ class Texture{
             // Create light circle
             var radgrad = ctx.createRadialGradient(370,470,0,370,470,250);
             radgrad.addColorStop(0, 'rgba(255,255,255,1)');
-            //radgrad.addColorStop(0.9, 'rgba(255,255,255,.9)');
             radgrad.addColorStop(1, 'rgba(255,255,255,0)');          
             ctx.fillStyle = radgrad;
             ctx.fillRect(128,200,550,550);
 
-
-            
             // Draw the imagedata from the asset texture to it
             ctx.putImageData(imageData,0,0);
             this.image.src = canvas.toDataURL();

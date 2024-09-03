@@ -84,7 +84,7 @@ class Game{
         deltaTime = Math.min(32,deltaTime);
 
         this.input.tick(this);
-        this.ui.tick(this,deltaTime);
+        //this.ui.tick(this,deltaTime);
 
         this.screen.tick(this,deltaTime);
 
