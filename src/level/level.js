@@ -47,16 +47,11 @@ class Level{
         if (bossLevel) startRoom = this.rooms[0];
         else{
             for (let i = 0; i < this.rooms.length;i++){
-            startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[i];
-            if (!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom) break;
-           // console.log("finding room "+ i + "   "+(!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom));
+                startRoom = this.rooms.sort(function(a,b){ return a.width*a.height - b.width*b.height})[i];
+                if (!startRoom.lastRoom && !startRoom.lava && !startRoom.battleRoom) break;
+            }
         }
 
-        //if (startRoom == null) this.rooms[0];
-        }
-        // Make the player start in the smallest room and remove all enemies from the room;
-        
-        
         startRoom.removeAllEnemies(this);
         this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
@@ -80,23 +75,27 @@ class Level{
         let previousRoom = null, previousDirection = null;
         let numberOfRoomsCreated = 0;
         for (let i = 0; i < this.numberOfRooms; i++) {
-            let lastRoom = i == this.numberOfRooms-1;
+            let lastRoom = i == this.numberOfRooms-1; //Let the room know it's the last room generated since that room will contain the exit stairs.
             this.rooms.push(newRoom);
             newRoom.generateRoom(this,game, rp.x, rp.y, rp.width, rp.height, this.floorColor, this.wallColor,i == 0, lastRoom,this.lava,this.battleRoom,this.bossLevel&&!lastRoom&&i!=0,this.bossLevel);
             // Generate a corridor connection to the previous generated room. It handles all four directions and will scan
-            // the previous generate room horizontal or vertical depending on the direction. It will record all possible paths
-            // found that would connect the two rooms and picks one of those paths randomly and then just insert a floor tile
+            // the previous generated room horizontal or vertical depending on the direction. It will record all possible paths
+            // found that would connect the two rooms and picks two of those paths randomly and then just insert floor tiles
             // into the tilemap overwriting the walls. It looks a bit ugly and can possibly be fixed with correct tile replacement.
+
             if (previousRoom) {
                 let possiblePaths = [], isHorizontal = previousDirection < 2,
+                // direction object that will be selected from the direction the previous room was generated in
                     dir = [
-                        { dx: 0, dy: -1, sx: 2, sy: 0, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: 0 },
-                        { dx: 0, dy: 1, sx: 2, sy: previousRoom.height, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: -1 },
-                        { dx: 1, dy: 0, sx: previousRoom.width, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: -1, offsetY: 0 },
-                        { dx: -1, dy: 0, sx: 0, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: 0, offsetY: 0 }
+                        { dx: 0, dy: -1, sx: 2, sy: 0, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: 0 },                     //south
+                        { dx: 0, dy: 1, sx: 2, sy: previousRoom.height, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: -1 },   //north
+                        { dx: 1, dy: 0, sx: previousRoom.width, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: -1, offsetY: 0 },   //east
+                        { dx: -1, dy: 0, sx: 0, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: 0, offsetY: 0 }                     //west
                     ][previousDirection],
+                    // source x and source y from the corridor search will be set to the previous room + the direction
                     [sx, sy] = [previousRoom.x + dir.sx, previousRoom.y + dir.sy];
             
+                // Inline method to iterate from source to destination. If the other room is found it will return that a path was found and how many steps the corridor will be.
                 let findPath = (x, y, dx, dy) => {
                     for (let i = 0; i < 5; i++) {
                        // this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff0000ff, 32, 32, 10000);
@@ -107,12 +106,13 @@ class Level{
                     }
                     return { pathFound: false, length: 5 };
                 };
-            
+                //Try to find a working path between the two rooms
                 for (let i = 0; i < dir.ex + dir.ey; i++) {
                     const { pathFound } = findPath(isHorizontal ? sx + i : sx, isHorizontal ? sy : sy + i, dir.dx, dir.dy);
                     if (pathFound) possiblePaths.push(isHorizontal ? sx + i : sy + i);
                 }
-                
+
+                // Pick a few diffrenet working path and add tiles to them to create a path between the two rooms
                 for (let i = 0; i < Math.floor(game.getRandom(1,3)); i++){
                     let p = possiblePaths[Math.floor(game.getRandom(0, possiblePaths.length - 1))],
                     { length } = findPath(isHorizontal ? p : sx, isHorizontal ? sy : p, dir.dx, dir.dy);
@@ -130,7 +130,12 @@ class Level{
             let loopMaxCounter = 0;
             while (!roomCreated) {
                 loopMaxCounter++;
-                //(loopMaxCounter);
+                // create a new room in a random direction from the current room
+                // it will do a AABB intersection test to see if a room will overlap with an exisiting room
+                // if it fails after 30 tries the level will be marked as failed and a new one will be created.
+                // This is to minimize the risk of an eternal loop and a broken level. It still only takes a few milliseconds to generate all levels so
+                // a retry is not a big cost.
+
                 if (loopMaxCounter > 30) break;
                 let nextDirection = Math.floor(game.getRandom(0, 4));
                 rp = this.generateRoomProperties(game, roomMargin, this.maxRoomSize, this.maxRoomSize);
@@ -152,6 +157,7 @@ class Level{
                 }
 
                 newRoom = new Room(roomMargin, rp.x, rp.y, rp.width, rp.height);
+                // Do an AABB intersect test for each room so the new room doesn't overlap. If it fails after 30 tries the level will be marked incomplete and a new one will be created.
                 roomCreated = this.rooms.every(room => !room.intersect(newRoom));
                 previousDirection = nextDirection;
             }
