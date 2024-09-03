@@ -56,14 +56,11 @@ class Bullet extends Entity{
     onCollision(game,otherEntity){
         if (otherEntity == null || otherEntity == this.shootingEntity) return;
         if (!(this.shootingEntity instanceof Player) && (otherEntity instanceof Spider || otherEntity instanceof Clown || otherEntity instanceof Fire || otherEntity instanceof Alien || otherEntity instanceof Thirteen)) return;
-        if (otherEntity instanceof Pickup) return;
-        if (otherEntity instanceof Bullet) return;
-        if (otherEntity instanceof Bomb) return;
-        if (otherEntity instanceof Explosion) return;
-        if (! otherEntity.damageImmune) this.disposed = true;
+        if (otherEntity instanceof Pickup || otherEntity instanceof Bullet || otherEntity instanceof Bomb || otherEntity instanceof Explosion) return;
+        if (!otherEntity.damageImmune) this.disposed = true;
         if(this.light != null) this.light.disposed = true;
         if (otherEntity instanceof Tile) return;
-        if (this.stopAtLocation != null && !this.stopMovement) return;
+        //if (this.stopAtLocation != null && !this.stopMovement) return;
         if (!otherEntity.damageImmune) otherEntity.hit(game,this.damage);
     }
 }

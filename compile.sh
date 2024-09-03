@@ -11,7 +11,8 @@ terser bundle.js -o g.js --compress --mangle --mangle-props --timings --toplevel
 rm bundle.js
 #roadroller -OO g.js -o ./o.js
 
-roadroller -Zab22 -Zlr2137 -Zmc3 -Zmd117 -Zpr16 -S0,1,2,3,5,7,14,25,85,225,298,453 g.js -o ./o.js
+roadroller -Zab22 -Zlr1740 -Zmc4 -Zmd55 -Zpr16 -S0,1,2,3,5,6,13,19,25,106,225,405 g.js -o ./o.js
+#roadroller -Zab22 -Zlr2137 -Zmc3 -Zmd117 -Zpr16 -S0,1,2,3,5,7,14,25,85,225,298,453 g.js -o ./o.js
 
 #/opt/homebrew/opt/gnu-sed/libexec/gnubin/sed 's/\x1f//g' o.js > oo.js
 echo "<meta charset="UTF-8"><style>" > index-template.html
