@@ -84,45 +84,92 @@ class Level{
             // into the tilemap overwriting the walls. It looks a bit ugly and can possibly be fixed with correct tile replacement.
 
             if (previousRoom) {
-                let possiblePaths = [], isHorizontal = previousDirection < 2,
-                // direction object that will be selected from the direction the previous room was generated in
-                    dir = [
-                        { dx: 0, dy: -1, sx: 2, sy: 0, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: 0 },                     //south
-                        { dx: 0, dy: 1, sx: 2, sy: previousRoom.height, ex: previousRoom.width - 2, ey: 0, offsetX: 0, offsetY: -1 },   //north
-                        { dx: 1, dy: 0, sx: previousRoom.width, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: -1, offsetY: 0 },   //east
-                        { dx: -1, dy: 0, sx: 0, sy: 1, ex: 0, ey: previousRoom.height - 2, offsetX: 0, offsetY: 0 }                     //west
-                    ][previousDirection],
-                    // source x and source y from the corridor search will be set to the previous room + the direction
-                    [sx, sy] = [previousRoom.x + dir.sx, previousRoom.y + dir.sy];
-            
-                // Inline method to iterate from source to destination. If the other room is found it will return that a path was found and how many steps the corridor will be.
-                let findPath = (x, y, dx, dy) => {
-                    for (let i = 0; i < 5; i++) {
-                       // this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff0000ff, 32, 32, 10000);
-                        if (this.getTile(x + i * dx, y + i * dy) == Tiles.floor1) {
-                          //  this.addLight((x + i * dx) * 64, (y + i * dy) * 64, 0xff00ff00, 32, 32, 10000);
-                            return { pathFound: true, length: i + 1 };
+                let possiblePaths = [];
+                switch (previousDirection) {
+                    case 0:{
+                        let [sx,sy] = [previousRoom.x +2,previousRoom.y];
+                        for (let x = sx;x < sx+previousRoom.width-2;x++){
+                            let pathFound = false;
+                            length = 0;
+                            for (let y = sy-1; y > sy-5;y--){
+                                length++;
+                                if (this.getTile(x,y) == Tiles.floor1){
+                                    pathFound = true;
+                                    break;
+                                }
+                            }
+                            if (pathFound) possiblePaths.push(x);
                         }
-                    }
-                    return { pathFound: false, length: 5 };
-                };
-                //Try to find a working path between the two rooms
-                for (let i = 0; i < dir.ex + dir.ey; i++) {
-                    const { pathFound } = findPath(isHorizontal ? sx + i : sx, isHorizontal ? sy : sy + i, dir.dx, dir.dy);
-                    if (pathFound) possiblePaths.push(isHorizontal ? sx + i : sy + i);
-                }
 
-                // Pick a few diffrenet working path and add tiles to them to create a path between the two rooms
-                for (let i = 0; i < Math.floor(game.getRandom(1,3)); i++){
-                    let p = possiblePaths[Math.floor(game.getRandom(0, possiblePaths.length - 1))],
-                    { length } = findPath(isHorizontal ? p : sx, isHorizontal ? sy : p, dir.dx, dir.dy);
-            
-                    for (let i = 0; i < length; i++) {
-                        this.addTile(isHorizontal ? p : sx + i * dir.dx + dir.offsetX, isHorizontal ? sy + i * dir.dy + dir.offsetY : p, Tiles.floor1);
+                       let px = possiblePaths[Math.floor(game.getRandom(0,possiblePaths.length-1))];
+                       for (let y = sy; y > sy-length;y--){
+                            this.addTile(px,y,Tiles.floor1);
+                        }
+                        break;
+                    }
+                    case 1:{
+                        let [sx,sy] = [previousRoom.x +2,previousRoom.y+previousRoom.height];
+                        for (let x = sx;x < sx+previousRoom.width-2;x++){
+                            let pathFound = false;
+                            length = 0;
+                            for (let y = sy; y < sy+5;y++){
+                                length++;
+                                if (this.getTile(x,y) == Tiles.floor1){
+                                    pathFound = true;
+                                    break;
+                                }
+                            }
+                            if (pathFound) possiblePaths.push(x);
+                        }
+                       let px = possiblePaths[Math.floor(game.getRandom(0,possiblePaths.length-1))];
+                       for (let y = sy-1; y < sy+length;y++){
+                            this.addTile(px,y,Tiles.floor1);
+                        }
+                        break;
+                    }
+                    case 2:{
+                        let [sx,sy] = [previousRoom.x + previousRoom.width,previousRoom.y+1];
+                        for (let y = sy;y < sy+previousRoom.height-2;y++){
+                            let pathFound = false;
+                            length = 0;
+                            for (let x = sx; x < sx+5;x++){
+                                length++;
+                                if (this.getTile(x,y) == Tiles.floor1){
+                                    pathFound = true;
+                                    break;
+                                }
+                            }
+                            if (pathFound) possiblePaths.push(y);
+                        }
+                       let py = possiblePaths[Math.floor(game.getRandom(0,possiblePaths.length-1))];
+                       for (let x = sx-1; x < sx+length;x++){
+                            this.addTile(x,py,Tiles.floor1);
+                        }
+                        break;
+                    }
+                    case 3:{
+                        let [sx,sy] = [previousRoom.x,previousRoom.y+1];
+                        for (let y = sy;y < sy+previousRoom.height-2;y++){
+                            let pathFound = false;
+                            length = 0;
+                            for (let x = sx; x > sx-5;x--){
+                                length++;
+                                if (this.getTile(x,y) == Tiles.floor1){
+                                    pathFound = true;
+                                    break;
+                                }
+                            }
+                            if (pathFound) possiblePaths.push(y);
+                        }
+                       let py = possiblePaths[Math.floor(game.getRandom(0,possiblePaths.length-1))];
+                       for (let x = sx; x > sx-length;x--){
+                            this.addTile(x,py,Tiles.floor1);
+                        }
+                        break;
                     }
                 }
-                
             }
+
             
 
             previousRoom = newRoom;
