@@ -17,10 +17,10 @@ class Input{
         if (game.keys[83] == "keydown") this.axes.y = 1;
         if (game.keys[87] == "keydown") this.axes.y = -1;
         if (game.buttons[0] == "mousedown") this.firePressed = true;
-        if (game.buttons[2] == "mousedown"){
+        if (game.buttons[2] == "mousedown" || game.keys[32] == "keydown"){
             this.glidePressed = true;
         }
-        if (game.buttons[2] == "mouseup"){
+        if (game.buttons[2] == "mouseup" || game.keys[32] == "keyup"){
             this.glideStillPressed = false;
         }
         if (game.keys[69] == "keydown" && !this.bombPressedPreviously) this.bombPressed = true;

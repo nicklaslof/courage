@@ -29,12 +29,13 @@ class Game{
         this.buttons = [];
         onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
         this.input = new Input();
-        onclick=e=> this.canvas.requestPointerLock();
+
         onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
         onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
-        document.addEventListener('contextmenu', event => {
-            event.preventDefault();
-        });
+        onclick=e=>{let l=document.getElementById("g");l.hasPointerCapture(0)||l.requestPointerLock()};
+        onclick=e=>{let l=document.getElementById("u");l.hasPointerCapture(0)||l.requestPointerLock()};
+        oncontextmenu=e=>e.preventDefault();
+
 
         this.setupLightBuffer();
 

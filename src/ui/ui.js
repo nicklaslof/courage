@@ -67,7 +67,7 @@ class UI{
                     let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
                     this.drawTextAt("WASD: move",screenCord.x,screenCord.y,"white",14);
                     this.drawTextAt("LMB: shoot",screenCord.x,screenCord.y+30,"white",14);
-                    this.drawTextAt("RMB: glide to avoid damage",screenCord.x,screenCord.y+60,"white",14);
+                    this.drawTextAt("RMB or Spacebar: glide to avoid damage",screenCord.x,screenCord.y+60,"white",14);
                     //this.drawTextAt("damage and move faster",screenCord.x,screenCord.y+80,"white",14);
                     this.drawTextAt("E: throw bombs",screenCord.x,screenCord.y+90,"white",14);
                 }
