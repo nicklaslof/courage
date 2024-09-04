@@ -33,7 +33,6 @@ class Game{
         onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
         onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
         onclick=e=>{let l=document.getElementById("g");l.hasPointerCapture(0)||l.requestPointerLock()};
-        onclick=e=>{let l=document.getElementById("u");l.hasPointerCapture(0)||l.requestPointerLock()};
         oncontextmenu=e=>e.preventDefault();
 
 
