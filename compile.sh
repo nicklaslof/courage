@@ -11,7 +11,8 @@ terser bundle.js -o g.js --compress --mangle --mangle-props --timings --toplevel
 rm bundle.js
 #roadroller -OO g.js -o ./o.js
 
-roadroller -Zab28 -Zlr2501 -Zmc3 -Zmd111 -Zpr16 -S0,1,2,3,5,14,19,25,85,225,362,387 g.js -o ./o.js
+roadroller -Zab29 -Zdy0 -Zlr2737 -Zmc3 -Zmd111 -Zpr16 -S0,1,2,3,5,7,14,25,113,170,212,451 g.js -o ./o.js
+#roadroller -Zab28 -Zlr2501 -Zmc3 -Zmd111 -Zpr16 -S0,1,2,3,5,14,19,25,85,225,362,387 g.js -o ./o.js
 
 #roadroller -Zab22 -Zlr2137 -Zmc3 -Zmd117 -Zpr16 -S0,1,2,3,5,7,14,25,85,225,298,453 g.js -o ./o.js
 

@@ -61,7 +61,7 @@ class UI{
                 this.drawTextAt("Bombs: "+game.screen.level.player.bombs,20,96,"white",14);
 
                 // Draw instructions
-                if (level.chapter < 2){
+                /*if (level.chapter < 2){
                     this.instructionX = this.instructionX == null ? game.screen.level.player.x - 64 : this.instructionX;
                     this.instructionY = this.instructionY == null ? game.screen.level.player.y+40: this.instructionY;   
                     let screenCord = this.projectWorldToScreen(game,this.instructionX,this.instructionY);
@@ -70,7 +70,7 @@ class UI{
                     this.drawTextAt("RMB or Spacebar: glide to avoid damage",screenCord.x,screenCord.y+60,"white",14);
                     //this.drawTextAt("damage and move faster",screenCord.x,screenCord.y+80,"white",14);
                     this.drawTextAt("E: throw bombs",screenCord.x,screenCord.y+90,"white",14);
-                }
+                }*/
 
 
                 if (game.screen.level.boss && game.screen.level.boss.health>0){
