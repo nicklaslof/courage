@@ -151,7 +151,7 @@ class Player extends Entity{
         if (game.input.firePressed && this.canShoot){
 
 
-            game.screen.level.addEntity(new Bullet(this.x+24,this.y+32,600,700,aim.x, aim.y,this));
+            game.screen.level.addEntity(new Bullet(this.x+16,this.y+32,600,700,aim.x, aim.y,this));
             this.canShoot = false;
             this.fireDelay = 128;
             game.playShoot();
@@ -159,7 +159,7 @@ class Player extends Entity{
 
         if (this.bombs > 0 && game.input.bombPressed && this.canThrowBomb){
             let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
-            game.screen.level.addEntity(new Bomb(this.x+24,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
+            game.screen.level.addEntity(new Bomb(this.x+16,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
             this.canThrowBomb = false;
             this.bombDelay = 1000;
             this.bombs--;
