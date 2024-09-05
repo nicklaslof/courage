@@ -1,42 +1,32 @@
-// Handles the player input. Either from a gamepad or the keyboard
-class Input{
-
+class Input {
     constructor() {
+        this.keys = [];
+        this.buttons = [];
         this.bombPressedPreviously = false;
+        this.glideStillPressed = false;
+        onkeydown = onkeyup = e => this.keys[e.keyCode] = e.type;
+        onmousemove = e => { this.pointerX = e.movementX; this.pointerY = e.movementY; };
+        onmousedown = onmouseup = e => this.buttons[e.button] = e.type;
+        onclick = e => e.target.requestPointerLock();
+        oncontextmenu = e => e.preventDefault();
     }
 
-    tick(game){
-        // reset all inputs and read them on each tick
-        this.axes = {x:0,y:0};
-        this.pointer = {x:0,y:0};
-        this.firePressed = this.bombPressed = this.glidePressed = false;
-        
-        if (game.keys[68] == "keydown" || game.keys[39] == "keydown") this.axes.x = 1;
-        if (game.keys[65] == "keydown" || game.keys[37] == "keydown") this.axes.x = -1;
-        if (game.keys[83] == "keydown" || game.keys[40] == "keydown") this.axes.y = 1;
-        if (game.keys[87] == "keydown" || game.keys[38] == "keydown") this.axes.y = -1;
-        if (game.buttons[0] == "mousedown") this.firePressed = true;
-        if (game.buttons[2] == "mousedown" || game.keys[32] == "keydown"){
-            this.glidePressed = true;
-        }
-        if (game.buttons[2] == "mouseup" || game.keys[32] == "keyup"){
-            this.glideStillPressed = false;
-        }
-        if (game.keys[69] == "keydown" && !this.bombPressedPreviously) this.bombPressed = true;
-
-        this.bombPressedPreviously = game.keys[69] == "keydown";
-
-        this.pointer.x = this.pointerX;
-        this.pointer.y = this.pointerY;
-        this.pointerX = this.pointerY = 0;
-        // Clear the glide buttons otherwise the user can just hold down glide.
-        game.buttons[2] = game.keys[32] = null;
+    tick() {
+        this.axes = { x: (this.keys[68] == "keydown" || this.keys[39] == "keydown") - (this.keys[65] == "keydown" || this.keys[37] == "keydown"), y: (this.keys[83] == "keydown" || this.keys[40] == "keydown") - (this.keys[87] == "keydown" || this.keys[38] == "keydown") };
+        this.pointer = { x: this.pointerX || 0, y: this.pointerY || 0 };
+        this.firePressed = this.buttons[0] == "mousedown";
+        this.glidePressed = (this.buttons[2] == "mousedown" || this.keys[32] == "keydown") && !this.glideStillPressed;
+        if (this.buttons[2] == "mouseup" || this.keys[32] == "keyup") this.glideStillPressed = false;
+        this.bombPressed = this.keys[69] == "keydown" && !this.bombPressedPreviously;
+        this.bombPressedPreviously = this.keys[69] == "keydown";
+        this.pointerX = 0;
+        this.pointerY = 0;
+        this.buttons[2] = this.keys[32] = null;
     }
 
     getGlide(){
-        if (this.glideStillPressed) return false;
         return this.glidePressed ? (this.glideStillPressed = true) : false;
-    }
+    } 
 }
 
 export default Input;

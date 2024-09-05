@@ -24,17 +24,8 @@ class Game{
         this.image = new Image();
         this.texture = new Texture(this.gl.g);
         this.image.src = "t.png";
-
-        this.keys =[];
-        this.buttons = [];
-        onkeydown=onkeyup=e=> this.keys[e.keyCode] = e.type;
+   
         this.input = new Input();
-
-        onmousemove=e=>{this.input.pointerX = e.movementX;this.input.pointerY = e.movementY};
-        onmousedown=onmouseup=e=> this.buttons[e.button] = e.type;
-        onclick=e=>{let l=document.getElementById("g");l.hasPointerCapture(0)||l.requestPointerLock()};
-        oncontextmenu=e=>e.preventDefault();
-
 
         this.setupLightBuffer();
 
@@ -44,9 +35,6 @@ class Game{
         this.showIntro = true;
         this.gameFinished = this.gameOver = false;
         this.screen = new IntroScreen(true);
-        //this.switchToEndScreen();
-
-
 
         this.cameraCenterX = W/2;
         this.cameraCenterY = H/2;
@@ -83,8 +71,7 @@ class Game{
         this.lastTime = currentTime;
         deltaTime = Math.min(32,deltaTime);
 
-        this.input.tick(this);
-        //this.ui.tick(this,deltaTime);
+        this.input.tick();
 
         this.screen.tick(this,deltaTime);
 
@@ -200,9 +187,7 @@ class Game{
         zzfx(...[.8,2,242,.02,.02,.001,,1.4,-80,,,,,,3.6,.1,.18,.87,.03,,-1374]);
     }
 
-    playEnemyKilled(){
-        zzfx(...[.5,5,351,.01,.08,.29,1,3.5,5,-17,,,,1.8,,.3,,.91,.07]);
-    }
+   
 
     playEnemyHit(){
         zzfx(...[1.3,.5,298,.01,.03,.09,3,1.3,,,,,,.7,,.4,,.96,,.49,-2451]);
@@ -210,10 +195,6 @@ class Game{
 
     playPlayerHit(){
         zzfx(...[1.2,,693,.02,.04,.05,1,4.5,,-98,-2,.55,,,2.9,.3,,.87,.01,.45]);
-    }
-
-    playMobSpawner(){
-        zzfx(...[2.2,,65,.02,.1,.46,1,2.1,,5,,,.05,.3,20,.5,.27,.3,.2,.11,-3480]);
     }
 
     playEnemyKilled(){
