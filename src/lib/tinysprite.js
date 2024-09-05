@@ -32,33 +32,33 @@ export function TinySprite(canvas) {
         width = canvas.width,
         height = canvas.height,
         shader = CreateShaderProgram(
-            gl, [
-                'precision lowp float;',
-                'attribute float a;',
-                'attribute vec2 b,c,d,e;',
-                'attribute vec4 f;',
-                'varying vec2 g;',
-                'varying vec4 h;',
-                'uniform mat4 i;',
-                'void main() {',
-                'float q=cos(a);',
-                'float w=sin(a);',
-                'gl_Position=i*vec4(((vec2(d.x*q-d.y*w,d.x*w+d.y*q)*c)+b),1.0,1.0);',
-                'g=e;',
-                'h=f;',
-                '}'
-            ].join('\n'), [
-                'precision lowp float;',
-                'varying vec2 g;',
-                'varying vec4 h;',
-                'uniform sampler2D j;',
-                'void main(){',
-                'vec4 c=texture2D(j,g)*h;',
-                'vec2 p = mod(gl_FragCoord.xy, 3.0);',
-                'float d = (mod(floor(p.x) + floor(p.y) * 2.0, 4.0) * 4.0 + mod(floor(p.x / 2.0) + floor(p.y / 2.0) * 2.0, 4.0)) / 16.0 -0.5;',
-                'gl_FragColor=vec4(c.rgb + vec3(d*0.5), c.a);;',
-                '}'
-            ].join('\n')
+            gl, ['precision lowp float;attribute float a;attribute vec2 b,c,d,e;attribute vec4 f;varying vec2 g;varying vec4 h;uniform mat4 i;void main() {float q=cos(a);float w=sin(a);gl_Position=i*vec4(((vec2(d.x*q-d.y*w,d.x*w+d.y*q)*c)+b),1.0,1.0);g=e;h=f;}'
+                // 'precision lowp float;',
+                // 'attribute float a;',
+                // 'attribute vec2 b,c,d,e;',
+                // 'attribute vec4 f;',
+                // 'varying vec2 g;',
+                // 'varying vec4 h;',
+                // 'uniform mat4 i;',
+                // 'void main() {',
+                // 'float q=cos(a);',
+                // 'float w=sin(a);',
+                // 'gl_Position=i*vec4(((vec2(d.x*q-d.y*w,d.x*w+d.y*q)*c)+b),1.0,1.0);',
+                // 'g=e;',
+                // 'h=f;',
+                // '}'
+            ], ['precision lowp float;varying vec2 g;varying vec4 h;uniform sampler2D j;void main(){vec4 c=texture2D(j,g)*h;vec2 p = mod(gl_FragCoord.xy, 3.0);float d = (mod(floor(p.x) + floor(p.y) * 2.0, 4.0) * 4.0 + mod(floor(p.x / 2.0) + floor(p.y / 2.0) * 2.0, 4.0)) / 16.0 -0.5;gl_FragColor=vec4(c.rgb + vec3(d*0.5), c.a);}'
+                // 'precision lowp float;',
+                // 'varying vec2 g;',
+                // 'varying vec4 h;',
+                // 'uniform sampler2D j;',
+                // 'void main(){',
+                // 'vec4 c=texture2D(j,g)*h;',
+                // 'vec2 p = mod(gl_FragCoord.xy, 3.0);',
+                // 'float d = (mod(floor(p.x) + floor(p.y) * 2.0, 4.0) * 4.0 + mod(floor(p.x / 2.0) + floor(p.y / 2.0) * 2.0, 4.0)) / 16.0 -0.5;',
+                // 'gl_FragColor=vec4(c.rgb + vec3(d*0.5), c.a);;',
+                // '}'
+            ]
         ),
         glBufferSubData = gl.bufferSubData.bind(gl),
         glDrawElements = gl.drawElements.bind(gl),
