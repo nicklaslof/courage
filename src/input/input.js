@@ -2,8 +2,7 @@
 class Input{
 
     constructor() {
-        this.bombPressedPreviously = this.glideStillPressed = false;
-        this.pointerX = this.pointerY = 0;
+        this.bombPressedPreviously = false;
     }
 
     tick(game){
@@ -30,6 +29,8 @@ class Input{
         this.pointer.x = this.pointerX;
         this.pointer.y = this.pointerY;
         this.pointerX = this.pointerY = 0;
+        // Clear the glide buttons otherwise the user can just hold down glide.
+        game.buttons[2] = game.keys[32] = null;
     }
     getGlide(){
         if (this.glideStillPressed) return false;
