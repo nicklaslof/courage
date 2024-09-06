@@ -80,7 +80,7 @@ class UI{
                 }
 
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x+12,game.screen.level.player.y-8);
-                this.drawCourageMeter(pos.x,pos.y,0.1,0.3,false,game.screen.level.player.health);
+                this.drawCourageMeter(pos.x,pos.y,0.1,0.5,true,game.screen.level.player.health,"#000000");
 
                 // Draw fear face and heart
                 /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
@@ -135,10 +135,10 @@ class UI{
             this.context.fillRect(20+r.x-x,120+r.y-y,r.width,r.height);
         })
     }
-    drawCourageMeter(x,y,scaleX,scaleY,border,health) {
+    drawCourageMeter(x,y,scaleX,scaleY,border,health,c="#ffffff") {
         //Draw the border around the courage bar
         if (border){
-            this.context.fillStyle = '#ffffff';
+            this.context.fillStyle = c;
             this.context.fillRect(x, y, 202*scaleX, 12*scaleY);
         }
 
