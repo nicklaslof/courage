@@ -1,5 +1,4 @@
 import Tiles from "../tile/tiles.js";
-import Bullet from "./bullet.js";
 
 class Entity{
 

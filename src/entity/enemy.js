@@ -1,4 +1,3 @@
-import Sprite from "../graphic/sprite.js";
 import Pickup from "./pickup.js";
 import Entity from "./entity.js";
 

@@ -2,7 +2,6 @@ import Sprite from "../graphic/sprite.js";
 import Animation from "./animation.js";
 import Bug from "./bug.js";
 import Bullet from "./bullet.js";
-import Pickup from "./pickup.js";
 
 class Spider extends Bug{
     constructor(x,y,c,speed,size,boss){

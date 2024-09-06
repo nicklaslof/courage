@@ -1,6 +1,5 @@
 import Animation from "../entity/animation.js";
 import Sprite from "../graphic/sprite.js";
-import Light from "../light/light.js";
 import Tiles from "../tile/tiles.js";
 
 class IntroScreen{

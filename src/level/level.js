@@ -1,4 +1,3 @@
-
 import Particle from "../entity/particle.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";

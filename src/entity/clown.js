@@ -2,7 +2,6 @@ import Sprite from "../graphic/sprite.js";
 import Animation from "./animation.js";
 import Enemy from "./enemy.js";
 import Bullet from "./bullet.js";
-import Pickup from "./pickup.js";
 
 class Clown extends Enemy{
         

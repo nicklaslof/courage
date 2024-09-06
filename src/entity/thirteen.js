@@ -1,5 +1,4 @@
 import Sprite from "../graphic/sprite.js";
-import Animation from "./animation.js";
 import Bullet from "./bullet.js";
 import Enemy from "./enemy.js";
 

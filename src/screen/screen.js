@@ -2,7 +2,6 @@
 import Level from "../level/level.js";
 import Bug from "../entity/bug.js";
 import Spider from "../entity/spider.js";
-import Sprite from "../graphic/sprite.js";
 import Pickup from "../entity/pickup.js";
 import Ghost from "../entity/ghost.js";
 import Clown from "../entity/clown.js";

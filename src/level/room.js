@@ -1,9 +1,6 @@
 import Tiles from "../tile/tiles.js";
-import Enemy from "../entity/enemy.js";
 import Decoration from "../entity/decoration.js";
-import Bug from "../entity/bug.js";
 import Box from "../entity/box.js";
-import Spider from "../entity/spider.js";
 import Pickup from "../entity/pickup.js";
 import SkeletonHead from "../entity/skeletonhead.js";
 

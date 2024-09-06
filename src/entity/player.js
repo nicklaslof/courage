@@ -7,7 +7,6 @@ import Pickup from "./pickup.js";
 import Entity from "./entity.js";
 import Box from "./box.js";
 import Tile from "../tile/tile.js";
-import Spider from "./spider.js";
 import Bomb from "./bomb.js";
 import Explosion from "./explosion.js";
 import Enemy from "./enemy.js";

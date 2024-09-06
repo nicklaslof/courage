@@ -1,5 +1,4 @@
 import Sprite from "../graphic/sprite.js";
-import Tile from "../tile/tile.js";
 import Animation from "./animation.js";
 import Entity from "./entity.js";
 import Explosion from "./explosion.js";

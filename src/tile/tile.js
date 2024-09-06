@@ -1,4 +1,3 @@
-import Bullet from "../entity/bullet.js";
 import Player from "../entity/player.js";
 import Sprite from "../graphic/sprite.js";
 import Tiles from "./tiles.js";
