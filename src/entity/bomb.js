@@ -4,8 +4,8 @@ import Entity from "./entity.js";
 import Explosion from "./explosion.js";
 
 class Bomb extends Entity{
-    constructor(x,y,ttl,speed,directionX, directionY, shootingEntity, stopAtLocation){
-        super(x,y,new Sprite(x,y,19,81,8,9,24,24,0xffffffff),1,{minX:0,minY:0,maxX:24,maxY:24});
+    constructor(game,x,y,ttl,speed,directionX, directionY, shootingEntity, stopAtLocation){
+        super(game,x,y,new Sprite(x,y,19,81,8,9,24,24,0xffffffff),1,{minX:0,minY:0,maxX:24,maxY:24});
         this.ttl = ttl;
         this.speed = speed;
         this.moveDirection = {x:directionX,y:directionY};
@@ -57,7 +57,7 @@ class Bomb extends Entity{
         }
 
         if (this.explode){
-            game.screen.level.addEntity(new Explosion(this.x,this.y,this.shootingEntity));
+            game.screen.level.addEntity(new Explosion(game,this.x,this.y,this.shootingEntity));
             game.playBombExplosion();
         }
 

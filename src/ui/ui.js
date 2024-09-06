@@ -12,6 +12,7 @@ class UI{
     render(game){
         this.context.clearRect(0,0,W,H);
 
+        
         if (game.showIntro){
 
             this.drawTextAt("Courage",(W/2)-77,40,"white",36);
@@ -22,6 +23,11 @@ class UI{
             this.drawTextAt("to face his 13 different phobias",(W/2)-236,550,"white",24);
 
             this.drawTextAt("Click to start!",(W/2)-108,705,"white",24);
+
+        } else if (game.showDiffcultySelection){
+            this.drawTextAt("Select diffculty",(W/2)-115,234,"white",24);
+            this.drawTextAt("(1) Easy    (2) Medium    (3) Hard",(W/2)-248,500,"white",24);
+        
         } else if (game.gameFinished){
 
             this.drawTextAt("You did it!",(W/2)-116,40,"white",36);

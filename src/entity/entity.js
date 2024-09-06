@@ -2,7 +2,7 @@ import Tiles from "../tile/tiles.js";
 
 class Entity{
 
-    constructor(x,y,sprite,health=1,collisionBox={minX:0,minY:0,maxX:64,maxY:64}){
+    constructor(game,x,y,sprite,health=1,collisionBox={minX:0,minY:0,maxX:64,maxY:64}){
         this.x = x;
         this.y = y;
         this.sprite = sprite;

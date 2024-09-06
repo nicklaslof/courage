@@ -4,8 +4,8 @@ import Enemy from "./enemy.js";
 import Bullet from "./bullet.js";
 
 class Fire extends Enemy{
-    constructor(x,y,c,speed,size){
-        super(x,y,new Sprite(x,y,32,64,9,8,size*1.2,size*1.2,0xffffffff));
+    constructor(game,x,y,c,speed,size){
+        super(game,x,y,new Sprite(x,y,32,64,9,8,size*1.2,size*1.2,0xffffffff));
         this.speed = speed;
         size *= 1.2;
 
@@ -51,7 +51,7 @@ class Fire extends Enemy{
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
                 if (game.length(this.calculatePlayerDirectionVector) < 400 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                     this.normalize(this.calculatePlayerDirectionVector);
-                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,6000,200, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0088ff,{x:player.x,y:player.y},true,new Sprite(this.x,this.y,32,74,7,5,16,16,0xffffffff)));
+                    game.screen.level.addEntity(new Bullet(game,this.x+18,this.y+16,6000,200, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0088ff,{x:player.x,y:player.y},true,new Sprite(this.x,this.y,32,74,7,5,16,16,0xffffffff)));
                 }
             }
 

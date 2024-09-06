@@ -6,8 +6,8 @@ class Pickup extends Entity{
     //Type:
     // c = courage
     // b = bomb
-    constructor(x,y,moveX,type="c"){
-        super(x,y,type == "c"?new Sprite(x,y,128,38,32,32,32,32,0xff0000ff):new Sprite(x,y,19,81,8,9,24,24,0xffffffff),10,{minX:0,minY:0,maxX:20,maxY:20});
+    constructor(game,x,y,moveX,type="c"){
+        super(game,x,y,type == "c"?new Sprite(x,y,128,38,32,32,32,32,0xff0000ff):new Sprite(x,y,19,81,8,9,24,24,0xffffffff),10,{minX:0,minY:0,maxX:20,maxY:20});
         this.moveDirection.x = moveX;
         this.type = type;
 

@@ -12,8 +12,8 @@ import Explosion from "./explosion.js";
 import Enemy from "./enemy.js";
 
 class Player extends Entity{
-    constructor(x,y,pixelScale){
-        super(x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:11,minY:5,maxX:35,maxY:51});
+    constructor(game,x,y,pixelScale){
+        super(game,x,y,new Sprite(x,y,0,112,16,16,pixelScale,pixelScale,0xffffffff),10,{minX:11,minY:5,maxX:35,maxY:51});
         this.speed = 300;
         this.playerSpeed = 300;
         this.pixelScale = pixelScale;
@@ -150,7 +150,7 @@ class Player extends Entity{
         if (game.input.firePressed && this.canShoot){
 
 
-            game.screen.level.addEntity(new Bullet(this.x+16,this.y+32,600,700,aim.x, aim.y,this));
+            game.screen.level.addEntity(new Bullet(game,this.x+16,this.y+32,600,700,aim.x, aim.y,this));
             this.canShoot = false;
             this.fireDelay = 128;
             game.playShoot();
@@ -158,7 +158,7 @@ class Player extends Entity{
 
         if (this.bombs > 0 && game.input.bombPressed && this.canThrowBomb){
             let aimWorld = this.projectScreenToWorld(game,this.aimX,this.aimY);
-            game.screen.level.addEntity(new Bomb(this.x+16,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
+            game.screen.level.addEntity(new Bomb(game,this.x+16,this.y+20,2000,800,aim.x,aim.y,this,aimWorld));
             this.canThrowBomb = false;
             this.bombDelay = 1000;
             this.bombs--;

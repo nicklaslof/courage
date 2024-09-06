@@ -1,8 +1,8 @@
 import IntroScreen from "./introscreen.js";
 
 class EndScreen extends IntroScreen{
-    constructor(){
-        super(false);
+    constructor(game,clickAction){
+        super(game,clickAction);
         this.clickToRestart = true;
         this.clickCounter = 2000;
     }
@@ -11,7 +11,7 @@ class EndScreen extends IntroScreen{
         super.tick(game,deltaTime);
         if (this.clickCounter > 0) this.clickCounter -= deltaTime;
         
-        if (this.clickToRestart && this.clickCounter <= 0 && game.input.firePressed)game.switchToGame();
+        if (this.clickToRestart && this.clickCounter <= 0 && game.input.firePressed)this.clickAction;
     }
 }
 

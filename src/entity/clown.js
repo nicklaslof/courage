@@ -5,11 +5,10 @@ import Bullet from "./bullet.js";
 
 class Clown extends Enemy{
         
-    constructor(x,y,c,speed,size,boss){
-        super(x,y,new Sprite(x,y,0,80,9,14,Math.max(28,size),Math.max(28,size),0xffffffff));
+    constructor(game,x,y,c,speed,size,boss){
+        super(game,x,y,new Sprite(x,y,0,80,9,14,Math.max(28,size),Math.max(28,size),0xffffffff));
         this.speed = 20;
         this.c = 0xffffffff;
-        this.health = 3;
         size = Math.max(28,size);
 
         this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
@@ -54,12 +53,12 @@ class Clown extends Enemy{
             this.calculatePlayerDirectionVector.y = player.y - this.y-48;
             this.normalize(this.calculatePlayerDirectionVector);
 
-            this.throwCountdown -= deltaTime;
+            this.throwCountdown -= deltaTime*game.getGamerule().bossBulletSpeed;
             this.animation.setCurrentState("attack");
 
             if (this.stageSwitchCountdown < 1){
                     if (this.throwCountdown < 1){
-                        game.screen.level.addEntity(new Bullet(
+                        game.screen.level.addEntity(new Bullet(game,
                         this.x + 48, this.y + 48, 5000, 400, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y, this, 0xffffffff, null, null,new Sprite(0, 0, 0, 64, 6, 6, 32, 32, 0xff0000ff), { minX: 0, minY: 0, maxX: 32, maxY: 32 }, 10
                         ));
                         this.throwCountdown = 300/this.bossStage;
@@ -70,25 +69,25 @@ class Clown extends Enemy{
                         this.spawnBossAdds(game,2,2);
                         this.firstWaveSpawned = true;
                         this.bossStage++;
-                        this.throwCountdown = 6000;
+                        this.throwCountdown = 6000*game.getGamerule().bossBulletSpeed;
                     }
                     if (this.health == 15 && !this.secondWaveSpawned){
                         this.spawnBossAdds(game,3,3);
                         this.secondWaveSpawned = true;
                         this.bossStage++;
-                        this.throwCountdown = 6000;
+                        this.throwCountdown = 6000*game.getGamerule().bossBulletSpeed;
                     }
                     if (this.health == 10 && !this.thirdWaveSpawned){
                         this.spawnBossAdds(game,4,3);
                         this.thirdWaveSpawned = true;
                         this.bossStage++;
-                        this.throwCountdown = 6000;
+                        this.throwCountdown = 6000*game.getGamerule().bossBulletSpeed;
                     }
                     if (this.health == 5 && !this.fourthWaveSpawned){
                         this.spawnBossAdds(game,5,3);
                         this.fourthWaveSpawned = true;
                         this.bossStage++;
-                        this.throwCountdown = 6000;
+                        this.throwCountdown = 6000*game.getGamerule().bossBulletSpeed;
                     }
                     if (this.health == 1 && !this.fifthWaveSpawned){
                         this.spawnBossAdds(game,10,4);
@@ -117,7 +116,7 @@ class Clown extends Enemy{
                         if (game.length(this.calculatePlayerDirectionVector) < 180 && game.canEntitySee(game.screen.level,this.throwLocation.x,this.throwLocation.y,this.x,this.y)) {
                             this.animation.setCurrentState("attack");
                             this.normalize(this.calculatePlayerDirectionVector);
-                            game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,1500,280, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0000ff));
+                            game.screen.level.addEntity(new Bullet(game,this.x+18,this.y+16,1500,280, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0000ff));
 
                         }
                     }
@@ -135,7 +134,7 @@ class Clown extends Enemy{
 
     spawnBossAdds(game,number,health) {
         for (let i = 0; i < number; i++) {
-            let e = new Clown(game.getRandom((this.room.x + 2) * 64, (this.room.x + this.room.width - 2) * 64), game.getRandom((this.room.y + 2) * 64, (this.room.y + this.room.height - 2) * 64), 0xffffffff, 20, 64, false);
+            let e = new Clown(game,game.getRandom((this.room.x + 2) * 64, (this.room.x + this.room.width - 2) * 64), game.getRandom((this.room.y + 2) * 64, (this.room.y + this.room.height - 2) * 64), 0xffffffff, 20, 64, false);
             e.health = health;
             e.speed = 0;
             game.screen.level.addEntity(e);

@@ -52,7 +52,7 @@ class Level{
         }
 
         startRoom.removeAllEnemies(this);
-        this.player = new Player((startRoom.x+2)*64,(startRoom.y+2)*64,48);
+        this.player = new Player(game,(startRoom.x+2)*64,(startRoom.y+2)*64,48);
         this.entities.push(this.player);
 
         if (bossLevel) this.player.health = 100;

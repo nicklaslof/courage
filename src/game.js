@@ -11,6 +11,7 @@ import EndScreen from "./screen/endscreen.js";
 
 class Game{
 
+    
     constructor(){
         this.canvas = document.getElementById("g");
         this.canvas.width = W;
@@ -32,15 +33,24 @@ class Game{
         //this.fps = this.fpsCounter = this.deltaTime = 0;
         this.lastTime = performance.now();
 
-        this.showIntro = true;
-        this.gameFinished = this.gameOver = false;
-        this.screen = new IntroScreen(true);
+        this.switchToIntro();
 
         this.cameraCenterX = W/2;
         this.cameraCenterY = H/2;
 
         this.clearPlayerTextCountdown = 0;
 
+        this.gameRules = [
+            {mobHealthExtra:0,explosionRange:500,spawnRate:0.5,courageDrops:2,courageDropChance:1,bombDropChance:1,bossBulletSpeed:0.5},
+            {mobHealthExtra:0,explosionRange:400,spawnRate:1,courageDrops:1,courageDropChance:1,bombDropChance:1,bossBulletSpeed:1},
+            {mobHealthExtra:1,explosionRange:200,spawnRate:3,courageDrops:2,courageDropChance:0.5,bombDropChance:2,bossBulletSpeed:3}
+        ];
+    
+
+    }
+
+    getGamerule(){
+        return this.gameRules[this.diffulty];
     }
 
     setupLightBuffer(){
@@ -62,7 +72,7 @@ class Game{
     update(){
         if (this.texture.glTexture.dirty) return;
         if ((this.gameFinished || this.gameOver) && !(this.screen instanceof EndScreen)) {
-            this.screen = new EndScreen(this.gameOver);
+            this.screen = this.gameOver ? new EndScreen(this,() => this.switchToGame()): new EndScreen(this,()=>this.switchToIntro());
             if (this.gameOver) this.playGameOver(); else this.playGameFinished();
             this.setupLightBuffer();
         }
@@ -129,6 +139,7 @@ class Game{
 
     switchToGame(){
         this.showIntro = false;
+        this.showDiffcultySelection = false;
         this.gameOver = false;
         this.screen = new Screen(this,W, H);
         this.setupLightBuffer();
@@ -136,6 +147,13 @@ class Game{
 
     switchToEndScreen(){
         this.gameFinished = true;
+    }
+
+    switchToIntro(){
+        this.diffulty = -1;
+        this.showIntro = true;
+        this.gameFinished = this.gameOver = false;
+        this.screen = new IntroScreen(this);
     }
 
     switchToGameOver(){

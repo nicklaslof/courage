@@ -3,11 +3,11 @@ import Bullet from "./bullet.js";
 import Enemy from "./enemy.js";
 
 class Thirteen extends Enemy{
-    constructor(x,y,c,speed,size){
-        super(x,y,Math.random()< 0.5?new Sprite(x,y,16,48,3,6,32,32,0xffffffff):new Sprite(x,y,20,48,3,6,32,32,0xffffffff));
+    constructor(game,x,y,c,speed,size){
+        super(game,x,y,Math.random()< 0.5?new Sprite(x,y,16,48,3,6,32,32,0xffffffff):new Sprite(x,y,20,48,3,6,32,32,0xffffffff));
 
         this.shootDelay = 0;
-        this.health = 2;
+        this.health = 2+game.getGamerule().mobHealthExtra;
         this.speed = speed;
     }
 
@@ -21,7 +21,7 @@ class Thirteen extends Enemy{
             this.calculatePlayerDirectionVector.y = player.y - this.y;
             if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                 this.normalize(this.calculatePlayerDirectionVector);
-                let b = new Bullet(this.x+18,this.y+16,game.getRandom(1000,4000),80, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,null,false,Math.random()< 0.5?new Sprite(this.x,this.y,16,48,3,6,16,16,0xff00ffff):new Sprite(this.x,this.y,20,48,3,6,16,16,0xff00ffff))
+                let b = new Bullet(game,this.x+18,this.y+16,game.getRandom(1000,4000),80, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,null,false,Math.random()< 0.5?new Sprite(this.x,this.y,16,48,3,6,16,16,0xff00ffff):new Sprite(this.x,this.y,20,48,3,6,16,16,0xff00ffff))
                 b.onTick = (e,game,deltaTime) => {
                     if (e.timer == null) e.timer = Math.random();
                     e.timer += deltaTime/100;

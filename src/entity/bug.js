@@ -4,8 +4,8 @@ import Enemy from "./enemy.js";
 
 class Bug extends Enemy{
 
-    constructor(x,y,c,speed,size){
-        super(x,y,new Sprite(x,y,0,96,9,8,size,size,c));
+    constructor(game,x,y,c,speed,size){
+        super(game,x,y,new Sprite(x,y,0,96,9,8,size,size,c));
         this.speed = speed/1.2;
         this.collisionBox = {minX:0,minY:0,maxX:size,maxY:size};
         this.updateAABB();

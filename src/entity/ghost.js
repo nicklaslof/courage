@@ -3,8 +3,8 @@ import Animation from "./animation.js";
 import Enemy from "./enemy.js";
 
 class Ghost extends Enemy{
-    constructor(x,y,c,speed,size){
-        super(x,y,new Sprite(x,y,48,96,4,8,32,32,c));
+    constructor(game,x,y,c,speed,size){
+        super(game,x,y,new Sprite(x,y,48,96,4,8,32,32,c));
         this.speed = speed;
 
         this.collisionBox = {minX:0,minY:0,maxX:32,maxY:32};

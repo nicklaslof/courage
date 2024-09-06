@@ -5,8 +5,8 @@ import Entity from "./entity.js";
 import SkeletonHead from "./skeletonhead.js";
 
 class Explosion extends Entity{
-    constructor(x,y,shootingEntity){
-        super(x,y,new Sprite(x,y,0,32,1,1,1,1,0x00000000),1,{minX:-200,minY:-200,maxX:200,maxY:200});
+    constructor(game,x,y,shootingEntity){
+        super(game,x,y,new Sprite(x,y,0,32,1,1,1,1,0x00000000),1,{minX:-game.getGamerule().explosionRange/2,minY:-game.getGamerule().explosionRange/2,maxX:game.getGamerule().explosionRange/2,maxY:game.getGamerule().explosionRange/2});
         this.shootingEntity = shootingEntity;
         this.ttl = 64;
     }

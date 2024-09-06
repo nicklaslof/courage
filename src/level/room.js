@@ -92,10 +92,10 @@ class Room{
                     case Tiles.floor1:
                         if(this.roomType == "r" && Math.random()<0.5)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"c"));
                         if(!lastRoom && this.roomType == "n" && Math.random()<0.3)level.addDecoration(new Decoration(level,x*64,y*64,64,64,"d"));
-                        if (!lastRoom && !bossRoom && Math.random() < 0.03) level.addEntity(new Box(x*64,y*64));
+                        if (!lastRoom && !bossRoom && Math.random() < 0.03) level.addEntity(new Box(game,x*64,y*64));
                         if (Math.random()< 0.05){
                             for (let i = 0; i < game.getRandom(1,3);i++){
-                                level.addEntity(new SkeletonHead((x*64)+game.getRandom(0,48),(y*64)+game.getRandom(0,48),game.getRandom(16,20),game.getRandom(16,20)));
+                                level.addEntity(new SkeletonHead(game,(x*64)+game.getRandom(0,48),(y*64)+game.getRandom(0,48),game.getRandom(16,20),game.getRandom(16,20)));
                             }
                             
                         }
@@ -116,21 +116,21 @@ class Room{
          // Spawn enimies
         if (bossRoom){
             let mobType = level.mobSpawns[0];
-            let e = new mobType(((startTileX + width/2)*64)-64,((startTileY + height/2)*64)-64,0xffffffff,0,128,true);
+            let e = new mobType(game,((startTileX + width/2)*64)-64,((startTileY + height/2)*64)-64,0xffffffff,0,128,true);
             this.enemies.push(e);
             level.addEntity(e);
             level.boss = e;
         }else if (!bossLevel){
             for (let x = startTileX+2; x < startTileX+width-2; x++){
                 for (let y = startTileY+2; y < startTileY+height-2; y++){
-                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance : Math.random() < 0.7;
+                    let r = this.roomType == "n" ? Math.random()<level.mobSpawnChance*game.getGamerule().spawnRate : Math.random() < 0.7*game.getGamerule().spawnRate;
                     if (r && level.getTile(x,y) == Tiles.floor1){
                         //for(let i = 0; i < Math.floor(game.getRandom(3,10));i++){
-                            let spawnX = (x*64);//+game.getRandom(-64,64);
-                            let spawnY = (y*64);//+game.getRandom(-64,64);
+                            let spawnX = (x*64)+game.getRandom(0,64);
+                            let spawnY = (y*64)+game.getRandom(0,64);
                             if (level.getTile(Math.round(spawnX/64),Math.round(spawnY/64)) == Tiles.floor1 && exitLocation.x !=Math.round(spawnX/64) && exitLocation.y !=Math.round(spawnY/64)){
                                let mobType = level.mobSpawns[0,Math.floor(level.mobSpawns.length -1)];
-                               let e = mobType.name == Pickup.name ?new mobType(spawnX,spawnY,0,"c"):new mobType(spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
+                               let e = mobType.name == Pickup.name ?new mobType(game,spawnX,spawnY,0,"c"):new mobType(game,spawnX,spawnY,0xff666666,game.getRandom(80,140),game.getRandom(16,32));
                                this.enemies.push(e);
                                level.addEntity(e);
                             }

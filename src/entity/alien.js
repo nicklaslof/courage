@@ -4,8 +4,8 @@ import Enemy from "./enemy.js";
 import Bullet from "./bullet.js";
 
 class Alien extends Enemy{
-    constructor(x,y,c,speed,size){
-        super(x,y,new Sprite(x,y,51,64,7,7,32,32,0xffffffff));
+    constructor(game,x,y,c,speed,size){
+        super(game,x,y,new Sprite(x,y,51,64,7,7,32,32,0xffffffff));
 
         this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
         this.updateAABB();
@@ -55,7 +55,7 @@ class Alien extends Enemy{
                 this.calculatePlayerDirectionVector.y = player.y - this.y;
                 this.normalize(this.calculatePlayerDirectionVector);
 
-                game.screen.level.addEntity(new Bullet(this.x+16,this.y+16,1200,200,this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00));
+                game.screen.level.addEntity(new Bullet(game,this.x+16,this.y+16,1200,200,this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00));
 
                 this.spitDelay = 400;
             }

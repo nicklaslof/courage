@@ -4,8 +4,8 @@ import Bug from "./bug.js";
 import Bullet from "./bullet.js";
 
 class Spider extends Bug{
-    constructor(x,y,c,speed,size,boss){
-        super(x,y,c,speed,size);
+    constructor(game,x,y,c,speed,size,boss){
+        super(game,x,y,c,speed,size);
         this.sprite = new Sprite(x,y,16,96,16,16,size,size,c);
         this.speed = speed/2.5;
 
@@ -47,12 +47,12 @@ class Spider extends Bug{
             }
         
             let numberOfBullets = this.health < 2 ? -1 : 6 - this.bossStage;
-            this.shootCounter += deltaTime;
+            this.shootCounter += deltaTime*game.getGamerule().bossBulletSpeed;
         
             if ((this.stageSwitchCountdown < 1 || this.health < 2) && this.shootCounter >= 96 / numberOfBullets) {
                 let s = Math.sin(this.shootAngle / 3.14), c = Math.cos(this.shootAngle / 3.14);
                 game.screen.level.addEntity(
-                    new Bullet(
+                    new Bullet(game,
                         this.x + 48, this.y + 48, 5000, 200 * (numberOfBullets / 2), s, c, this, 0xffffffff, null, null,new Sprite(0, 0, 0, 64, 6, 6, 32, 32, 0xff00ff00), { minX: 0, minY: 0, maxX: 32, maxY: 32 }, 10
                 ));
                 if (++this.bulletCounter >= numberOfBullets) {
@@ -80,7 +80,7 @@ class Spider extends Bug{
                 this.calculatePlayerDirectionVector.y = this.playerLocation.y - this.y;
                 if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                     this.normalize(this.calculatePlayerDirectionVector);
-                    game.screen.level.addEntity(new Bullet(this.x+18,this.y+16,5000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
+                    game.screen.level.addEntity(new Bullet(game,this.x+18,this.y+16,5000,150, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,{x:player.x,y:player.y}));
                 }
                 this.shootCountdown = 100;
                 this.spit = false;

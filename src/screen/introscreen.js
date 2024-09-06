@@ -4,7 +4,7 @@ import Tiles from "../tile/tiles.js";
 
 class IntroScreen{
 
-    constructor(switchToGame){
+    constructor(game,clickAction){
         this.floor = Tiles.floor1.sprite;
         this.u0 = 128/TZ;
         this.u1 = 200/TZ;
@@ -21,8 +21,10 @@ class IntroScreen{
 
         let x = W/2;
         let y = H/2;
+        this.clickCounter = 2000;
 
-        this.switchToGame = switchToGame;
+        //this.clickAction = clickAction?clickAction:()=>game.switchToGame();
+        this.clickAction = clickAction?clickAction:()=>{game.showDiffcultySelection=true;game.showIntro=false};
 
         this.pixelScale = 72;
         this.sprite = new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff);
@@ -35,6 +37,7 @@ class IntroScreen{
     }
 
     tick(game, deltaTime){
+        if (this.clickCounter > 0) this.clickCounter -= deltaTime;
         this.floor.tick(game,deltaTime);
         this.animation.tick(game,deltaTime);
         this.sprite = this.animation.currentSprite;
@@ -42,7 +45,16 @@ class IntroScreen{
         this.sprite.y = (H/2)-32;
 
         this.sprite.tick();
-        if (this.switchToGame) if (game.input.firePressed) game.switchToGame();
+
+        if (this.clickAction && this.clickCounter <= 0 && game.input.firePressed) this.clickAction();
+        if (game.showDiffcultySelection){
+            let k = game.input.keys;
+            if (k[49] == "keydown") game.diffulty = 0;
+            if (k[50] == "keydown") game.diffulty = 1;
+            if (k[51] == "keydown") game.diffulty = 2;
+            
+            if (game.diffulty>-1)game.switchToGame();
+        }
     }
 
     render(game){
