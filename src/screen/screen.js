@@ -33,6 +33,9 @@ class Screen{
 
     tryAndCreateLevel(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom,bossLevel=false){
         let newLevel = null;
+        // This will loop until a level has been created. There is a slight chance a level fails to generate if the random generator creates a loop of rooms and can't find a direction
+        // to generate a new room. So I'm safe to do an "eternal while true"-loop here since the levelgeneration is fast and if it fails it usually succedes the next time.
+        // The only time if can make this to a real while true loop if trying to create too small rooms or huge rooms with not enough h and w of the level.
         while (newLevel == null){
             let level = new Level(game,width,height,chapter,name,wallColor,floorColor,mobSpawns,mobSpawnChance,globalDarkness,torches,minRoomSize,maxRoomSize,numberOfRooms,lava,battleRoom,bossLevel);
             if (level.allRoomsCreated) newLevel = level;
@@ -40,6 +43,8 @@ class Screen{
         return newLevel;
     }
 
+    // Change the level to the next level. If there are enimies left in the level and the player health(courage) is over 100 the player will leave but if it's below 100 the player will refuse to leave.
+    // If there are no enemies left the player leaves even if the health(courage) isn't over 100 but that will make the player have even lower health(courage) on the next level.
     tryChangeLevel(game,player,levelId){
         if (levelId == null) levelId = 0;
         let remainingEnemies = game.screen.level!=null ? game.screen.level.getRemainingEnemies():1;
@@ -54,7 +59,7 @@ class Screen{
         if (player == null){
             this.level = this.levels[levelId];
             this.currentLevelId = levelId;
-            this.levelTransitionTime = 40;
+            this.levelTransitionTime = 4000;
         }else{
             if (player.health >= 100 || (player.health < 100 && remainingEnemies == 0)){
                 this.level = this.levels[++this.currentLevelId];
@@ -68,9 +73,6 @@ class Screen{
             }
 
         }
-        
-        //if (player == null || player.health >= 100 || (player.health < 100 && game.screen.level.getRemainingEnemies() == 0)) 
-        
     }
 
     isLevelTransition(){

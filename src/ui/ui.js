@@ -1,5 +1,6 @@
 class UI{
 
+    // Render the UI on a seperate Canvas that is overlayed the game canvas.
     constructor(){
         this.canvas = document.getElementById("u");
         this.context = this.canvas.getContext("2d");
@@ -55,7 +56,7 @@ class UI{
                 this.drawTextAt("Courage",160,70,"white",14);
 
                 // Draw meter bar
-                this.drawCourageMeter(game,18,44,1,1,true,game.screen.level.player.health);
+                this.drawCourageMeter(18,44,1,1,true,game.screen.level.player.health);
 
 
                 this.drawTextAt("Bombs: "+game.screen.level.player.bombs,20,96,"white",14);
@@ -75,11 +76,11 @@ class UI{
 
                 if (game.screen.level.boss && game.screen.level.boss.health>0){
                     let bossPos = this.projectWorldToScreen(game,game.screen.level.boss.x,game.screen.level.boss.y-8);
-                    this.drawCourageMeter(game,bossPos.x,bossPos.y,0.8,1.2,true,game.screen.level.boss.health*3.33);  
+                    this.drawCourageMeter(bossPos.x,bossPos.y,0.8,1.2,true,game.screen.level.boss.health*3.33);  
                 }
 
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x+12,game.screen.level.player.y-8);
-                this.drawCourageMeter(game,pos.x,pos.y,0.1,0.3,false,game.screen.level.player.health);
+                this.drawCourageMeter(pos.x,pos.y,0.1,0.3,false,game.screen.level.player.health);
 
                 // Draw fear face and heart
                 /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
@@ -134,8 +135,8 @@ class UI{
             this.context.fillRect(20+r.x-x,120+r.y-y,r.width,r.height);
         })
     }
-    drawCourageMeter(game,x,y,scaleX,scaleY,border,health) {
-        
+    drawCourageMeter(x,y,scaleX,scaleY,border,health) {
+        //Draw the border around the courage bar
         if (border){
             this.context.fillStyle = '#ffffff';
             this.context.fillRect(x, y, 202*scaleX, 12*scaleY);

@@ -25,12 +25,13 @@ class Texture{
 
             ctx.font = "normal 32px monospace";
             ctx.fillStyle = "white";
+
+            // the heart graphic used for courage pickup
             ctx.fillText("\u2665",128,60,32);
-            //ctx.fillText("\uD83D\uDE31",160,60,32);
+            
 
             // Create stars
             
-            //ctx.fillRect(768,768,400,400);
             for (let x = 768; x < 768+1600; x++){
                 for (let y = 768; y < 768+1600; y++){
                     if (Math.random() < 0.001){

@@ -12,7 +12,7 @@ class Light{
         this.u1 = 200/TZ;
         this.v0 = this.u0 + (550/TZ);
         this.v1 = this.u1 + (550/TZ);
-        this.ttl = ttl; // if light has a ttl more than 10 seconds it will light forever
+        this.ttl = ttl; // if light has a ttl more than 10 seconds it will burn forever
         this.disposed = false;
         this.renderOffsetX = 0;
         this.renderOffsetY = 0;

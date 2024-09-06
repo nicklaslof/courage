@@ -24,6 +24,7 @@ class Input {
         this.buttons[2] = this.keys[32] = null;
     }
 
+    // getGlide but only if the player doesn't keep the glide button down all the time.
     getGlide(){
         return this.glidePressed ? (this.glideStillPressed = true) : false;
     } 
