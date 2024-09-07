@@ -24,6 +24,11 @@ class Decoration{
             case "d":
                 this.animation.addState("anim", new Sprite(this.x,this.y,0,0,16,16,64,64,level.getTileRoom(Math.floor(x/64),Math.floor(y/64)).floorColor*10).setRotation(Math.random()<0.45?3.14:0));
                 break;
+            case "b":
+                let xx = Math.random()*8;
+                let yy = Math.random()*8;
+                this.animation.addState("anim", new Sprite(this.x,this.y,xx,48+yy,xx,yy,10,10,0xffffffff));
+                break;
         }
         
         this.animation.setCurrentState("anim");
