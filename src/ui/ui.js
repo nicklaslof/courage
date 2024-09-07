@@ -86,7 +86,7 @@ class UI{
                 }
 
                 let pos = this.projectWorldToScreen(game,game.screen.level.player.x+12,game.screen.level.player.y-8);
-                this.drawCourageMeter(pos.x,pos.y,0.1,0.5,true,game.screen.level.player.health,"#000000");
+                this.drawCourageMeter(pos.x,pos.y,0.1,0.6,true,game.screen.level.player.health,"#000000");
 
                 // Draw fear face and heart
                 /*this.context.drawImage(game.texture.image,160,34,32,32,24,64,24,24);
@@ -152,7 +152,7 @@ class UI{
         let courage = Math.min(200, health * 2);
         let color = this.interpolateColor("ff0000", "#00ff00", courage / 2);
         this.context.fillStyle = color;
-        this.context.fillRect(x+1,y+1 , courage*scaleX, 10*scaleY);
+        this.context.fillRect(x+2,y+2 , (courage*scaleX)-3, (8*scaleY)-1);
     }
 
     projectWorldToScreen(game, worldX,worldY){
