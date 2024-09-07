@@ -59,7 +59,7 @@ class Screen{
         if (player == null){
             this.level = this.levels[levelId];
             this.currentLevelId = levelId;
-            this.levelTransitionTime = 40;
+            this.levelTransitionTime = 4000;
         }else{
             if (player.health >= 100 || (player.health < 100 && remainingEnemies == 0)){
                 this.level = this.levels[++this.currentLevelId];
