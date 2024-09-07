@@ -133,7 +133,8 @@ class Clown extends Enemy{
     }
 
     spawnBossAdds(game,number,health) {
-        for (let i = 0; i < number; i++) {
+        let modifier = game.getGamerule().spawnRate;
+        for (let i = 0; i < number*(modifier>0.5?game.getGamerule().spawnRate:1); i++) {
             let e = new Clown(game,game.getRandom((this.room.x + 2) * 64, (this.room.x + this.room.width - 2) * 64), game.getRandom((this.room.y + 2) * 64, (this.room.y + this.room.height - 2) * 64), 0xffffffff, 20, 64, false);
             e.health = health;
             e.speed = 0;

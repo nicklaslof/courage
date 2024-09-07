@@ -42,7 +42,7 @@ class Game{
         this.gameRules = [
             {mobHealthExtra:0,explosionRange:500,spawnRate:0.5,courageDrops:2,courageDropChance:1,bombDropChance:1,bossBulletSpeed:0.5},
             {mobHealthExtra:0,explosionRange:400,spawnRate:1,courageDrops:1,courageDropChance:1,bombDropChance:1,bossBulletSpeed:1},
-            {mobHealthExtra:1,explosionRange:200,spawnRate:3,courageDrops:2,courageDropChance:0.5,bombDropChance:2,bossBulletSpeed:3}
+            {mobHealthExtra:1,explosionRange:200,spawnRate:3,courageDrops:1,courageDropChance:0.5,bombDropChance:2,bossBulletSpeed:3}
         ];
     
 
