@@ -52,6 +52,7 @@ class Texture{
             // Draw the imagedata from the asset texture to it
             ctx.putImageData(imageData,0,0);
             this.image.src = canvas.toDataURL();
+            canvas.remove();
         };
 
         assetImage.src = "t.png";
