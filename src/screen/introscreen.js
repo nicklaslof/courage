@@ -21,7 +21,7 @@ class IntroScreen{
 
         let x = W/2;
         let y = H/2;
-        this.clickCounter = 2000;
+        this.clickDelay = 500;
 
         //this.clickAction = clickAction?clickAction:()=>game.switchToGame();
         this.clickAction = clickAction?clickAction:()=>{game.showDiffcultySelection=true;game.showIntro=false};
@@ -37,7 +37,7 @@ class IntroScreen{
     }
 
     tick(game, deltaTime){
-        if (this.clickCounter > 0) this.clickCounter -= deltaTime;
+        if (this.clickDelay > 0) this.clickDelay -= deltaTime;
         this.floor.tick(game,deltaTime);
         this.animation.tick(game,deltaTime);
         this.sprite = this.animation.currentSprite;
@@ -46,7 +46,7 @@ class IntroScreen{
 
         this.sprite.tick();
 
-        if (this.clickAction && this.clickCounter <= 0 && game.input.firePressed) this.clickAction();
+        if (this.clickAction && this.clickDelay <= 0 && game.input.firePressed) this.clickAction();
         if (game.showDiffcultySelection){
             let k = game.input.keys;
             if (k[49] == "keydown") game.diffulty = 0;

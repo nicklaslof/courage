@@ -7,7 +7,6 @@ import {zzfx} from './lib/z.js'
 import Tiles from "./tile/tiles.js";
 import UI from "./ui/ui.js";
 import IntroScreen from "./screen/introscreen.js";
-import EndScreen from "./screen/endscreen.js";
 
 class Game{
 
@@ -71,8 +70,8 @@ class Game{
 
     update(){
         if (this.texture.glTexture.dirty) return;
-        if ((this.gameFinished || this.gameOver) && !(this.screen instanceof EndScreen)) {
-            this.screen = this.gameOver ? new EndScreen(this,() => this.switchToGame()): new EndScreen(this,()=>this.switchToIntro());
+        if ((this.gameFinished || this.gameOver) && !(this.screen instanceof IntroScreen)) {
+            this.screen = this.gameOver ? new IntroScreen(this,() => this.switchToGame()): new IntroScreen(this,()=>this.switchToIntro());
             if (this.gameOver) this.playGameOver(); else this.playGameFinished();
             this.setupLightBuffer();
         }
