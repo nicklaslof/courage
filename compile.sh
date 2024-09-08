@@ -13,7 +13,8 @@ rm bundle.js
 # Let roadroller run until stopped. I usually leave it running for an hour and then record the output parameters to save time next time
 #roadroller -OO g.js -o ./o.js
 
-roadroller -Zab24 -Zlr2737 -Zmc3 -Zmd130 -Zpr16 -S0,1,2,3,5,6,15,25,42,113,204,451 g.js -o ./o.js
+roadroller -Zab24 -Zlr2260 -Zmc3 -Zmd123 -S0,1,2,3,5,6,13,26,57,85,170,451 g.js -o ./o.js
+#roadroller -Zab24 -Zlr2737 -Zmc3 -Zmd130 -Zpr16 -S0,1,2,3,5,6,15,25,42,113,204,451 g.js -o ./o.js
 
 echo "<meta charset="UTF-8"><style>" > index-template.html
 cat ../src/i.css >> index-template.html
