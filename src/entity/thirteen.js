@@ -22,7 +22,7 @@ class Thirteen extends Enemy{
             if (game.length(this.calculatePlayerDirectionVector) < 350 && game.canEntitySee(game.screen.level,player.x,player.y,this.x,this.y)) {
                 this.normalize(this.calculatePlayerDirectionVector);
                 let b = new Bullet(game,this.x+18,this.y+16,game.getRandom(1000,4000),80, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff00ff00,null,false,Math.random()< 0.5?new Sprite(this.x,this.y,16,48,3,6,16,16,0xff00ffff):new Sprite(this.x,this.y,20,48,3,6,16,16,0xff00ffff))
-                b.onTick = (e,game,deltaTime) => {
+                b.onTick = (e,deltaTime) => {
                     if (e.timer == null) e.timer = Math.random();
                     e.timer += deltaTime/100;
                     let s = Math.sin(e.timer);

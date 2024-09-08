@@ -89,7 +89,7 @@ class Entity{
         this.sprite.y = (game.cameraCenterY - game.screen.level.player.y) + this.y;
         this.sprite.tick();
 
-        if (this.onTick != null) this.onTick(this,game,deltaTime);
+        if (this.onTick != null) this.onTick(this,deltaTime);
 
     }
 

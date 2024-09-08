@@ -8,7 +8,7 @@ import Player from "./player.js";
 class SkeletonHead extends Entity{
     constructor(game,x,y,sizeX,sizeY){
         super(game,x,y,new Sprite(x,y,20,64,6,7,sizeX,sizeY,0xffffffff),1,{minX:0,minY:0,maxX:16,maxY:16});
-        this.goldenSkull = Math.random()<0.05;
+        this.goldenSkull = Math.random()<0.02;
     }
 
     onCollision(game,otherEntity){
@@ -35,8 +35,8 @@ class SkeletonHead extends Entity{
         for (let i = 0; i < 32;i++){
             game.screen.level.addParticle(this.x,this.y+this.pixelScale,0xffdddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-0.5,0.5),y:game.getRandom(-0.7,-0.3)},game.getRandom(50,120));
         }
-        if (this.goldenSkull || Math.random() < 0.1*game.getGamerule().bombDropChance){
-            let j = this.goldenSkull?5:1;
+        if (this.goldenSkull || Math.random() < 0.09*game.getGamerule().bombDropChance){
+            let j = (this.goldenSkull?3:1)*game.getGamerule().bombDropChance;
                 for (let i = 0; i < j;i++){
                     game.screen.level.addEntity(new Pickup(game,this.x,this.y,game.getRandom(-1,1),"b"));
                 }

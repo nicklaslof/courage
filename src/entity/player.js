@@ -103,13 +103,6 @@ class Player extends Entity{
             game.screen.level.addParticle(this.x+24,this.y+this.pixelScale,0x99dddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-1,1),y:game.getRandom(-1,1)},game.getRandom(50,120));
         }
 
-
-        if (this.speed < 1){
-            //this.moveDirection.x = 0;
-            //this.moveDirection.y = 0;
-        }
-
-
         super.tick(game,deltaTime);
 
         // Overwrite player position set in the parent class tick function because player should always be rendered at center of the screen
@@ -132,15 +125,13 @@ class Player extends Entity{
         //if (this.aimX > 0 ) this.horizontalFlip = true;
         //else this.horizontalFlip = false;
 
-        if (this.fireDelay > 0){
-            this.fireDelay -= deltaTime;
-        }
+        if (this.fireDelay > 0)this.fireDelay -= deltaTime;
+        
 
         if (this.fireDelay <= 0 && !this.canShoot) this.canShoot = true;
 
-        if (this.bombDelay > 0){
-            this.bombDelay -= deltaTime;
-        }
+        if (this.bombDelay > 0) this.bombDelay -= deltaTime;
+        
 
         if (this.bombDelay <= 0 && !this.canThrowBomb) this.canThrowBomb = true;
        
@@ -182,7 +173,7 @@ class Player extends Entity{
             game.setPlayerSays("I have the courage to leave now!",5000);
         }
         if (this.health < 100 && this.courageFullPlayed){
-            game.setPlayerSays("I lost my courage, I can't leave now!",5000);
+            game.setPlayerSays("I lost my courage,I can't leave now!",5000);
             this.courageFullPlayed = false;
         }
 
@@ -196,7 +187,7 @@ class Player extends Entity{
         this.bombs++;
         if (this.bombMessageTimeout <= 0){
             this.bombMessageTimeout = 120000;
-            game.setPlayerSays("I found a bomb, throw it with E",8000);
+            game.setPlayerSays("I found a bomb,throw it with E",8000);
         }
     }
 
