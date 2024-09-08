@@ -113,7 +113,7 @@ class Clown extends Enemy{
                     if (this.throwCountdown <= 0){
                         this.throwCounter++;
                         this.throwCountdown = 60;
-                        if (game.length(this.calculatePlayerDirectionVector) < 180 && game.canEntitySee(game.screen.level,this.throwLocation.x,this.throwLocation.y,this.x,this.y)) {
+                        if (game.length(this.calculatePlayerDirectionVector) < 220 && game.canEntitySee(game.screen.level,this.throwLocation.x,this.throwLocation.y,this.x,this.y)) {
                             this.animation.setCurrentState("attack");
                             this.normalize(this.calculatePlayerDirectionVector);
                             game.screen.level.addEntity(new Bullet(game,this.x+18,this.y+16,1500,280, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0000ff));
