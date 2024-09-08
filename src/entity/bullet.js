@@ -24,6 +24,7 @@ class Bullet extends Entity{
         this.stopMovement = false;
         this.flickering = flickering;
         this.damage = damage;
+        this.shadow = new Sprite(0,0,0,64,6,6,this.sprite.sizeX,this.sprite.sizeY,0x77000000);
 
     }
 
@@ -51,6 +52,9 @@ class Bullet extends Entity{
         if (this.stopMovement) this.moveDirection.x = this.moveDirection.y = 0;
 
         this.horizontalFlip = true;
+        this.shadow.x = this.sprite.x;
+        this.shadow.y = this.sprite.y+24;
+        this.shadow.tick();
     }
 
     onCollision(game,otherEntity){
@@ -62,6 +66,11 @@ class Bullet extends Entity{
         if (otherEntity instanceof Tile) return;
         //if (this.stopAtLocation != null && !this.stopMovement) return;
         if (!otherEntity.damageImmune) otherEntity.hit(game,this.damage);
+    }
+
+    render(game){
+        super.render(game);
+        !this.stopMovement && this.shadow.render(game);
     }
 }
 

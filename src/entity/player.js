@@ -36,12 +36,12 @@ class Player extends Entity{
         
 
         this.animation = new Animation();
-        this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("walk", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
+        this.animation.addState("i",this.sprite,0.1);
+        this.animation.addState("w", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("w", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
         
-        this.animation.setCurrentState("idle");
+        this.animation.setCurrentState("i");
 
         this.aimSprite = new Sprite(this.x,this.y,0,71,7,7,24,24,0xffffffff);
         this.currentTile = null;
@@ -79,11 +79,11 @@ class Player extends Entity{
             this.moveDirection.x = game.input.axes.x;
             this.moveDirection.y = game.input.axes.y;
             this.speed = this.playerSpeed + this.glideSpeed;
-            this.animation.setCurrentState("walk")
+            this.animation.setCurrentState("w")
         }else{
             this.speed += this.glideSpeed;
             this.speed *= decay;
-            this.animation.setCurrentState("idle");
+            this.animation.setCurrentState("i");
         }
 
         if (game.input.getGlide() && this.canglide && this.glideSpeed < 1){
@@ -99,7 +99,7 @@ class Player extends Entity{
         }
         if (this.speed > 980) this.speed = 980;
         if (this.glideSpeed > 10){
-            this.animation.setCurrentState("idle");
+            this.animation.setCurrentState("i");
             game.screen.level.addParticle(this.x+24,this.y+this.pixelScale,0x99dddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-1,1),y:game.getRandom(-1,1)},game.getRandom(50,120));
         }
 

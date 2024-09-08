@@ -13,10 +13,10 @@ class Fire extends Enemy{
         this.updateAABB();
 
         this.animation = new Animation();
-        this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("burning", new Sprite(x,y,32,64,9,8,size,size,0xffffffff),240)
-        .addState("burning", new Sprite(x,y,41,64,9,8,size,size,0xffffffff),240);
-        this.animation.setCurrentState("burning");
+        //this.animation.addState("i",this.sprite,0.1);
+        this.animation.addState("b", new Sprite(x,y,32,64,9,8,size,size,0xffffffff),240)
+        .addState("b", new Sprite(x,y,41,64,9,8,size,size,0xffffffff),240);
+        this.animation.setCurrentState("b");
         this.moveToPlayerRange = 1024;
 
         this.spitTimer = this.shootTimer = 0;
@@ -24,7 +24,7 @@ class Fire extends Enemy{
 
     tick(game,deltaTime){
         super.tick(game,deltaTime);
-        this.animation.setCurrentState("burning");
+        this.animation.setCurrentState("b");
         if (this.light == null) this.light = game.screen.level.addLight(this.x,this.y,0xff0044cc,256,256,10000,true);
         this.light.x = this.x;
         this.light.y = this.y;

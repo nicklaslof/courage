@@ -29,11 +29,11 @@ class IntroScreen{
         this.pixelScale = 72;
         this.sprite = new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff);
         this.animation = new Animation();
-        this.animation.addState("walk", this.sprite,160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("walk", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
-        .addState("walk", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
+        this.animation.addState("w", this.sprite,160)
+        .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("w", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
         
-        this.animation.setCurrentState("walk");
+        this.animation.setCurrentState("w");
     }
 
     tick(game, deltaTime){

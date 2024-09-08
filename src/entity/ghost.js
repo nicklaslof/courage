@@ -10,10 +10,10 @@ class Ghost extends Enemy{
         this.collisionBox = {minX:0,minY:0,maxX:32,maxY:32};
 
         this.animation = new Animation();
-        this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("walk", new Sprite(x,y,48,96,4,8,32,32,c),240)
-        .addState("walk", new Sprite(x,y,52,96,4,8,32,32,c),240);
-        this.animation.setCurrentState("idle");
+        //this.animation.addState("i",this.sprite,0.1);
+        this.animation.addState("w", new Sprite(x,y,48,96,4,8,32,32,c),240)
+        .addState("w", new Sprite(x,y,52,96,4,8,32,32,c),240);
+        this.animation.setCurrentState("w");
         this.moveToPlayerRange = 1024;
     }
 

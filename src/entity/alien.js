@@ -11,12 +11,12 @@ class Alien extends Enemy{
         this.updateAABB();
         
         this.animation = new Animation();
-        this.animation.addState("blinking", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),1024)
-        .addState("blinking", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
-        .addState("blinking", new Sprite(x,y,51,71,7,7,32,32,0xffffffff),240)
-        .addState("blinking", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
-        .addState("blinking", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),240);
-        this.animation.setCurrentState("blinking");
+        this.animation.addState("b", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),1024)
+        .addState("b", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
+        .addState("b", new Sprite(x,y,51,71,7,7,32,32,0xffffffff),240)
+        .addState("b", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
+        .addState("b", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),240);
+        this.animation.setCurrentState("b");
         this.moveAwayRange = this.spitDelay = this.shootTimer = 0;
     }
 
@@ -32,7 +32,7 @@ class Alien extends Enemy{
             this.moveDirection.x = -this.moveDirection.x;
             this.moveDirection.y = -this.moveDirection.y;
         }
-        this.animation.setCurrentState("blinking");
+        this.animation.setCurrentState("b");
 
         if (this.shootTimer > 0) this.shootTimer -= deltaTime;
         else{

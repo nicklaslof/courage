@@ -11,10 +11,10 @@ class Bug extends Enemy{
         this.updateAABB();
 
         this.animation = new Animation();
-        this.animation.addState("idle",this.sprite,0.1);
-        this.animation.addState("walk", new Sprite(x,y,0,96,9,8,size,size,c),240)
-        .addState("walk", new Sprite(x,y,0,105,9,8,size,size,c),240);
-        this.animation.setCurrentState("idle");
+        this.animation.addState("i",this.sprite,0.1);
+        this.animation.addState("w", new Sprite(x,y,0,96,9,8,size,size,c),240)
+        .addState("w", new Sprite(x,y,0,105,9,8,size,size,c),240);
+        this.animation.setCurrentState("i");
     }
 
     tick(game,deltaTime){
@@ -25,11 +25,11 @@ class Bug extends Enemy{
     }
 
     onEntityMovement(game,deltaTime){
-        this.animation.setCurrentState("walk");
+        this.animation.setCurrentState("w");
     }
 
     onEntityStopMovement(game,deltaTime){
-        this.animation.setCurrentState("idle");
+        this.animation.setCurrentState("i");
     }
 }
 
