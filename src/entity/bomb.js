@@ -17,12 +17,12 @@ class Bomb extends Entity{
         this.sprite.renderOffsetY=-24;
         this.sprite.renderOffsetX=-24;
 
-        this.animation = new Animation();
-        this.animation.addState("i",this.sprite,0.1);
-        this.animation.addState("e", this.sprite,160)
+        this.anim = new Animation();
+        this.anim.addState("i",this.sprite,0.1);
+        this.anim.addState("e", this.sprite,160)
         .addState("e", new Sprite(x,y,0,32,1,1,1,1,0x00000000),240);
         
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
     }
 
     tick(game,deltaTime){
@@ -32,8 +32,8 @@ class Bomb extends Entity{
             return;
         }
 
-        if (this.stopBomb) this.animation.setCurrentState("e");
-        else this.animation.setCurrentState("i");
+        if (this.stopBomb) this.anim.setCurrentState("e");
+        else this.anim.setCurrentState("i");
         
         if (this.light == null){
             this.light = game.screen.level.addLight(this.x,this.y,0xff0099ff,300,300,this.ttl,true);

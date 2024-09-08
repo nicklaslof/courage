@@ -13,11 +13,11 @@ class Clown extends Enemy{
 
         this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
         this.updateAABB();
-        this.animation = new Animation();
-        this.animation.addState("i",this.sprite,0.1);
-        this.animation.addState("a", new Sprite(x,y,0,80,9,14,size,size,0xffffffff),120)
+        this.anim = new Animation();
+        this.anim.addState("i",this.sprite,0.1);
+        this.anim.addState("a", new Sprite(x,y,0,80,9,14,size,size,0xffffffff),120)
         .addState("a", new Sprite(x,y,9,80,9,14,size,size,0xffffffff),120);
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
         this.moveToPlayerRange = 800;
 
         this.throwCounter = 0;
@@ -54,7 +54,7 @@ class Clown extends Enemy{
             this.normalize(this.calculatePlayerDirectionVector);
 
             this.throwCountdown -= deltaTime*game.getGamerule().bossBulletSpeed;
-            this.animation.setCurrentState("a");
+            this.anim.setCurrentState("a");
 
             if (this.stageSwitchCountdown < 1){
                     if (this.throwCountdown < 1){
@@ -114,7 +114,7 @@ class Clown extends Enemy{
                         this.throwCounter++;
                         this.throwCountdown = 60;
                         if (game.length(this.calculatePlayerDirectionVector) < 220 && game.canEntitySee(game.screen.level,this.throwLocation.x,this.throwLocation.y,this.x,this.y)) {
-                            this.animation.setCurrentState("a");
+                            this.anim.setCurrentState("a");
                             this.normalize(this.calculatePlayerDirectionVector);
                             game.screen.level.addEntity(new Bullet(game,this.x+18,this.y+16,1500,280, this.calculatePlayerDirectionVector.x, this.calculatePlayerDirectionVector.y,this,0xff0000ff));
 
@@ -126,7 +126,7 @@ class Clown extends Enemy{
                         this.throw = false;
                         this.throwLocation.x = 0;
                         this.throwLocation.y = 0;
-                        this.animation.setCurrentState("i");
+                        this.anim.setCurrentState("i");
                     }
             }
         }

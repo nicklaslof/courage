@@ -10,11 +10,11 @@ class Bug extends Enemy{
         this.collisionBox = {minX:0,minY:0,maxX:size,maxY:size};
         this.updateAABB();
 
-        this.animation = new Animation();
-        this.animation.addState("i",this.sprite,0.1);
-        this.animation.addState("w", new Sprite(x,y,0,96,9,8,size,size,c),240)
+        this.anim = new Animation();
+        this.anim.addState("i",this.sprite,0.1);
+        this.anim.addState("w", new Sprite(x,y,0,96,9,8,size,size,c),240)
         .addState("w", new Sprite(x,y,0,105,9,8,size,size,c),240);
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
     }
 
     tick(game,deltaTime){
@@ -25,11 +25,11 @@ class Bug extends Enemy{
     }
 
     onEntityMovement(game,deltaTime){
-        this.animation.setCurrentState("w");
+        this.anim.setCurrentState("w");
     }
 
     onEntityStopMovement(game,deltaTime){
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
     }
 }
 

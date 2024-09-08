@@ -28,19 +28,19 @@ class IntroScreen{
 
         this.pixelScale = 72;
         this.sprite = new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff);
-        this.animation = new Animation();
-        this.animation.addState("w", this.sprite,160)
+        this.anim = new Animation();
+        this.anim.addState("w", this.sprite,160)
         .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("w", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
         .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
         
-        this.animation.setCurrentState("w");
+        this.anim.setCurrentState("w");
     }
 
     tick(game, deltaTime){
         if (this.clickDelay > 0) this.clickDelay -= deltaTime;
         this.floor.tick(game,deltaTime);
-        this.animation.tick(game,deltaTime);
-        this.sprite = this.animation.currentSprite;
+        this.anim.tick(game,deltaTime);
+        this.sprite = this.anim.currentSprite;
         this.sprite.x = (W/2)-36;
         this.sprite.y = (H/2)-32;
 

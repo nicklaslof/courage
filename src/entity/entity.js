@@ -10,7 +10,7 @@ class Entity{
         this.moveDirection = {x:0,y:0};
         this.facingDirection = {x:0,y:0};
         this.speed = 1;
-        this.animation = null;
+        this.anim = null;
         this.collisionBox = collisionBox;
         this.AABB = {minX:0,minY:0,maxX:0,maxY:0};
         this.tempAABB = {minX:0,minY:0,maxX:0,maxY:0};
@@ -52,9 +52,9 @@ class Entity{
             return;
         }
 
-        if (this.animation != null){
-            this.animation.tick(game,deltaTime);
-            this.sprite = this.animation.currentSprite;
+        if (this.anim != null){
+            this.anim.tick(game,deltaTime);
+            this.sprite = this.anim.currentSprite;
         }
 
         if (this.moveDirection.x != 0 || this.moveDirection.y != 0){

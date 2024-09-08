@@ -10,13 +10,13 @@ class Alien extends Enemy{
         this.collisionBox = {minX:0,minY:0,maxX:size+2,maxY:size+6};
         this.updateAABB();
         
-        this.animation = new Animation();
-        this.animation.addState("b", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),1024)
+        this.anim = new Animation();
+        this.anim.addState("b", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),1024)
         .addState("b", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
         .addState("b", new Sprite(x,y,51,71,7,7,32,32,0xffffffff),240)
         .addState("b", new Sprite(x,y,58,64,7,7,32,32,0xffffffff),240)
         .addState("b", new Sprite(x,y,51,64,7,7,32,32,0xffffffff),240);
-        this.animation.setCurrentState("b");
+        this.anim.setCurrentState("b");
         this.moveAwayRange = this.spitDelay = this.shootTimer = 0;
     }
 
@@ -32,7 +32,7 @@ class Alien extends Enemy{
             this.moveDirection.x = -this.moveDirection.x;
             this.moveDirection.y = -this.moveDirection.y;
         }
-        this.animation.setCurrentState("b");
+        this.anim.setCurrentState("b");
 
         if (this.shootTimer > 0) this.shootTimer -= deltaTime;
         else{

@@ -9,11 +9,11 @@ class Spider extends Bug{
         this.sprite = new Sprite(x,y,16,96,16,16,size,size,c);
         this.speed = speed/2.5;
 
-        this.animation = new Animation();
-        this.animation.addState("i",this.sprite,0.1);
-        this.animation.addState("w", new Sprite(x,y,16,96,16,16,size,size,c),240)
+        this.anim = new Animation();
+        this.anim.addState("i",this.sprite,0.1);
+        this.anim.addState("w", new Sprite(x,y,16,96,16,16,size,size,c),240)
         .addState("w", new Sprite(x,y,32,96,16,16,size,size,c),240);
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
 
         this.shootTimer = 0;
         this.boss = boss;

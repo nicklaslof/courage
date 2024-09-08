@@ -35,13 +35,13 @@ class Player extends Entity{
         this.bombMessageTimeout = 0;
         
 
-        this.animation = new Animation();
-        this.animation.addState("i",this.sprite,0.1);
-        this.animation.addState("w", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
+        this.anim = new Animation();
+        this.anim.addState("i",this.sprite,0.1);
+        this.anim.addState("w", new Sprite(x,y,16,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
         .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240).addState("w", new Sprite(x,y,32,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),160)
         .addState("w", new Sprite(x,y,0,112,16,16,this.pixelScale,this.pixelScale,0xffffffff),240);
         
-        this.animation.setCurrentState("i");
+        this.anim.setCurrentState("i");
 
         this.aimSprite = new Sprite(this.x,this.y,0,71,7,7,24,24,0xffffffff);
         this.currentTile = null;
@@ -79,11 +79,11 @@ class Player extends Entity{
             this.moveDirection.x = game.input.axes.x;
             this.moveDirection.y = game.input.axes.y;
             this.speed = this.playerSpeed + this.glideSpeed;
-            this.animation.setCurrentState("w")
+            this.anim.setCurrentState("w")
         }else{
             this.speed += this.glideSpeed;
             this.speed *= decay;
-            this.animation.setCurrentState("i");
+            this.anim.setCurrentState("i");
         }
 
         if (game.input.getGlide() && this.canglide && this.glideSpeed < 1){
@@ -99,7 +99,7 @@ class Player extends Entity{
         }
         if (this.speed > 980) this.speed = 980;
         if (this.glideSpeed > 10){
-            this.animation.setCurrentState("i");
+            this.anim.setCurrentState("i");
             game.screen.level.addParticle(this.x+24,this.y+this.pixelScale,0x99dddddd,game.getRandom(1,12),game.getRandom(1,12),1500,{x:game.getRandom(-1,1),y:game.getRandom(-1,1)},game.getRandom(50,120));
         }
 
@@ -179,7 +179,7 @@ class Player extends Entity{
         if (!game.screen.level.bossLevel && this.health == 100 && !this.courageFullPlayed){
             this.courageFullPlayed = true;
             game.playFullCourage();
-            game.setPlayerSays("I have the courage to leave this place now!",5000);
+            game.setPlayerSays("I have the courage to leave now!",5000);
         }
         if (this.health < 100 && this.courageFullPlayed){
             game.setPlayerSays("I lost my courage, I can't leave now!",5000);
@@ -196,7 +196,7 @@ class Player extends Entity{
         this.bombs++;
         if (this.bombMessageTimeout <= 0){
             this.bombMessageTimeout = 120000;
-            game.setPlayerSays("I found a bomb, throw them by pressing E",8000);
+            game.setPlayerSays("I found a bomb, throw it with E",8000);
         }
     }
 

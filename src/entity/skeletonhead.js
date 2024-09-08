@@ -8,7 +8,7 @@ import Player from "./player.js";
 class SkeletonHead extends Entity{
     constructor(game,x,y,sizeX,sizeY){
         super(game,x,y,new Sprite(x,y,20,64,6,7,sizeX,sizeY,0xffffffff),1,{minX:0,minY:0,maxX:16,maxY:16});
-        this.goldenSkull = Math.random()<0.1;
+        this.goldenSkull = Math.random()<0.05;
     }
 
     onCollision(game,otherEntity){
